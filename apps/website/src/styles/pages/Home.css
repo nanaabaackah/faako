@@ -1,0 +1,77 @@
+.hero-section {
+    padding: 96px 0;
+    background-color: #f9fafb;
+  }
+  
+  .hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+    gap: 48px;
+  }
+  
+  .hero-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 24px;
+  }
+  
+  .hero-content p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #4b5563;
+    margin-bottom: 32px;
+  }
+  
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+  }
+  
+  .hero-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .faako-logo {
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+  }
+  
+  .faako-logo--dark {
+    display: none;
+  }
+  
+  [data-theme="dark"] .faako-logo--light {
+    display: none;
+  }
+  
+  [data-theme="dark"] .faako-logo--dark {
+    display: block;
+  }
+  
+  .faako-loop-path {
+    stroke-width: 2px;
+    animation: faako-draw 2s ease-in-out forwards, faako-fill 1.5s 2.2s ease-in-out forwards;
+    animation-iteration-count: 1;
+  }
+  
+  @keyframes faako-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  
+  @keyframes faako-fill {
+    to {
+      fill: var(--path-fill);
+      stroke-width: 0;
+    }
+  }
+  

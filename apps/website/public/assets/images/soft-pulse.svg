@@ -1,0 +1,16 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="softPulseGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#fef5eb" stop-opacity="0.8" />
+      <stop offset="60%" stop-color="#d7b79a" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#a67b56" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="softPulseGlare" cx="45%" cy="40%" r="30%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.65" />
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <circle cx="250" cy="250" r="220" fill="url(#softPulseGradient)" />
+  <circle cx="280" cy="180" r="90" fill="url(#softPulseGlare)" />
+  <circle cx="150" cy="320" r="65" fill="rgba(138, 90, 59, 0.45)" />
+</svg>
