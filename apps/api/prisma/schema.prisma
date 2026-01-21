@@ -7,31 +7,80 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Tenant {
-  id        String       @id @default(cuid())
-  name      String
-  slug      String       @unique
-  createdAt DateTime     @default(now())
-  members   Membership[]
+model Organization {
+  id           String             @id @default(cuid())
+  name         String
+  slug         String             @unique
+  status       OrganizationStatus @default(PENDING)
+  primaryEmail String?
+  teamSize     String?
+  currency     String             @default("USD")
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  members      Membership[]
+  signupRequests SignupRequest[]
 }
 
 model User {
-  id          String       @id @default(cuid())
-  email       String       @unique
+  id          String        @id @default(cuid())
+  email       String        @unique
   fullName    String?
-  createdAt   DateTime     @default(now())
+  status      UserStatus    @default(PENDING)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
   memberships Membership[]
+  signupRequests SignupRequest[]
 }
 
 model Membership {
-  id        String   @id @default(cuid())
-  tenantId  String
-  userId    String
-  role      String   @default("owner")
-  createdAt DateTime @default(now())
+  id              String   @id @default(cuid())
+  organizationId  String
+  userId          String
+  role            String   @default("owner")
+  createdAt       DateTime @default(now())
 
-  tenant Tenant @relation(fields: [tenantId], references: [id])
-  user   User   @relation(fields: [userId], references: [id])
+  organization    Organization @relation(fields: [organizationId], references: [id])
+  user            User         @relation(fields: [userId], references: [id])
 
-  @@unique([tenantId, userId])
+  @@unique([organizationId, userId])
 }
+
+model SignupRequest {
+  id             String         @id @default(cuid())
+  organizationId String?
+  userId         String?
+  companyName    String
+  email          String
+  teamSize       String?
+  currency       String?
+  status         SignupStatus   @default(NEW)
+  source         String?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  organization   Organization?  @relation(fields: [organizationId], references: [id])
+  user           User?          @relation(fields: [userId], references: [id])
+
+  @@index([email])
+}
+
+enum OrganizationStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  ARCHIVED
+}
+
+enum UserStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+}
+
+enum SignupStatus {
+  NEW
+  REVIEWING
+  CONTACTED
+  CLOSED
+}
+
