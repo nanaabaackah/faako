@@ -1,249 +1,118 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // eslint-disable-line no-unused-vars
-import PrimaryButton from "../components/PrimaryButton.jsx";
+import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faBoxOpen,
-  faTruck,
-  faRoute,
-  faReceipt,
-  faGear,
-  faChartPie,
+  faAddressBook,
+  faBoxArchive,
+  faBoxesStacked,
   faBullhorn,
-  faCalendarDays,
-  faHandshake,
-  faUsers,
   faCalendarCheck,
-  faUserTie,
-  faFileInvoiceDollar,
-  faMoneyBillWave,
-  faFolderOpen,
+  faCalendarDays,
+  faCartShopping,
+  faChartLine,
+  faChartPie,
   faClock,
-  faUserAlt,
+  faFileInvoiceDollar,
+  faFolderOpen,
+  faGear,
+  faGlobe,
+  faArrowRight,
+  faHandshake,
+  faHeadset,
+  faMoneyBillWave,
+  faPenToSquare,
+  faPlug,
+  faReceipt,
+  faRoute,
+  faShield,
+  faTruck,
+  faUserShield,
+  faUserTie,
   faWrench,
 } from "@fortawesome/free-solid-svg-icons";
-
-const installableModules = [
-  {
-    label: "Inventory",
-    desc: "Stock, serialized rentals, and valuations in one tab.",
-    icon: faBoxOpen,
-  },
-  {
-    label: "Vendors",
-    desc: "Supplier portals, purchase paperwork, and approvals.",
-    icon: faTruck,
-  },
-  {
-    label: "Delivery",
-    desc: "Dispatch runs, pickups, and status tracking.",
-    icon: faRoute,
-  },
-  {
-    label: "Orders",
-    desc: "Unified order entry for retail + rental channels.",
-    icon: faReceipt,
-  },
-  {
-    label: "Settings",
-    desc: "Admin controls for roles, localization, and branding.",
-    icon: faGear,
-  },
-  {
-    label: "Accounting",
-    desc: "Ledgers, reconciliations, and financial dashboards.",
-    icon: faChartPie,
-  },
-  {
-    label: "Marketing",
-    desc: "Campaigns, broadcast messaging, and updates.",
-    icon: faBullhorn,
-  },
-  {
-    label: "Bookings",
-    desc: "Rental reservations and calendar conflict checks.",
-    icon: faCalendarDays,
-  },
-  {
-    label: "Customers",
-    desc: "CRM profiles, loyalty, and notes.",
-    icon: faHandshake,
-  },
-  {
-    label: "Directory",
-    desc: "Team contacts, user info, and access controls.",
-    icon: faUsers,
-  },
-  {
-    label: "Scheduler",
-    desc: "Resource blocks, crews, and shift planning.",
-    icon: faCalendarCheck,
-  },
-  {
-    label: "HR",
-    desc: "Roles, staff data, and approvals.",
-    icon: faUserTie,
-  },
-  {
-    label: "Invoicing",
-    desc: "PDF-ready invoices tied to orders or bookings.",
-    icon: faFileInvoiceDollar,
-  },
-  {
-    label: "Expenses",
-    desc: "Expense capture and visibility per unit.",
-    icon: faMoneyBillWave,
-  },
-  {
-    label: "Documents",
-    desc: "Store files, waivers, and approvals centrally.",
-    icon: faFolderOpen,
-  },
-  {
-    label: "Timesheets",
-    desc: "Track crews, hours, and billable time.",
-    icon: faClock,
-  },
-  {
-    label: "Users",
-    desc: "Permissions, password resets, and roles.",
-    icon: faUserAlt,
-  },
-  {
-    label: "Maintenance",
-    desc: "Asset health logs and scheduled upkeep.",
-    icon: faWrench,
-  },
-];
-
-const toolsTabContent = [
-  {
-    id: "insights",
-    label: "Insights",
-    title: "Ribbon dashboards that keep momentum calm",
-    text:
-      "Paint a real-time pulse of finance, inventory, and people so leadership never needs to search for the next report.",
-    bullets: [
-      "Unified dashboards refresh every minute",
-      "Annotations stay visible to the whole team",
-      "Shared bookmarks keep conversations grounded",
-    ],
-  },
-  {
-    id: "workflow",
-    label: "Workflow",
-    title: "Flow-based work orders and approvals",
-    text:
-      "Create intuitive workflows that pass data between modules and notify every team member with the right context.",
-    bullets: [
-      "Chain approvals from finance to ops",
-      "Automated reminders for overdue tasks",
-      "Self-service checkpoints for team leads",
-    ],
-  },
-  {
-    id: "automation",
-    label: "Automation",
-    title: "Automations that react to your business",
-    text:
-      "Use visual builders to trigger automations whenever a project hits a milestone, a closing date nears, or inventory dips.",
-    bullets: [
-      "Event-based automations with visual triggers",
-      "Conditional rules guard your approvals",
-      "Automated summaries keep stakeholders aligned",
-    ],
-  },
-];
+import PrimaryButton from "../components/PrimaryButton.jsx";
+import TrustedBy from "../components/TrustedBy.jsx";
+import Testimonials from "../components/Testimonials.jsx";
+import FaqSection from "../components/FaqSection.jsx";
 
 export default function Home() {
-  const [activeToolId, setActiveToolId] = useState(toolsTabContent[0].id);
-  useEffect(() => {
-    if (
-      typeof IntersectionObserver === "undefined" ||
-      typeof window === "undefined"
-    ) {
-      return undefined;
-    }
+  const [activeTab, setActiveTab] = useState("insights");
 
+  useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+          }
         });
       },
-      { threshold: 0.25 }
+      { threshold: 0.1 }
     );
 
     const nodes = document.querySelectorAll("[data-scroll]");
     nodes.forEach((node) => observer.observe(node));
-    
-    // ---- Faako SVG draw+fill loop (runs once on mount)
+
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (!prefersReducedMotion) {
       const svgs = document.querySelectorAll(".faako-logo");
-
       svgs.forEach((svg) => {
         const paths = svg.querySelectorAll("path");
-
         paths.forEach((p, i) => {
-          const originalFill = (p.getAttribute("fill") || "#4a3931").toLowerCase();
-
-          // Store original fill and index
+          const originalFill = (p.getAttribute("fill") || "#0052FF").toLowerCase();
           p.style.setProperty("--path-fill", originalFill);
           p.style.setProperty("--i", String(i));
-
-          // Measure path length
           const len = p.getTotalLength();
           p.style.setProperty("--dash", String(len));
-
-          // Dash setup using CSS vars (so keyframes can loop cleanly)
           p.style.strokeDasharray = "var(--dash)";
           p.style.strokeDashoffset = "var(--dash)";
-
-          // Start outline-only
           p.style.fill = "transparent";
           p.style.stroke = "var(--path-fill)";
-
           p.classList.add("faako-loop-path");
         });
       });
     }
-
     return () => observer.disconnect();
   }, []);
 
   return (
     <>
       <section className="page hero">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
         <div className="hero-copy reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">The Single Source of Truth</p>
-          <h1>Your Entire Enterprise, in One Place.</h1>
+          <p className="eyebrow">The ERP for Growth</p>
+          <h1>One System. Absolute Control.</h1>
           <p className="lead">
-            Stop chasing data across a dozen apps. Bring your finance,
-            inventory, and people into one powerful, unified workspace designed
-            for the modern African enterprise.
+            Faako is a robust ERP platform backed by expert tech consulting. 
+            We help you migrate from fragmented tools to a single, high-performance ecosystem.
           </p>
           <div className="hero-actions">
-            <PrimaryButton to="/signup">Get Started for Free</PrimaryButton>
-            <Link className="button button-ghost" to="/signup">
-              Request a Demo
+            <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
+            <Link className="button button-ghost" to="/contact">
+              View ERP Features
             </Link>
           </div>
+          
           <div className="hero-metrics">
             <div className="metric">
-              <span>One place</span>
-              <p>Finance, inventory, people</p>
+              <span>Audit</span>
+              <p>Workflows mapped</p>
             </div>
             <div className="metric">
-              <span>Real time</span>
-              <p>Unified dashboards</p>
+              <span>Deploy</span>
+              <p>Custom ERP setup</p>
             </div>
-            <div className="metric">
-              <span>Built to scale</span>
-              <p>Modular and global</p>
+            <div className="metric" data-scroll>
+              <span>Sustain</span>
+              <p>24/7 Tech Advisory</p>
             </div>
           </div>
         </div>
@@ -461,342 +330,690 @@ export default function Home() {
         </div>
       </section>
 
-      <section
-        className="page section tools-tabs reveal scroll-reveal"
-        style={{ "--delay": "160ms" }}
-        data-scroll
-      >
-        <div className="section-header">
+      <TrustedBy
+        className="page trust-strip"
+        headerScroll
+        eyebrow="Trusted By"
+        title="Teams who run on Faako"
+        lead="From fast-moving operators to multi-location teams, Faako keeps everyone aligned."
+        logos={[
+          "Reebs",
+          "Atlas Rentals",
+          "Northbridge",
+          "Summit Events",
+          "Clearline Logistics",
+          "VentureWorks",
+        ]}
+      />
+
+      <section id="features" className="page features-section">
+        <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Tools</p>
           <h2>The features that keep Faako grounded.</h2>
         </div>
-
-        <div className="tools-tab-menu">
-          <div className="tools-tab-buttons">
-            {toolsTabContent.map((tab) => (
+        <div className="tools-tabs reveal" data-scroll>
+          <div className="tools-tab-menu">
+            <div className="tools-tab-buttons" role="tablist" aria-label="Module highlights">
               <button
-                key={tab.id}
                 type="button"
-                className={`tools-tab-button ${
-                  activeToolId === tab.id ? "is-active" : ""
-                }`}
-                onClick={() => setActiveToolId(tab.id)}
+                id="tools-tab-insights"
+                data-icon="I"
+                className={`tools-tab-button ${activeTab === "insights" ? "is-active" : ""}`}
+                role="tab"
+                aria-selected={activeTab === "insights"}
+                aria-controls="tools-panel-insights"
+                tabIndex={activeTab === "insights" ? 0 : -1}
+                onClick={() => setActiveTab("insights")}
               >
-                {tab.label}
+                Insights
               </button>
-            ))}
-          </div>
-
-          <div className="tools-tab-panel" data-scroll>
-            {toolsTabContent.map((tab) => (
-              <div
-                key={tab.id}
-                className={`tools-tab-panel-card ${
-                  tab.id === activeToolId ? "is-visible" : ""
-                }`}
-                role="tabpanel"
-                aria-hidden={tab.id !== activeToolId}
+              <button
+                type="button"
+                id="tools-tab-workflow"
+                data-icon="W"
+                className={`tools-tab-button ${activeTab === "workflow" ? "is-active" : ""}`}
+                role="tab"
+                aria-selected={activeTab === "workflow"}
+                aria-controls="tools-panel-workflow"
+                tabIndex={activeTab === "workflow" ? 0 : -1}
+                onClick={() => setActiveTab("workflow")}
               >
-                <div className="tools-tab-panel-copy">
-                  <h3>{tab.title}</h3>
-                  <p>{tab.text}</p>
-                  <ul>
-                    {tab.bullets.map((bullet) => (
-                      <li key={bullet}>{bullet}</li>
-                    ))}
-                  </ul>
-                </div>
+                Workflow
+              </button>
+              <button
+                type="button"
+                id="tools-tab-automations"
+                data-icon="A"
+                className={`tools-tab-button ${activeTab === "automations" ? "is-active" : ""}`}
+                role="tab"
+                aria-selected={activeTab === "automations"}
+                aria-controls="tools-panel-automations"
+                tabIndex={activeTab === "automations" ? 0 : -1}
+                onClick={() => setActiveTab("automations")}
+              >
+                Automations
+              </button>
+            </div>
 
+            <div className="tools-tab-panel">
+              <div
+                id="tools-panel-insights"
+                className={`tools-tab-panel-card ${activeTab === "insights" ? "is-visible" : ""}`}
+                role="tabpanel"
+                aria-labelledby="tools-tab-insights"
+                aria-hidden={activeTab !== "insights"}
+              >
                 <figure className="tools-tab-figure">
-                  <img
-                    src="/assets/images/dynamic-grid.svg"
-                    alt="Floating grid illustration"
-                    loading="lazy"
-                  />
-                  <figcaption>Soft geometry mirrors the calm Faako workflow.</figcaption>
+                  <img src="/imgs/faako-erp-dashboard.png" alt="Insights dashboard preview" />
                 </figure>
               </div>
-            ))}
+
+              <div
+                id="tools-panel-workflow"
+                className={`tools-tab-panel-card ${activeTab === "workflow" ? "is-visible" : ""}`}
+                role="tabpanel"
+                aria-labelledby="tools-tab-workflow"
+                aria-hidden={activeTab !== "workflow"}
+              >
+                <figure className="tools-tab-figure">
+                  <img src="/imgs/faako-erp-orders.png" alt="Workflow management preview" />
+                </figure>
+              </div>
+
+              <div
+                id="tools-panel-automations"
+                className={`tools-tab-panel-card ${activeTab === "automations" ? "is-visible" : ""}`}
+                role="tabpanel"
+                aria-labelledby="tools-tab-automations"
+                aria-hidden={activeTab !== "automations"}
+              >
+                <figure className="tools-tab-figure">
+                  <img src="/imgs/faako-erp-reports.png" alt="Automation overview preview" />
+                </figure>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      <section
-        className="page visual-section reveal scroll-reveal"
-        style={{ "--delay": "220ms" }}
-        data-scroll
-      >
-        <div className="visual-section-header">
-          <p className="eyebrow">Visual Pulse</p>
-          <h2>The modules that keep Faako unified.</h2>
+      <section className="page split how-it-works">
+        <div className="workflow-copy reveal" data-scroll>
+          <p className="eyebrow">How It Works</p>
+          <h2>From audit to rollout in weeks</h2>
           <p className="lead">
-            Every face of Faako moves together—finance, operations, and people use
-            one clear visual language so nothing falls out of sync.
+            We map what you do today, design the future state, and launch in phases so your team
+            keeps moving without disruption.
           </p>
         </div>
-
-        <div className="visual-card-row">
-          <article className="visual-card card-primary">
-            <span className="pill">Faako Finance</span>
-            <h3>Automated close</h3>
-            <p>Bookkeeping, compliance, and multi-currency reporting.</p>
-            <div className="signal">
-              <span />
-              <span />
-              <span />
-            </div>
-          </article>
-
-          <article className="visual-card">
-            <span className="pill">Faako Ops</span>
-            <h3>Supply chain pulse</h3>
-            <p>Real-time inventory tracking and ordering clarity.</p>
-            <div className="chip-row">
-              <span className="chip">Inventory</span>
-              <span className="chip">Supply chain</span>
-            </div>
-          </article>
-
-          <article className="visual-card card-muted">
-            <span className="pill">Faako Talent</span>
-            <h3>People in focus</h3>
-            <p>Payroll, performance, and recruitment in one view.</p>
-          </article>
-        </div>
-      </section>
-
-      <section
-        className="page ribbon reveal scroll-reveal"
-        style={{ "--delay": "220ms" }}
-        data-scroll
-      >
-        <p>One Place. Zero Friction.</p>
-        <div className="ribbon-tags">
-          <span>Finance</span>
-          <span>Inventory</span>
-          <span>People</span>
-          <span>Customers</span>
-          <span>Analytics</span>
-        </div>
-      </section>
-
-      <section className="page section" id="platform">
-        <div className="section-header reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Why Faako?</p>
-          <h2>One system. One truth.</h2>
-          <p className="lead">
-            Faako is the single source of truth for modern enterprises that
-            want to move fast with unified data.
-          </p>
-        </div>
-
-        <div className="feature-grid" data-scroll>
-          <article
-            className="feature-card reveal scroll-reveal"
-            style={{ "--delay": "120ms" }}
-          >
-            <h3>One Place. Zero Friction.</h3>
-            <p>
-              In Fante, Faako means "One Place." We built this ERP because
-              business should not be scattered. When your data lives in one
-              place, your team moves at one speed: fast.
-            </p>
-          </article>
-
-          <article
-            className="feature-card reveal scroll-reveal"
-            style={{ "--delay": "200ms" }}
-          >
-            <h3>Unified Intelligence</h3>
-            <p>
-              From the warehouse to the boardroom, Faako connects the dots.
-              Real-time analytics give you a 360-degree view of your operations
-              so you can make decisions based on facts, not feelings.
-            </p>
-          </article>
-
-          <article
-            className="feature-card reveal scroll-reveal"
-            style={{ "--delay": "280ms" }}
-          >
-            <h3>Built for Scale</h3>
-            <p>
-              Whether you are a growing startup in Accra or a multinational
-              corporation, Faako scales with you. Modular features allow you to
-              activate exactly what you need, nothing more, nothing less.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section className="page section split" id="workflow">
-        <div className="workflow-copy reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Single Source of Truth</p>
-          <h2>Everything connected. Faako.</h2>
-          <p className="lead">
-            When finance, inventory, and people share one data backbone, every
-            decision is grounded in reality.
-          </p>
-          <Link className="button button-ghost" to="/signup">
-            Request a Demo
-          </Link>
-        </div>
-
-        <div className="workflow-steps" data-scroll>
-          <div className="step reveal scroll-reveal" style={{ "--delay": "120ms" }}>
+        <div className="workflow-steps">
+          <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "80ms" }}>
             <span>01</span>
             <div>
-              <h4>Unify your data</h4>
-              <p>Bring finance, inventory, and people records into one view.</p>
+              <h3>Discovery Audit</h3>
+              <p className="muted">Workflows, data, and approvals mapped across every team.</p>
             </div>
           </div>
-
-          <div className="step reveal scroll-reveal" style={{ "--delay": "200ms" }}>
+          <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "160ms" }}>
             <span>02</span>
             <div>
-              <h4>Align your teams</h4>
-              <p>Everyone works from the same numbers and approvals.</p>
+              <h3>Blueprint Build</h3>
+              <p className="muted">Modules configured, integrations connected, and dashboards tailored.</p>
             </div>
           </div>
-
-          <div className="step reveal scroll-reveal" style={{ "--delay": "280ms" }}>
+          <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "240ms" }}>
             <span>03</span>
             <div>
-              <h4>Act with confidence</h4>
-              <p>Real-time dashboards show what is happening right now.</p>
+              <h3>Launch + Scale</h3>
+              <p className="muted">Phased rollout with training, KPI tracking, and optimization.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="page section" id="modules">
-        <div className="section-header reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Modules</p>
-          <h2>Product features that run the business.</h2>
-          <p className="lead">Activate only what you need, when you need it.</p>
+      <section id="consulting" className="page consulting-section">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
         </div>
-
-        <div className="modules-body" data-scroll>
-          <div
-            className="modules-visuals reveal scroll-reveal"
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div
+          className="section-header reveal"
+          style={{ "--delay": "0ms" }}
+          data-scroll
+        >
+          <h2>ERP Consulting & Strategy</h2>
+          <p>
+            Buying software is easy. Implementing it for success requires a
+            partner.
+          </p>
+        </div>
+        <div className="consulting-body">
+          <figure
+            className="consulting-logo-card reveal scroll-reveal"
             style={{ "--delay": "120ms" }}
+            data-scroll
           >
-            <figure className="module-figure soft-grid" data-scroll>
-              <img
-                src="/assets/images/dynamic-grid.svg"
-                alt="Dynamic grid inspiration"
-                loading="lazy"
-              />
-              <figcaption>Each module plays a gentle role in the same grid.</figcaption>
-            </figure>
-          </div>
-
-          <div className="module-grid" data-scroll>
-            <article
-              className="module-card reveal scroll-reveal"
-              style={{ "--delay": "120ms" }}
+            <svg
+              className="faako-logo consulting-logo"
+              viewBox="0 0 375 374.999991"
+              preserveAspectRatio="xMidYMid meet"
+              role="img"
+              aria-label="Faako logo blueprint"
             >
-              <h3>Faako Finance</h3>
-              <p>Automated bookkeeping, tax compliance, and multi-currency reporting.</p>
+              <defs>
+                <clipPath id="logo2white-clip-consulting">
+                  <path
+                    d="M 37.5 1.875 L 339 1.875 L 339 373.125 L 37.5 373.125 Z M 37.5 1.875"
+                    clipRule="nonzero"
+                  />
+                </clipPath>
+              </defs>
+              <g clipPath="url(#logo2white-clip-consulting)">
+                <path
+                  fill="currentColor"
+                  d="M 74.933594 144.785156 C 95.671875 144.785156 112.8125 128.15625 112.8125 107.476562 C 112.8125 86.8125 95.671875 69.71875 74.933594 69.71875 C 54.207031 69.71875 37.515625 86.8125 37.515625 107.476562 C 37.515625 128.15625 54.207031 144.785156 74.933594 144.785156 Z M 301.242188 144.785156 C 321.980469 144.785156 338.65625 128.15625 338.65625 107.476562 C 338.65625 86.8125 321.980469 69.71875 301.242188 69.71875 C 280.515625 69.71875 263.835938 86.8125 263.835938 107.476562 C 263.835938 128.15625 280.515625 144.785156 301.242188 144.785156 Z M 301.242188 126.355469 C 312.066406 126.355469 320.179688 117.824219 320.179688 107.476562 C 320.179688 97.144531 312.066406 88.597656 301.242188 88.597656 C 290.878906 88.597656 282.316406 97.144531 282.316406 107.476562 C 282.316406 117.824219 290.875 126.355469 301.242188 126.355469 Z M 188.09375 76.925781 C 209.28125 76.925781 225.957031 59.835938 225.957031 39.167969 C 225.957031 18.9375 209.28125 1.875 188.09375 1.875 C 167.351562 1.875 150.675781 18.9375 150.675781 39.167969 C 150.675781 59.832031 167.351562 76.925781 188.09375 76.925781 Z M 188.09375 58.046875 C 198.917969 58.046875 207.480469 49.949219 207.480469 39.167969 C 207.480469 28.820312 198.917969 20.292969 188.09375 20.292969 C 177.730469 20.292969 169.167969 28.824219 169.167969 39.167969 C 169.167969 49.949219 177.730469 58.046875 188.09375 58.046875 Z M 56.453125 225.226562 L 56.453125 200.066406 C 56.453125 189.734375 65.015625 181.1875 75.394531 181.1875 C 85.757812 181.1875 93.871094 189.734375 93.871094 200.066406 L 93.871094 231.523438 L 112.8125 231.523438 L 112.8125 200.066406 C 112.8125 179.386719 95.671875 162.753906 75.394531 162.753906 C 54.652344 162.757812 37.515625 179.386719 37.515625 200.066406 L 37.515625 234.21875 C 37.515625 249.957031 50.140625 262.539062 65.925781 262.539062 L 93.871094 262.539062 L 93.871094 335.785156 C 93.871094 356.019531 110.996094 373.097656 131.75 373.097656 C 152.476562 373.097656 169.167969 356.019531 169.167969 335.785156 L 169.167969 274.671875 L 150.675781 274.671875 L 150.675781 335.785156 C 150.675781 345.671875 142.113281 354.21875 131.75 354.21875 C 121.375 354.21875 112.8125 345.671875 112.8125 335.785156 L 112.8125 262.539062 L 207.035156 262.539062 L 207.035156 335.785156 C 207.035156 356.019531 224.15625 373.097656 244.898438 373.097656 C 265.175781 373.097656 282.316406 356.019531 282.316406 335.785156 L 282.316406 274.671875 L 263.375 274.671875 L 263.375 335.785156 C 263.375 345.671875 255.261719 354.21875 244.898438 354.21875 C 234.535156 354.21875 225.957031 345.671875 225.957031 335.785156 L 225.957031 262.539062 L 310.710938 262.539062 C 326.046875 262.539062 338.65625 249.957031 338.65625 234.21875 L 338.65625 200.066406 C 338.65625 179.386719 321.980469 162.753906 301.242188 162.753906 C 280.515625 162.753906 263.375 179.386719 263.375 200.066406 L 263.375 243.65625 L 169.167969 243.65625 L 169.167969 224.332031 L 169.167969 225.226562 L 169.167969 132.207031 C 169.167969 121.859375 177.730469 113.328125 188.09375 113.328125 C 198.917969 113.328125 207.035156 121.859375 207.035156 132.207031 L 207.035156 225.226562 L 207.035156 224.332031 L 207.035156 231.523438 L 225.957031 231.523438 L 225.957031 224.332031 L 225.957031 225.226562 L 225.957031 132.207031 C 225.957031 111.527344 208.835938 94.449219 188.09375 94.449219 C 167.351562 94.449219 150.675781 111.527344 150.675781 132.207031 L 150.675781 225.226562 L 150.675781 224.332031 L 150.675781 243.660156 L 65.925781 243.660156 C 60.519531 243.660156 56.453125 239.160156 56.453125 234.21875 Z M 282.316406 243.660156 L 282.316406 200.066406 C 282.316406 189.734375 290.878906 181.1875 301.242188 181.1875 C 311.617188 181.1875 320.179688 189.734375 320.179688 200.066406 L 320.179688 234.21875 C 320.179688 239.164062 315.667969 243.660156 310.710938 243.660156 Z M 74.933594 126.355469 C 85.757812 126.355469 93.871094 117.824219 93.871094 107.476562 C 93.871094 97.144531 85.757812 88.597656 74.933594 88.597656 C 64.570312 88.597656 56.007812 97.144531 56.007812 107.476562 C 56.007812 117.824219 64.570312 126.355469 74.933594 126.355469 Z M 74.933594 126.355469"
+                  fillOpacity="1"
+                  fillRule="evenodd"
+                />
+              </g>
+            </svg>
+            <figcaption>Blueprints drawn into execution.</figcaption>
+          </figure>
+          <div className="consulting-grid">
+            <article
+              className="consulting-card reveal scroll-reveal"
+              style={{ "--delay": "200ms" }}
+              data-scroll
+            >
+              <h3>Inventory & Logistics</h3>
+              <p>
+                Master your supply chain with serialized tracking and automated
+                valuations.
+              </p>
             </article>
             <article
-              className="module-card reveal scroll-reveal"
-              style={{ "--delay": "180ms" }}
+              className="consulting-card reveal scroll-reveal"
+              style={{ "--delay": "260ms" }}
+              data-scroll
             >
-              <h3>Faako Ops</h3>
-              <p>Real-time inventory tracking and supply chain management.</p>
+              <h3>Financial Intelligence</h3>
+              <p>
+                Real-time accounting integrations that provide a true picture of
+                your ROI.
+              </p>
             </article>
             <article
-              className="module-card reveal scroll-reveal"
-              style={{ "--delay": "240ms" }}
+              className="consulting-card reveal scroll-reveal"
+              style={{ "--delay": "320ms" }}
+              data-scroll
             >
-              <h3>Faako Talent</h3>
-              <p>A complete HR suite for payroll, performance, and recruitment.</p>
-            </article>
-            <article
-              className="module-card reveal scroll-reveal"
-              style={{ "--delay": "300ms" }}
-            >
-              <h3>Faako CRM</h3>
-              <p>Manage your customer relationships and sales pipeline in one view.</p>
+              <h3>Custom Workflows</h3>
+              <p>
+                We build the modules you need to match your specific business
+                DNA.
+              </p>
             </article>
           </div>
         </div>
       </section>
 
-      <section
-        className="page section install-modules reveal scroll-reveal"
-        style={{ "--delay": "0ms" }}
-        id="installables"
-      >
-        <div className="section-header">
-          <p className="eyebrow">Installable Modules</p>
-          <h2>Activate exactly what your team needs.</h2>
+      <section className="page compliance-section">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Security & Compliance</p>
+          <h2>Built to protect your operations</h2>
           <p className="lead">
-            Pick the Faako modules that make sense for your stack. Each plug-in installs
-            instantly on the same data core, so finance, operations, and people stay harmonized.
+            Enterprise-grade controls, audit trails, and data safeguards come standard.
+          </p>
+        </div>
+        <div className="compliance-grid">
+          <div className="compliance-card">
+            <h3>Role-Based Access</h3>
+            <p>Granular permissions across departments and locations.</p>
+          </div>
+          <div className="compliance-card">
+            <h3>Audit Trails</h3>
+            <p>Full change history on orders, inventory, and finance.</p>
+          </div>
+          <div className="compliance-card">
+            <h3>Data Backups</h3>
+            <p>Automated backups and recovery workflows.</p>
+          </div>
+          <div className="compliance-card">
+            <h3>Privacy Controls</h3>
+            <p>Encryption in transit and at rest.</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="page cta reveal" data-scroll>
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="cta-content">
+          <h2>Stop managing tools. Start managing your business.</h2>
+          <p className="lead">Let's build your ERP roadmap today.</p>
+        </div>
+        <div className="cta-actions">
+          <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
+        </div>
+      </section>
+
+      <section id="solutions" className="page solutions-section">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">The Platform</p>
+          <h2>Comprehensive ERP Solutions</h2>
+          <p className="lead">
+            We don't just provide tools; we re-engineer your workflows for
+            maximum efficiency.
           </p>
         </div>
 
-        <div className="install-module-grid" data-scroll>
-          {installableModules.map((module, index) => (
-            <article
-              key={module.label}
-              className="install-module-pill reveal scroll-reveal"
-              style={{ "--delay": `${80 + index * 30}ms` }}
-            >
-              <span className="module-pill-icon">
-                <FontAwesomeIcon icon={module.icon} />
-              </span>
-              <div>
-                <h3>{module.label}</h3>
-                <p>{module.desc}</p>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
+        <div className="solutions-container">
+          {/* Pillar 1: Operations */}
+          <div className="solution-pillar reveal" data-scroll style={{ "--delay": "100ms" }}>
+            <div className="pillar-head">
+              <div className="pillar-icon">01</div>
+              <h3>Operational Excellence</h3>
+            </div>
+            <ul className="solution-list">
+              <li>
+                <strong>Unified Inventory:</strong> Real-time tracking of stock levels across multiple warehouses with serialized asset management.
+              </li>
+              <li>
+                <strong>Supply Chain Sync:</strong> Automated vendor procurement and purchase order approvals to prevent stockouts.
+              </li>
+              <li>
+                <strong>Logistics & Dispatch:</strong> Integrated route optimization and delivery tracking for field operations.
+              </li>
+            </ul>
+          </div>
 
-      <section className="page section story">
-        <div className="section-header reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Brand Story</p>
-          <h2>The Power of Unity.</h2>
-        </div>
+          {/* Pillar 2: Financials */}
+          <div className="solution-pillar reveal" data-scroll style={{ "--delay": "200ms" }}>
+            <div className="pillar-head">
+              <div className="pillar-icon">02</div>
+              <h3>Financial Integrity</h3>
+            </div>
+            <ul className="solution-list">
+              <li>
+                <strong>Automated Accounting:</strong> Seamless flow from sales orders to ledger entries without manual data entry.
+              </li>
+              <li>
+                <strong>Revenue Tracking:</strong> Real-time visibility into cash flow, receivables, and payables.
+              </li>
+              <li>
+                <strong>Multi-Currency Support:</strong> Handle global transactions with automatic exchange rate updates.
+              </li>
+            </ul>
+          </div>
 
-        <div className="story-grid" data-scroll>
-          <div className="testimonial-grid">
-            <article className="testimonial-card reveal" style={{ "--delay": "140ms" }}>
-              <p>
-                Faako was born from a simple observation: African businesses are
-                among the most resilient in the world, but they are often slowed
-                down by fragmented systems. We took a word that represents
-                "oneness" and built a technology that represents "efficiency."
-              </p>
-              <span>Ghana to Global</span>
-            </article>
-
-            <article className="testimonial-card reveal" style={{ "--delay": "220ms" }}>
-              <p>
-                Faako is more than an ERP; it is a commitment to bringing order to
-                complexity. We are proud of our Ghanaian roots and built this to
-                empower businesses everywhere to operate with world-class
-                precision.
-              </p>
-              <span>Built for unity</span>
-            </article>
+          {/* Pillar 3: Intelligence */}
+          <div className="solution-pillar reveal" data-scroll style={{ "--delay": "300ms" }}>
+            <div className="pillar-head">
+              <div className="pillar-icon">03</div>
+              <h3>Strategic Intelligence</h3>
+            </div>
+            <ul className="solution-list">
+              <li>
+                <strong>Custom Dashboards:</strong> KPIs tailored to your specific business goals—from conversion rates to asset ROI.
+              </li>
+              <li>
+                <strong>Predictive Analytics:</strong> Use historical data to forecast demand and optimize labor costs.
+              </li>
+              <li>
+                <strong>Role-Based Access:</strong> Secure, granular permissions ensure the right people see the right data.
+              </li>
+            </ul>
           </div>
         </div>
       </section>
 
-      <section className="page cta reveal" style={{ "--delay": "0ms" }}>
-        <div>
-          <h2>Ready to unite your data?</h2>
-          <p className="lead">Start free or book a demo to see Faako in action.</p>
+      <section id="modules" className="page section modules-section">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Installable Apps</p>
+          <h2>Build your stack, one module at a time</h2>
+          <p className="lead">
+            Turn on only what you need. Add apps as your team grows, plus recommended add-ons for scale.
+          </p>
+        </div>
+
+        <div className="install-module-grid">
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "60ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faGlobe} /></div>
+            <h3>Website</h3>
+            <p>Public storefront, service pages, and lead capture.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "120ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faBoxesStacked} /></div>
+            <h3>Inventory</h3>
+            <p>Serialized items, warehouses, and stock movement tracking.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "180ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faHandshake} /></div>
+            <h3>CRM</h3>
+            <p>Leads, client timelines, and sales follow-ups.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "240ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faReceipt} /></div>
+            <h3>Orders</h3>
+            <p>Quotes, order status, and fulfillment progress.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "300ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faCalendarDays} /></div>
+            <h3>Bookings</h3>
+            <p>Reservations, event timelines, and resource holds.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "360ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faCalendarCheck} /></div>
+            <h3>Scheduler</h3>
+            <p>Staff calendars, shifts, and job allocations.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "420ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faChartPie} /></div>
+            <h3>Accounting</h3>
+            <p>General ledger, reconciliations, and closing.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "480ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faFileInvoiceDollar} /></div>
+            <h3>Invoicing</h3>
+            <p>Billing schedules, deposits, and payment tracking.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "540ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faAddressBook} /></div>
+            <h3>Directory</h3>
+            <p>Team contacts, customers, and vendor profiles.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "600ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faMoneyBillWave} /></div>
+            <h3>Expenses</h3>
+            <p>Operating costs, receipts, and approvals.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "660ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faUserTie} /></div>
+            <h3>HR</h3>
+            <p>Hiring, training, and team performance records.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "720ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faTruck} /></div>
+            <h3>Vendors</h3>
+            <p>Supplier catalog, contracts, and lead times.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "780ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faWrench} /></div>
+            <h3>Maintenance</h3>
+            <p>Asset upkeep schedules and service history.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "840ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faRoute} /></div>
+            <h3>Delivery</h3>
+            <p>Routes, drivers, and drop-off confirmations.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "900ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faFolderOpen} /></div>
+            <h3>Documents</h3>
+            <p>Contracts, files, and version control.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "960ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faUserShield} /></div>
+            <h3>Users</h3>
+            <p>Roles, permissions, and access control.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1020ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faClock} /></div>
+            <h3>Timesheets</h3>
+            <p>Hours logged, payroll exports, and approvals.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1080ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faBullhorn} /></div>
+            <h3>Marketing</h3>
+            <p>Campaign tracking and customer outreach.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1140ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faGear} /></div>
+            <h3>Settings</h3>
+            <p>System preferences, tax rules, and templates.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1200ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faPenToSquare} /></div>
+            <h3>Template Mode</h3>
+            <p>Website layouts and content edits without code.</p>
+          </article>
+
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1260ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faCartShopping} /></div>
+            <h3>Procurement</h3>
+            <p>Purchase requests, approvals, and vendor quotes.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1320ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faBoxArchive} /></div>
+            <h3>Asset Management</h3>
+            <p>Equipment lifecycle tracking and depreciation.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1380ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faPlug} /></div>
+            <h3>Integrations</h3>
+            <p>Connect banking, email, SMS, and accounting tools.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1440ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faHeadset} /></div>
+            <h3>Support Desk</h3>
+            <p>Tickets, SLAs, and customer service history.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1500ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faShield} /></div>
+            <h3>Compliance</h3>
+            <p>Audits, safety checks, and policy attestations.</p>
+          </article>
+          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1560ms" }}>
+            <div className="module-pill-icon"><FontAwesomeIcon icon={faChartLine} /></div>
+            <h3>Analytics</h3>
+            <p>Advanced reporting, forecasting, and BI exports.</p>
+          </article>
+        </div>
+      </section>
+
+      <section className="page cta reveal" data-scroll>
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="cta-content">
+          <h2>Ready for an ERP audit?</h2>
+          <p className="lead">
+            We map your current stack, surface quick wins, and build a phased
+            rollout plan tailored to your operations.
+          </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/signup">Get Started for Free</PrimaryButton>
+          <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
+          <Link className="button button-ghost" to="/#case-studies">
+            View case studies
+          </Link>
+        </div>
+      </section>
+
+      {/* --- Expertise Section --- */}
+      <section id="expertise" className="page expertise-section">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="expertise-content reveal" data-scroll>
+          <p className="eyebrow">Our Edge</p>
+          <h2>Beyond the Software: <br/>Technical Advisory</h2>
+          <p className="lead">
+            Implementing an ERP is a structural change, not just a software install. 
+            Our consulting team ensures your transition is seamless.
+          </p>
+
+          <div className="expertise-items">
+            <div className="exp-item">
+              <h4>Legacy Data Migration</h4>
+              <p>We safely extract, clean, and map your historical data from spreadsheets or old systems into Faako.</p>
+            </div>
+            <div className="exp-item">
+              <h4>Custom API Integrations</h4>
+              <p>Connecting Faako to your existing banking, shipping, or communication tools (Slack, WhatsApp, Stripe).</p>
+            </div>
+            <div className="exp-item">
+              <h4>Change Management</h4>
+              <p>On-site training and documentation for your staff to ensure 100% platform adoption.</p>
+            </div>
+          </div>
+        </div>
+        <div className="expertise-visual reveal" data-scroll style={{ "--delay": "200ms" }}>
+          <div className="tech-stack-card">
+              {/* You can put a simplified architecture diagram or tech logos here */}
+              <span className="badge">Consulting Focus</span>
+              <div className="stack-line"><span>Audit</span></div>
+              <div className="stack-line"><span>Architecture</span></div>
+              <div className="stack-line"><span>Deployment</span></div>
+              <div className="stack-line"><span>Optimization</span></div>
+          </div>
+        </div>
+      </section>
+
+      <Testimonials
+        className="page section testimonials"
+        headerScroll
+        cardScroll
+        eyebrow="Client Love"
+        title="Operators feel the difference"
+        lead="Faster decisions, fewer blind spots, and teams aligned on the same data."
+        items={[
+          {
+            quote:
+              "We finally see every order, booking, and delivery in one place. Our team stopped chasing spreadsheets overnight.",
+            author: "Operations Lead, Multi-Location Rentals",
+          },
+          {
+            quote:
+              "The dashboards made weekly reviews simple. We know what is shipping, what is late, and where to intervene.",
+            author: "COO, Logistics & Events",
+            delay: "120ms",
+          },
+          {
+            quote:
+              "Setup was fast and the advisory team stayed with us. We launched in phases without disruption.",
+            author: "Founder, Regional Services Group",
+            delay: "220ms",
+          },
+        ]}
+      />
+
+      {/* --- Case Studies Section --- */}
+      <section id="case-studies" className="page case-studies">
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Proof of Impact</p>
+          <h2>Success Blueprints</h2>
+        </div>
+
+        <div className="case-grid">
+          <article className="case-card reveal" data-scroll>
+            <div className="case-image">
+              <img src="/imgs/case-studies/erp-case.png" alt="Reebs ERP system" />
+            </div>
+            <div className="case-info">
+              <span className="case-tag">ERP Implementation</span>
+              <h3>Party Rental ERP System</h3>
+              <p>Unified operations with inventory, finance, and analytics in a single ERP experience.</p>
+              <Link to="/contact" className="text-link">
+                View Project <FontAwesomeIcon icon={faArrowRight} />
+              </Link>
+            </div>
+          </article>
+
+          <article className="case-card reveal" data-scroll style={{ "--delay": "150ms" }}>
+            <div className="case-image">
+              <img src="/imgs/case-studies/dashboard-case.png" alt="Developer dashboard" />
+            </div>
+            <div className="case-info">
+              <span className="case-tag">Productivity Suite</span>
+              <h3>Developer Dashboard</h3>
+              <p>Real-time visibility into deployments, tasks, and system health in one command center.</p>
+              <Link to="/contact" className="text-link">
+                View Project <FontAwesomeIcon icon={faArrowRight} />
+              </Link>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <FaqSection
+        className="page faq-section"
+        headerScroll
+        eyebrow="FAQ"
+        title="Quick answers before you start"
+        lead="Clear expectations on timelines, data migration, and ongoing support."
+        items={[
+          {
+            question: "How long does a typical implementation take?",
+            answer:
+              "Most teams launch in 4-8 weeks, starting with core modules and expanding in phases.",
+            open: true,
+          },
+          {
+            question: "Can you migrate data from spreadsheets or legacy tools?",
+            answer:
+              "Yes. We clean, map, and validate historical data before go-live.",
+          },
+          {
+            question: "Do you support custom workflows?",
+            answer:
+              "Absolutely. We configure approvals, roles, and automation rules around your process.",
+          },
+          {
+            question: "What happens after launch?",
+            answer:
+              "We provide ongoing advisory, KPI reviews, and optimization sprints as your team grows.",
+          },
+        ]}
+      />
+
+      <section className="page cta cta-compact reveal" data-scroll>
+        <div className="section-bg" aria-hidden="true">
+          {/* Add background SVGs here */}
+        </div>
+        <div className="section-media">
+          {/* Add image elements here */}
+        </div>
+        <div className="cta-content">
+          <h2>See Faako in action.</h2>
+          <p className="lead">
+            Get a tailored walkthrough built around your industry, team size,
+            and data workflows.
+          </p>
+        </div>
+        <div className="cta-actions">
+          <PrimaryButton to="/contact">Request a demo</PrimaryButton>
           <Link className="button button-ghost" to="/signup">
-            Request a Demo
+            Start onboarding
           </Link>
         </div>
       </section>

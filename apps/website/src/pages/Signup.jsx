@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Signup() {
   const [status, setStatus] = useState({ state: "idle", message: "" });
@@ -112,6 +113,9 @@ export default function Signup() {
         >
           {status.state === "loading" ? "Sending..." : "Request access"}
         </button>
+        <Link className="button button-ghost" to="/configure">
+          Configure modules
+        </Link>
         {status.message ? (
           <p className={`form-note ${status.state}`} role="status">
             {status.message}

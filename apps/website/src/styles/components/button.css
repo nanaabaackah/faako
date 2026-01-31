@@ -36,3 +36,8 @@
   color: var(--accent);
   transform: translateY(-1px);
 }
+
+.button:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 3px;
+}

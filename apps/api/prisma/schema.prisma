@@ -19,6 +19,7 @@ model Organization {
   updatedAt    DateTime           @updatedAt
   members      Membership[]
   signupRequests SignupRequest[]
+  subscriptions Subscription[]
 }
 
 model User {
@@ -64,6 +65,46 @@ model SignupRequest {
   @@index([email])
 }
 
+model Subscription {
+  id             String               @id @default(cuid())
+  organizationId String?
+  organization   Organization?        @relation(fields: [organizationId], references: [id])
+  name           String
+  status         SubscriptionStatus   @default(ACTIVE)
+  interval       SubscriptionInterval @default(MONTHLY)
+  amount         Decimal              @db.Decimal(14, 2)
+  currency       CurrencyCode         @default(CAD)
+  startedAt      DateTime             @default(now())
+  endedAt        DateTime?
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt
+
+  payments       SubscriptionPayment[]
+
+  @@index([organizationId])
+  @@index([status])
+}
+
+model SubscriptionPayment {
+  id             String                    @id @default(cuid())
+  subscriptionId String
+  subscription   Subscription              @relation(fields: [subscriptionId], references: [id])
+  status         SubscriptionPaymentStatus @default(PAID)
+  amount         Decimal                   @db.Decimal(14, 2)
+  currency       CurrencyCode              @default(CAD)
+  paidAt         DateTime?
+  dueAt          DateTime?
+  periodStart    DateTime?
+  periodEnd      DateTime?
+  createdAt      DateTime                  @default(now())
+  updatedAt      DateTime                  @updatedAt
+
+  @@index([subscriptionId])
+  @@index([status])
+  @@index([paidAt])
+  @@index([dueAt])
+}
+
 enum OrganizationStatus {
   PENDING
   ACTIVE
@@ -84,3 +125,25 @@ enum SignupStatus {
   CLOSED
 }
 
+enum SubscriptionStatus {
+  ACTIVE
+  PAUSED
+  CANCELED
+}
+
+enum SubscriptionInterval {
+  MONTHLY
+  QUARTERLY
+  YEARLY
+}
+
+enum SubscriptionPaymentStatus {
+  PAID
+  PENDING
+  FAILED
+}
+
+enum CurrencyCode {
+  CAD
+  GHS
+}

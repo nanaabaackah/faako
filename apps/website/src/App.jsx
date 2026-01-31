@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import Header from "./components/Header.jsx";
+import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Pricing from "./pages/Pricing.jsx";
+import ModuleConfig from "./pages/ModuleConfig.jsx";
 import Signup from "./pages/Signup.jsx";
+import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
+import Dashboard from "./pages/Dashboard.jsx";
+import Solutions from "./pages/Solutions.jsx";
+import CaseStudies from "./pages/CaseStudies.jsx";
+import About from "./pages/About.jsx";
+import Privacy from "./pages/Privacy.jsx";
+import Terms from "./pages/Terms.jsx";
+import Login from "./pages/Login.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
 import "./styles/components/button.css";
+
 
 const themeStorageKey = "faako-theme";
 
@@ -93,66 +106,34 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <header className="site-header">
-        <div className="brand-block">
-          <Link className="logo" to="/">
-            <img src={headerLogo} alt="Faako logo" loading="lazy" />
-          </Link>
-        </div>
-        <nav className="site-nav">
-          <a href="/#platform">Why Faako</a>
-          <a href="/#workflow">Single Source</a>
-          <a href="/#modules">Modules</a>
-          <Link to="/pricing">Pricing</Link>
-        </nav>
-        <div className="nav-actions">
-          <button
-            className="theme-toggle"
-            type="button"
-            onClick={handleThemeToggle}
-            aria-pressed={currentTheme === "dark"}
-            aria-label={`Switch to ${currentTheme === "dark" ? "light" : "dark"} mode`}
-          >
-            {nextThemeLabel}
-          </button>
-          <Link to="/signup" className="button button-primary">
-            Get started
-          </Link>
-        </div>
-      </header>
-      <main className="site-main">
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
+      <Header
+        headerLogo={headerLogo}
+        currentTheme={currentTheme}
+        nextThemeLabel={nextThemeLabel}
+        onToggleTheme={handleThemeToggle}
+      />
+      <main className="site-main" id="main-content">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/solutions" element={<Solutions />} />
+          <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
+          <Route path="/configure" element={<ModuleConfig />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <footer className="site-footer">
-        <div className="footer-brand">
-          <div className="logo footer-logo">
-            <img src={footerLogo} alt="Faako logo" loading="lazy" />
-          </div>
-          <p>Faako: The Power of One.</p>
-          <small>The operating system for your business.</small>
-        </div>
-        <div className="footer-links">
-          <span className="footer-title">Product</span>
-          <a href="/#platform">Platform</a>
-          <a href="/#modules">Modules</a>
-          <Link to="/pricing">Pricing</Link>
-        </div>
-        <div className="footer-links">
-          <span className="footer-title">Company</span>
-          <Link to="/signup">Request a demo</Link>
-          <a href="mailto:hello@faako.nanaabaackah.com">Contact</a>
-        </div>
-        <div className="footer-links">
-          <span className="footer-title">Based in</span>
-          <span>Accra, Ghana</span>
-          <span>Serving global teams</span>
-        </div>
-      </footer>
+      <Footer footerLogo={footerLogo} />
     </div>
   );
 }
