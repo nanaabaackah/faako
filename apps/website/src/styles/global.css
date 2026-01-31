@@ -26,6 +26,7 @@
   --radius: 24px;
   --radius-sm: 14px;
   --radius-lg: 32px;
+  --page-gutter: clamp(1.25rem, 6vw, 6.5rem);
 }
 
 :root[data-theme="light"] {
@@ -200,7 +201,6 @@ img {
   flex-direction: column;
   position: relative;
   isolation: isolate;
-  overflow-x: hidden;
 }
 
 .app-shell::before {
@@ -376,17 +376,15 @@ img {
 }
 
 .site-main {
-  padding: 3rem clamp(1.5rem, 6vw, 6.5rem);
+  padding: 3rem 0;
   display: grid;
   gap: 4rem;
   margin-inline: auto;
   width: 100%;
-  justify-items: center;
 }
 
 .site-main > * {
   width: 100%;
-  max-width: 100%;
 }
 
 .scroll-reveal {
@@ -407,6 +405,11 @@ img {
   z-index: 0;
   isolation: isolate;
   margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+
+.page .page {
+  padding-inline: 0;
 }
 
 .section-bg,
@@ -1990,7 +1993,7 @@ summary:focus-visible {
 
 @media (max-width: 700px) {
   .site-main {
-    padding: 3.5rem clamp(1.2rem, 6vw, 2.5rem) 5rem;
+    padding: 3.5rem 0 5rem;
   }
 
   .ribbon {
