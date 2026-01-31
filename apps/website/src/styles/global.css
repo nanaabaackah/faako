@@ -447,7 +447,7 @@ img {
 
 .hero {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
   gap: 2.5rem;
   align-items: center;
   padding: clamp(2.5rem, 4vw, 3.5rem);
@@ -459,6 +459,7 @@ img {
 }
 
 .hero-copy,
+.hero-detail,
 .workflow-copy,
 .signup-copy {
   display: grid;
@@ -529,6 +530,35 @@ img {
   padding: 1.6rem;
   position: relative;
   z-index: 1;
+}
+
+.hero-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  grid-template-areas:
+    "lead visual"
+    "actions visual"
+    "metrics visual";
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.hero-detail .lead {
+  grid-area: lead;
+}
+
+.hero-detail .hero-visual {
+  grid-area: visual;
+}
+
+.hero-detail .hero-actions {
+  grid-area: actions;
+  margin-top: 0;
+}
+
+.hero-detail .hero-metrics {
+  grid-area: metrics;
+  margin-top: 0;
 }
 
 .hero-illustration {
@@ -1032,11 +1062,12 @@ img {
 .install-module-grid {
   width: min(1140px, 100%);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
   margin: 1rem auto 0;
   justify-content: center;
   align-items: center;
+  justify-items: center;
 }
 
 .install-module-pill {
@@ -1044,17 +1075,23 @@ img {
   display: grid;
   gap: 0.35rem;
   min-height: 130px;
+  width: 100%;
+  max-width: 220px;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   align-items: start;
   border-radius: 20px;
-  background: var(--card);
-  border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
-  box-shadow: 0 18px 35px rgba(26, 15, 10, 0.08);
 }
 
 .install-module-pill:hover {
   transform: translateY(-4px);
   box-shadow: var(--loose-shadow);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .install-module-pill:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
 
 .module-pill-icon {
@@ -1111,7 +1148,7 @@ img {
 .tools-tab-buttons {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
   background: var(--surface);
   border-radius: 18px;
@@ -1131,7 +1168,7 @@ img {
   background: transparent;
   padding: 0.55rem 1.1rem;
   border-radius: 14px;
-  font-size: 0.92rem;
+  font-size: 0.7rem;
   font-weight: 600;
   color: var(--muted);
   cursor: pointer;
@@ -1962,6 +1999,15 @@ summary:focus-visible {
     grid-template-columns: 1fr;
   }
 
+  .hero-detail {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "lead"
+      "visual"
+      "actions"
+      "metrics";
+  }
+
   .dashboard-shell.app-shell {
     grid-template-columns: 1fr;
   }
@@ -1992,6 +2038,10 @@ summary:focus-visible {
 }
 
 @media (max-width: 700px) {
+  html {
+    font-size: 15px;
+  }
+
   .site-main {
     padding: 3.5rem 0 5rem;
   }
@@ -2038,6 +2088,35 @@ summary:focus-visible {
     height: 200px;
   }
 
+  .install-module-pill {
+    min-height: auto;
+    padding: 0.9rem 1rem;
+    width: 100%;
+    max-width: 100%;
+    align-items: center;
+    justify-items: center;
+    align-content: center;
+    text-align: center;
+  }
+
+  .install-module-pill p {
+    display: none;
+  }
+
+  .install-module-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.85rem;
+    align-items: stretch;
+  }
+
+  .install-module-pill h3 {
+    text-align: center;
+  }
+
+  .module-pill-icon {
+    margin-inline: auto;
+  }
+
   .scroll-top {
     width: 42px;
     height: 42px;
@@ -2049,6 +2128,23 @@ summary:focus-visible {
 @media (max-width: 900px) {
   .tools-tab-panel {
     min-height: auto;
+  }
+
+  .tools-tab-buttons {
+    flex-wrap: nowrap;
+    gap: 0.4rem;
+    padding: 0.4rem;
+  }
+
+  .tools-tab-button {
+    padding: 0.45rem 0.85rem;
+    font-size: 0.6rem;
+  }
+
+  .tools-tab-button::before {
+    width: 26px;
+    height: 26px;
+    font-size: 0.6rem;
   }
 
   .tools-tab-panel-card,
@@ -2070,10 +2166,6 @@ summary:focus-visible {
   .tools-tab-figure,
   .tools-tab-figure img {
     height: auto;
-  }
-
-  .install-module-grid {
-    grid-template-columns: 1fr;
   }
 
   .consulting-logo {
