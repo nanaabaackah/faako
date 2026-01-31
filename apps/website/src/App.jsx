@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
@@ -31,6 +33,7 @@ const getStoredTheme = () => {
 
 export default function App() {
   const [theme, setTheme] = useState(getStoredTheme);
+  const [showScrollTop, setShowScrollTop] = useState(false);
   const [systemTheme, setSystemTheme] = useState(() => {
     if (typeof window === "undefined") {
       return "light";
@@ -78,6 +81,21 @@ export default function App() {
     document.documentElement.setAttribute("data-theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 320);
+    };
+
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const currentTheme = theme || systemTheme;
   const nextThemeLabel = currentTheme === "dark" ? "Light mode" : "Dark mode";
   const headerLogo =
@@ -102,6 +120,13 @@ export default function App() {
     if (typeof window !== "undefined") {
       window.localStorage.setItem(themeStorageKey, nextTheme);
     }
+  };
+
+  const handleScrollTop = () => {
+    if (typeof window === "undefined") {
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -133,6 +158,16 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
+      {showScrollTop ? (
+        <button
+          className="scroll-top"
+          type="button"
+          onClick={handleScrollTop}
+          aria-label="Scroll to top"
+        >
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
+      ) : null}
       <Footer footerLogo={footerLogo} />
     </div>
   );
