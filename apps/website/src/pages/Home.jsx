@@ -49,7 +49,7 @@ export default function Home() {
   const [trustStats, setTrustStats] = useState({
     monthlyTransactions: null,
     inventoryUnits: null,
-    locations: null,
+    organizations: null,
   });
 
   // Calculate ROI
@@ -72,12 +72,12 @@ export default function Home() {
         const payload = await response.json();
         const monthlyTransactions = Number(payload?.monthlyTransactions?.amount);
         const inventoryUnits = Number(payload?.inventoryUnits);
-        const locations = Number(payload?.locations);
+        const organizations = Number(payload?.organizations);
 
         setTrustStats({
           monthlyTransactions: Number.isFinite(monthlyTransactions) ? monthlyTransactions : null,
           inventoryUnits: Number.isFinite(inventoryUnits) ? inventoryUnits : null,
-          locations: Number.isFinite(locations) ? locations : null,
+          organizations: Number.isFinite(organizations) ? organizations : null,
         });
       } catch (error) {
         if (error.name !== "AbortError") {
@@ -435,27 +435,26 @@ export default function Home() {
           </div>
           <div className="trust-stat">
             <strong className="stat-value">{formatCountThousands(trustStats.inventoryUnits)}</strong>
-            <p className="stat-label">Units managed</p>
+            <p className="stat-label">Inventory managed</p>
             <small>Tracked across warehouses and storefronts</small>
           </div>
           <div className="trust-stat">
-            <strong className="stat-value">{formatCount(trustStats.locations)}</strong>
-            <p className="stat-label">Locations across Ghana</p>
-            <small>Accra, Kumasi, Tema, Takoradi & more</small>
+            <strong className="stat-value">{formatCount(trustStats.organizations)}</strong>
+            <p className="stat-label">Organizations managed</p>
+            <small>Growing across industries in Ghana</small>
           </div>
         </div>
         
-        <div className="industry-badges reveal" data-scroll style={{ "--delay": "200ms" }}>
+       {/* <div className="industry-badges reveal" data-scroll style={{ "--delay": "200ms" }}>
           <h3>Trusted Across Industries</h3>
           <div className="badge-grid">
-            <span className="industry-badge">🚚 Logistics</span>
-            <span className="industry-badge">🏪 Retail</span>
-            <span className="industry-badge">🎉 Events</span>
-            <span className="industry-badge">🏭 Manufacturing</span>
-            <span className="industry-badge">📦 Distribution</span>
-            <span className="industry-badge">🏗️ Construction</span>
+            <span className="industry-badge">Logistics</span>
+            <span className="industry-badge">Retail</span>
+            <span className="industry-badge">Events</span>
+            <span className="industry-badge">Manufacturing</span>
+            <span className="industry-badge">Distribution</span>
           </div>
-        </div>
+        </div>*/}
       </section>
 
       <section id="features" className="page features-section">
