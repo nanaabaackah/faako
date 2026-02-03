@@ -47,9 +47,9 @@ export default function Home() {
   const [ordersPerDay, setOrdersPerDay] = useState(50);
   const [errorCost, setErrorCost] = useState(500);
   const [trustStats, setTrustStats] = useState({
-    monthlyTransactions: 45_000_000,
-    ordersPerDay: 12_000,
-    locations: 50,
+    monthlyTransactions: null,
+    inventoryItems: null,
+    locations: null,
   });
 
   // Calculate ROI
@@ -71,16 +71,14 @@ export default function Home() {
         }
         const payload = await response.json();
         const monthlyTransactions = Number(payload?.monthlyTransactions?.amount);
-        const orders = Number(payload?.ordersPerDay);
+        const inventoryItems = Number(payload?.inventoryItems);
         const locations = Number(payload?.locations);
 
-        setTrustStats((prev) => ({
-          monthlyTransactions: Number.isFinite(monthlyTransactions)
-            ? monthlyTransactions
-            : prev.monthlyTransactions,
-          ordersPerDay: Number.isFinite(orders) ? orders : prev.ordersPerDay,
-          locations: Number.isFinite(locations) ? locations : prev.locations,
-        }));
+        setTrustStats({
+          monthlyTransactions: Number.isFinite(monthlyTransactions) ? monthlyTransactions : null,
+          inventoryItems: Number.isFinite(inventoryItems) ? inventoryItems : null,
+          locations: Number.isFinite(locations) ? locations : null,
+        });
       } catch (error) {
         if (error.name !== "AbortError") {
           console.warn("Trust stats fetch failed", error);
@@ -367,8 +365,6 @@ export default function Home() {
               />
   
           </svg>
-
-          <figcaption>Everything, Together.</figcaption>
           </figure>
 
         </div>
@@ -429,9 +425,9 @@ export default function Home() {
             <small>And growing every single day</small>
           </div>
           <div className="trust-stat">
-            <strong className="stat-value">{formatCount(trustStats.ordersPerDay)}</strong>
-            <p className="stat-label">Orders managed daily</p>
-            <small>From small shops to large distributors</small>
+            <strong className="stat-value">{formatCount(trustStats.inventoryItems)}</strong>
+            <p className="stat-label">Inventory items managed</p>
+            <small>Tracked across warehouses and storefronts</small>
           </div>
           <div className="trust-stat">
             <strong className="stat-value">{formatCount(trustStats.locations)}</strong>

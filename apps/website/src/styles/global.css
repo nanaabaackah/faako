@@ -612,8 +612,8 @@ img {
 /* --- Faako SVG hero animation --- */
 /* Base sizing */
 .faako-logo {
-  width: min(600px, 100%);
-  height: auto;
+  width: min(500px, 100%);
+  height: 500px;
   display: block;
   margin-inline: auto;
 }
