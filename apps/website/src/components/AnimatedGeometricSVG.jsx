@@ -4,47 +4,158 @@ export default function AnimatedGeometricSVG({ className = "" }) {
   const svgRef = useRef(null);
 
   useEffect(() => {
-    if (svgRef.current) {
-      const paths = svgRef.current.querySelectorAll('path');
-      paths.forEach((path, index) => {
-        path.style.setProperty('--n', index);
-      });
+    if (!svgRef.current) {
+      return;
     }
+
+    const allPaths = Array.from(svgRef.current.querySelectorAll('path')).filter(
+      (path) => !path.closest('defs')
+    );
+    const dots = [];
+    const lines = [];
+
+    allPaths.forEach((path) => {
+      let length = 0;
+      try {
+        length = path.getTotalLength();
+      } catch {
+        length = 0;
+      }
+
+      let isDot = false;
+      try {
+        const box = path.getBBox();
+        const maxSide = Math.max(box.width, box.height);
+        isDot = maxSide <= 6 || length <= 24;
+      } catch {
+        isDot = length > 0 && length <= 24;
+      }
+
+      if (isDot) {
+        dots.push(path);
+      } else {
+        lines.push({ path, length });
+      }
+    });
+
+    const dotStagger = 0.07;
+    const lineStagger = 0.02;
+    const lineStart = dots.length * dotStagger + 0.6;
+    const cycle = Math.max(12, lineStart + lines.length * lineStagger + 4);
+
+    svgRef.current.style.setProperty('--cycle', `${cycle}s`);
+
+    dots.forEach((path, index) => {
+      path.classList.add('dot');
+      path.style.setProperty('--dot-delay', `${index * dotStagger}s`);
+    });
+
+    lines.forEach(({ path, length }, index) => {
+      path.classList.add('line');
+      path.style.setProperty('--path-length', length);
+      path.style.setProperty('--line-delay', `${lineStart + index * lineStagger}s`);
+    });
   }, []);
 
   return (
     <>
       <style>{`
-        .animated-geometric-svg path {
-          opacity: 0;
-          animation: drawLoopGeometric 15.5s ease-in-out infinite;
+        .animated-geometric-svg {
+          color: var(--accent);
+          --cycle: 14s;
+          --line-width: 1.25;
+        }
+
+        :root[data-theme="dark"] .animated-geometric-svg {
+          color: #ffffff;
+        }
+
+        @media (prefers-color-scheme: dark) {
+          :root:not([data-theme]) .animated-geometric-svg {
+            color: #ffffff;
+          }
+        }
+
+        .animated-geometric-svg > path {
+          fill: none;
+          stroke: currentColor;
+          stroke-width: var(--line-width);
+          stroke-linecap: round;
+          stroke-linejoin: round;
           transform-origin: center;
+          vector-effect: non-scaling-stroke;
         }
-        
-        .animated-geometric-svg path:nth-child(n+1) { 
-          animation-delay: calc(var(--n, 0) * 0.008s); 
+
+        .animated-geometric-svg > path.line {
+          opacity: 0;
+          stroke-dasharray: var(--path-length);
+          stroke-dashoffset: var(--path-length);
+          animation: lineDraw var(--cycle) ease-in-out infinite;
+          animation-delay: var(--line-delay, 0s);
         }
-        
-        @keyframes drawLoopGeometric {
+
+        .animated-geometric-svg > path.dot {
+          fill: currentColor;
+          stroke: none;
+          opacity: 0;
+          transform: scale(0.6);
+          animation: dotPop var(--cycle) ease-in-out infinite;
+          animation-delay: var(--dot-delay, 0s);
+        }
+
+        @keyframes dotPop {
           0% {
             opacity: 0;
-            transform: scale(0.92);
+            transform: scale(0.5);
           }
-          12.5% {
+          8% {
             opacity: 1;
             transform: scale(1);
           }
-          50% {
+          65% {
             opacity: 1;
             transform: scale(1);
           }
-          62.5% {
+          80% {
             opacity: 0;
-            transform: scale(0.92);
+            transform: scale(0.85);
           }
           100% {
             opacity: 0;
-            transform: scale(0.92);
+            transform: scale(0.85);
+          }
+        }
+
+        @keyframes lineDraw {
+          0% {
+            opacity: 0;
+            stroke-dashoffset: var(--path-length);
+          }
+          15% {
+            opacity: 1;
+          }
+          55% {
+            opacity: 1;
+            stroke-dashoffset: 0;
+          }
+          75% {
+            opacity: 0;
+            stroke-dashoffset: 0;
+          }
+          100% {
+            opacity: 0;
+            stroke-dashoffset: var(--path-length);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .animated-geometric-svg > path.line,
+          .animated-geometric-svg > path.dot {
+            animation: none;
+            opacity: 1;
+            transform: none;
+            stroke-dasharray: none;
+            stroke-dashoffset: 0;
           }
         }
       `}</style>

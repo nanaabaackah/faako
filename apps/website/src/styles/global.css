@@ -2608,6 +2608,7 @@ summary:focus-visible {
   max-width: 1100px;
   margin-inline: auto;
   overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
   border-radius: var(--radius);
   border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
   background: var(--card);
@@ -2679,12 +2680,16 @@ summary:focus-visible {
   align-items: flex-start;
   gap: 0.55rem;
   line-height: 1.45;
+  min-width: 0;
 }
 
 .comparison-no span,
 .comparison-warning span,
 .comparison-yes span {
   color: var(--muted);
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .icon-no {
@@ -2995,16 +3000,18 @@ summary:focus-visible {
 /* ---------- 9. WHATSAPP FLOATING BUTTON ---------- */
 .whatsapp-float {
   position: fixed;
-  bottom: 1.75rem;
-  right: 1.75rem;
+  width: 48px;
+  height: 48px;
+  right: 5.75rem;
+  bottom: 1.5rem;
   display: inline-flex;
   align-items: center;
-  gap: 0.6rem;
+  justify-content: center;
   background: #25d366;
   color: #fff;
   padding: 0.85rem 1.4rem;
   border-radius: 999px;
-  font-size: 0.92rem;
+  font-size: 1rem;
   font-weight: 700;
   text-decoration: none;
   box-shadow: 0 6px 24px rgba(37, 211, 102, 0.4);
@@ -3087,6 +3094,41 @@ summary:focus-visible {
     width: 100%;
   }
 
+  .solutions-hero {
+    text-align: left;
+  }
+
+  .solutions-hero-figure {
+    display: grid;
+    justify-items: center;
+    margin-inline: auto;
+  }
+
+  .solutions-hero-figure .solutions-hero-art {
+    width: min(420px, 92vw);
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .solutions-hero-orbits {
+    transform: scale(0.9);
+    transform-origin: center;
+  }
+
+  .solutions-hero-chip {
+    font-size: 0.65rem;
+  }
+
+  .solutions-hero-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .solutions-hero-figure figcaption {
+    text-align: center;
+  }
+
   .hero-visual .visual-card,
   .hero-visual .visual-card:nth-child(1),
   .hero-visual .visual-card:nth-child(2),
@@ -3125,6 +3167,13 @@ summary:focus-visible {
 @media (max-width: 700px) {
   html {
     font-size: 15px;
+  }
+
+  .comparison-section,
+  .modules-section,
+  .mobile-showcase,
+  .timeline-section {
+    display: none;
   }
 
   .app-shell::after {
@@ -3216,10 +3265,43 @@ summary:focus-visible {
     margin-inline: auto;
   }
 
+  .about-hero {
+    text-align: left;
+  }
+
+  .about-hero-figure {
+    justify-self: center;
+  }
+
+  .about-hero-figure .about-hero-art {
+    width: min(320px, 85vw);
+    height: auto;
+    margin-inline: auto;
+  }
+
+  .solutions-hero {
+    text-align: left;
+  }
+
+  .solutions-hero-figure {
+    justify-self: center;
+  }
+
+  .solutions-hero-figure .solutions-hero-art {
+    width: min(320px, 88vw);
+    height: auto;
+    margin-left: 0;
+    margin-top: 0;
+  }
+
+  .solutions-hero-figure figcaption {
+    text-align: center;
+  }
+
   .scroll-top {
     width: 42px;
     height: 42px;
-    right: 1rem;
+    right: 0.5rem;
     bottom: 1rem;
   }
 
@@ -3304,8 +3386,10 @@ summary:focus-visible {
   }
 
   .whatsapp-float {
+    width: 40px;
+    height: 40px;
     bottom: 1.2rem;
-    right: 1.2rem;
+    left: 0.5rem;
     padding: 0.75rem;
   }
 
@@ -3331,7 +3415,7 @@ summary:focus-visible {
 
   .tools-tab-button {
     padding: 0.45rem 0.85rem;
-    font-size: 0.6rem;
+    font-size: 0.5rem;
   }
 
   .tools-tab-button::before {
@@ -3581,28 +3665,32 @@ summary:focus-visible {
 }
 
 .solutions-hero-figure .solutions-hero-art {
-  width: 112%;
+  width: 500px;
   max-width: none;
-  height: auto;
+  height: 500px;
   display: block;
   margin-left: -6%;
   margin-top: -6%;
   transform-origin: center;
-  animation: solutionsFloat 7s ease-in-out infinite;
+  animation: solutionsFloat 10s ease-in-out infinite;
   filter: drop-shadow(0 18px 30px rgba(20, 12, 6, 0.18));
   position: relative;
   z-index: 0;
+  will-change: transform;
 }
 
 @keyframes solutionsFloat {
   0% {
-    transform: translateY(0) scale(1);
+    transform: translate3d(-6px, 0, 0) rotate(-1.2deg) scale(0.98);
   }
-  50% {
-    transform: translateY(-12px) scale(1.02);
+  40% {
+    transform: translate3d(8px, -10px, 0) rotate(0.8deg) scale(1.02);
+  }
+  70% {
+    transform: translate3d(-2px, -6px, 0) rotate(1.4deg) scale(1.01);
   }
   100% {
-    transform: translateY(0) scale(1);
+    transform: translate3d(-6px, 0, 0) rotate(-1.2deg) scale(0.98);
   }
 }
 
@@ -3937,5 +4025,106 @@ summary:focus-visible {
 
   .mobile-mockup {
     max-width: 280px;
+  }
+
+  .solutions .solutions-container {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions .solutions-hero-figure {
+    display: grid;
+    justify-items: center;
+    margin-inline: auto;
+  }
+
+  .solutions .solutions-hero-figure .solutions-hero-art {
+    width: min(380px, 92vw);
+    max-width: 100%;
+    height: auto;
+    margin: 0;
+  }
+
+  .solutions .solutions-hero-orbits {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+
+  .solutions .solutions-hero-chip {
+    font-size: 0.65rem;
+  }
+
+  .solutions .solutions-hero-dot {
+    width: 8px;
+    height: 8px;
+  }
+
+  .solutions .solutions-hero-figure figcaption {
+    text-align: center;
+  }
+
+  .solutions .solution-pillar {
+    padding: 1.6rem;
+  }
+
+  .solutions .pillar-head {
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .solutions .industry-section .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .solutions .industry-card {
+    padding: 1.6rem;
+  }
+
+  .case-hero {
+    text-align: left;
+  }
+
+  .case-hero-figure {
+    display: grid;
+    justify-items: center;
+    margin-inline: auto;
+  }
+
+  .case-hero-figure .case-hero-art {
+    width: min(360px, 90vw);
+    height: auto;
+    margin: 0;
+  }
+
+  .case-studies {
+    width: 100%;
+    padding: clamp(1.8rem, 6vw, 2.4rem);
+  }
+
+  .case-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-card {
+    width: 100%;
+  }
+
+  .case-image {
+    height: 200px;
+  }
+
+  .case-info {
+    padding: 1.4rem;
+  }
+
+  .pricing-hero-figure {
+    display: grid;
+    justify-items: center;
+    margin-inline: auto;
+  }
+
+  .pricing-hero-figure .pricing-hero-art {
+    width: min(340px, 90vw);
+    height: 350px;
+    margin: 0;
   }
 }

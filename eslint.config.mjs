@@ -13,6 +13,11 @@ export default [
     languageOptions: {
       ecmaVersion: "latest",
       sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
       globals: {
         ...globals.browser,
         ...globals.node
@@ -28,6 +33,7 @@ export default [
       }
     },
     rules: {
+      "react/jsx-uses-vars": "error",
       "react/react-in-jsx-scope": "off",
       "react-hooks/rules-of-hooks": "error",
       "react-hooks/exhaustive-deps": "warn"

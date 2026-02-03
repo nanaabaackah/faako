@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -33,22 +34,63 @@ import {
   faTimes,
   faCheckCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import TrustedBy from "../components/TrustedBy.jsx";
 import Testimonials from "../components/Testimonials.jsx";
 import FaqSection from "../components/FaqSection.jsx";
+import WhatsApp from "../components/WhatsApp.jsx";
 
 export default function Home() {
+  const trustApiBase = (import.meta.env.VITE_KPI_BASE_URL || "").replace(/\/$/, "");
   const [activeTab, setActiveTab] = useState("insights");
   const [hoursPerWeek, setHoursPerWeek] = useState(10);
   const [ordersPerDay, setOrdersPerDay] = useState(50);
   const [errorCost, setErrorCost] = useState(500);
+  const [trustStats, setTrustStats] = useState({
+    monthlyTransactions: 45_000_000,
+    ordersPerDay: 12_000,
+    locations: 50,
+  });
 
   // Calculate ROI
   const timeSavings = hoursPerWeek * 52 * 50; // ₵50/hour value
   const errorSavings = ordersPerDay * 365 * 0.02 * errorCost; // 2% error rate
   const totalSavings = timeSavings + errorSavings;
+
+  useEffect(() => {
+    if (!trustApiBase) return;
+    const controller = new AbortController();
+
+    const loadTrustStats = async () => {
+      try {
+        const response = await fetch(`${trustApiBase}/api/public/trust-stats`, {
+          signal: controller.signal,
+        });
+        if (!response.ok) {
+          throw new Error("Unable to load trust stats");
+        }
+        const payload = await response.json();
+        const monthlyTransactions = Number(payload?.monthlyTransactions?.amount);
+        const orders = Number(payload?.ordersPerDay);
+        const locations = Number(payload?.locations);
+
+        setTrustStats((prev) => ({
+          monthlyTransactions: Number.isFinite(monthlyTransactions)
+            ? monthlyTransactions
+            : prev.monthlyTransactions,
+          ordersPerDay: Number.isFinite(orders) ? orders : prev.ordersPerDay,
+          locations: Number.isFinite(locations) ? locations : prev.locations,
+        }));
+      } catch (error) {
+        if (error.name !== "AbortError") {
+          console.warn("Trust stats fetch failed", error);
+        }
+      }
+    };
+
+    loadTrustStats();
+    return () => controller.abort();
+  }, [trustApiBase]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -90,24 +132,32 @@ export default function Home() {
     return () => observer.disconnect();
   }, []);
 
+  const formatCount = (value) => {
+    if (!Number.isFinite(value)) return "--";
+    return `${Math.round(value).toLocaleString("en-US")}+`;
+  };
+
+  const formatCurrencyGhs = (value) => {
+    if (!Number.isFinite(value)) return "—";
+    const formatted = new Intl.NumberFormat("en-US", {
+      notation: "compact",
+      maximumFractionDigits: 1,
+    }).format(value);
+    return `₵${formatted}+`;
+  };
+
   return (
     <>
       <section className="page hero">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="hero-copy reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Built for African Hustle</p>
-          <h1>Your Business Deserves Better Than Spreadsheets</h1>
+          <p className="eyebrow">Designed for Modern Teams</p>
+          <h1>One System. Zero Guesswork.</h1>
         </div>
 
         <div className="hero-lead reveal" style={{ "--delay": "80ms" }}>
           <p className="lead">
-            From Lagos to Accra, smart businesses are ditching WhatsApp chaos and Excel headaches. 
-            Faako brings enterprise-grade power to Ghanaian entrepreneurs ready to scale like the big players.
+            Stop juggling disconnected apps and constant technical headaches. 
+            Faako provides the unified data backbone Ghanaian enterprises need to compete and grow on a world-class level.
           </p>
         </div>
 
@@ -346,21 +396,21 @@ export default function Home() {
         </div>
       </section>
 
-      <TrustedBy
+      {/*<TrustedBy
         className="page trust-strip"
         headerScroll
         eyebrow="Trusted By"
         title="Teams who run on Faako"
         lead="From fast-moving operators to multi-location teams, Faako keeps everyone aligned."
         logos={[
-          "Reebs",
+          "REEBS Party Themes",
           "Atlas Rentals",
           "Northbridge",
           "Summit Events",
           "Clearline Logistics",
           "VentureWorks",
         ]}
-      />
+      /> */}
 
       {/* Social Proof Section */}
       <section className="page trust-indicators">
@@ -372,17 +422,19 @@ export default function Home() {
         
         <div className="trust-stats reveal" data-scroll style={{ "--delay": "100ms" }}>
           <div className="trust-stat">
-            <strong className="stat-value">₵45M+</strong>
+            <strong className="stat-value">
+              {formatCurrencyGhs(trustStats.monthlyTransactions)}
+            </strong>
             <p className="stat-label">In transactions processed monthly</p>
             <small>And growing every single day</small>
           </div>
           <div className="trust-stat">
-            <strong className="stat-value">12,000+</strong>
+            <strong className="stat-value">{formatCount(trustStats.ordersPerDay)}</strong>
             <p className="stat-label">Orders managed daily</p>
             <small>From small shops to large distributors</small>
           </div>
           <div className="trust-stat">
-            <strong className="stat-value">50+</strong>
+            <strong className="stat-value">{formatCount(trustStats.locations)}</strong>
             <p className="stat-label">Locations across Ghana</p>
             <small>Accra, Kumasi, Tema, Takoradi & more</small>
           </div>
@@ -1564,18 +1616,7 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* WhatsApp Floating Button */}
-      <a 
-        href="https://wa.me/233XXXXXXXXX?text=Hi%20Faako%20team%2C%20I%27m%20interested%20in%20learning%20more%20about%20your%20ERP%20system"
-        className="whatsapp-float"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
-      >
-        <FontAwesomeIcon icon={faWhatsapp} className="whatsapp-icon" />
-        <span className="whatsapp-text">Chat with us</span>
-      </a>
+      <WhatsApp />
     </>
   );
 }

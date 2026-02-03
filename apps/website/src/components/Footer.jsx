@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 
 export default function Footer({ footerLogo }) {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="site-footer">
       <div className="footer-brand">
@@ -8,7 +10,6 @@ export default function Footer({ footerLogo }) {
           <img src={footerLogo} alt="Faako logo" loading="lazy" />
         </div>
         <p>Faako: The Power of One.</p>
-        <small>© 2026 Faako ERP Systems.</small>
       </div>
       <div className="footer-links">
         <span className="footer-title">Services</span>
@@ -33,6 +34,9 @@ export default function Footer({ footerLogo }) {
         <span>Accra, Ghana</span>
         <span>Global Availability</span>
       </div>
+      <span className="footer-note">
+        &copy; {year} Faako ERP Systems | MADE TO MATTER. MADE BY NANA.
+      </span>
     </footer>
   );
 }

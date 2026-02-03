@@ -10,22 +10,26 @@ import {
   faCartShopping,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import WhatsApp from "../components/WhatsApp.jsx";
 
 export default function Solutions() {
   return (
     <section className="page solutions page-stack">
+
+      {/* ── Hero ── */}
       <section className="solutions-hero split">
         <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Solutions</p>
-          <h1>Every workflow, connected to one source of truth.</h1>
+          <p className="eyebrow">What Faako Does</p>
+          <h1>Stop running your business in pieces. Connect everything.</h1>
           <p className="lead">
-            Faako aligns Finance, Operations, and Talent in a single ERP backbone
-            so teams can plan, execute, and scale without silos.
+            Finance, Ops, People — all talking to each other, all in one place.
+            No more chasing info between WhatsApp groups and Excel sheets. Just
+            one dashboard that actually tells you what's going on.
           </p>
           <div className="cta-actions">
-            <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
+            <PrimaryButton to="/contact">Let's Build Yours</PrimaryButton>
             <Link className="button button-ghost" to="/pricing">
-              View Pricing
+              See the Pricing
             </Link>
           </div>
         </div>
@@ -41,232 +45,270 @@ export default function Solutions() {
           </div>
           <img
             className="solutions-hero-art"
-            src="/imgs/elements/18.svg"
+            src="/imgs/elements/17.svg"
             alt="Faako ERP dashboard preview"
           />
-          <figcaption>Unified dashboards for Finance, Ops, and Talent.</figcaption>
+          <figcaption>Everything, in one place. Too clear.</figcaption>
         </figure>
       </section>
 
+      {/* ── Core Pillars ── */}
       <section className="page solutions-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Core Pillars</p>
-          <h2>Unified execution across the business.</h2>
+          <p className="eyebrow">The Three Pillars</p>
+          <h2>The three things every business needs running smoothly.</h2>
           <p className="lead">
-            These solution pillars keep every department synced to the same
-            metrics and timelines.
+            Money. Operations. People. When these three are synced up and talking
+            to each other, that's when the magic happens.
           </p>
         </div>
         <div className="solutions-container">
+
           <article className="solution-pillar reveal">
             <div className="pillar-head">
               <div className="pillar-icon">01</div>
-              <h3>Finance Intelligence</h3>
+              <h3>Know Your Money</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Cash Flow Clarity</strong>
-                Track invoices, expenses, and balances in real time.
+                <strong>Cash Flow — Too Clear</strong>
+                See every invoice, every expense, every cedi moving in and out.
+                In real time. No guessing.
               </li>
               <li>
-                <strong>Executive Reporting</strong>
-                GHS dashboards with revenue and margin visibility.
+                <strong>Dashboards That Make Sense</strong>
+                Revenue, margins, GRA-ready reports — all in one screen. Your
+                Monday morning meeting just got a lot shorter.
               </li>
               <li>
-                <strong>Audit Trails</strong>
-                Built-in compliance logs and approval history.
+                <strong>Paper Trail on Everything</strong>
+                Every approval, every change, logged automatically. If GRA comes
+                knocking, you're ready.
               </li>
             </ul>
           </article>
+
           <article className="solution-pillar reveal" style={{ "--delay": "120ms" }}>
             <div className="pillar-head">
               <div className="pillar-icon">02</div>
-              <h3>Operational Excellence</h3>
+              <h3>Run Ops Like a Machine</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Inventory Control</strong>
-                Warehouse movements, procurement, and fulfillment.
+                <strong>Never Lose Stock Again</strong>
+                Warehouse in, warehouse out, delivery confirmed. No more "it
+                finish" surprises. Every item tracked from shelf to door.
               </li>
               <li>
-                <strong>Workflow Automation</strong>
-                Approvals, routing, and service delivery timelines.
+                <strong>Approvals That Actually Move</strong>
+                Set up routing and approvals that work while you sleep. Orders go
+                out. Payments get signed off. No bottlenecks.
               </li>
               <li>
-                <strong>Logistics Visibility</strong>
-                Track routes, vendors, and delivery SLAs.
+                <strong>See Your Deliveries Live</strong>
+                Driver left? Package en route? Delivered? You'll know before the
+                customer even asks.
               </li>
             </ul>
           </article>
+
           <article className="solution-pillar reveal" style={{ "--delay": "240ms" }}>
             <div className="pillar-head">
               <div className="pillar-icon">03</div>
-              <h3>Talent Alignment</h3>
+              <h3>Keep Your Team Sharp</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>People Ops</strong>
-                HR records, payroll, and time tracking in one view.
+                <strong>One Place for Your People</strong>
+                HR records, payroll, timesheets — done. No more juggling files.
+                Everyone's info, clean and in one spot.
               </li>
               <li>
-                <strong>Team Performance</strong>
-                Role-based dashboards and coaching insights.
+                <strong>See Who's Winning</strong>
+                Role-based dashboards so every person knows their targets and how
+                they're doing. No surprises at review time.
               </li>
               <li>
-                <strong>Secure Access</strong>
-                Permissions and governance for every team.
+                <strong>Lock It Down</strong>
+                Permissions set up so only the right people see the right stuff.
+                Tight, clean, no drama.
               </li>
             </ul>
           </article>
         </div>
       </section>
 
+      {/* ── Industry Verticals ── */}
       <section className="section industry-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Who It’s For</p>
-          <h2>Built for teams that run on tight operations.</h2>
+          <p className="eyebrow">Who's Already Using It</p>
+          <h2>Built for the businesses that keep Ghana moving.</h2>
           <p className="lead">
-            Faako is designed for Ghanaian operators who need clarity across
-            inventory, finance, and service delivery.
+            From the trucks on the road to the shops on the high street — Faako
+            is already running operations like yours. Here's how.
           </p>
         </div>
         <div className="feature-grid">
+
           <article className="feature-card reveal industry-card">
             <FontAwesomeIcon icon={faRoute} />
             <h3>Logistics & Distribution</h3>
             <p className="muted">
-              Route planning, dispatch updates, and vendor SLAs in one view.
+              The guys moving goods from A to B across Ghana. Routes, dispatches,
+              deliveries — all tracked, all visible, zero wahala.
             </p>
             <ul className="solution-list">
               <li>
-                <strong>Dispatch control</strong>
-                Track delivery stages and proof of fulfillment.
+                <strong>Dispatch sorted</strong>
+                Know exactly where every delivery is at, every stage of the way.
               </li>
               <li>
-                <strong>Vendor SLAs</strong>
-                Monitor partner performance and turnaround time.
+                <strong>Hold suppliers to account</strong>
+                Track how fast your partners deliver. No more guessing.
               </li>
             </ul>
           </article>
+
           <article className="feature-card reveal industry-card" style={{ "--delay": "120ms" }}>
             <FontAwesomeIcon icon={faCartShopping} />
-            <h3>Retail & Trade</h3>
+            <h3>Retail & Trading</h3>
             <p className="muted">
-              Keep branches stocked, prices aligned, and sell-through visible.
+              Whether it's one shop or five branches — stock stays full, prices
+              stay right, and you always know what's selling.
             </p>
             <ul className="solution-list">
               <li>
-                <strong>Reorder triggers</strong>
-                Automate replenishment before stockouts hit.
+                <strong>Restock before it's too late</strong>
+                Automatic alerts when stock is running low. No more "it finish"
+                on a busy day.
               </li>
               <li>
-                <strong>Branch visibility</strong>
-                Compare performance across locations.
+                <strong>Compare your branches</strong>
+                See which location is crushing it — and which one needs a nudge.
               </li>
             </ul>
           </article>
+
           <article className="feature-card reveal industry-card" style={{ "--delay": "240ms" }}>
             <FontAwesomeIcon icon={faBoxesStacked} />
-            <h3>Rentals & Asset Teams</h3>
+            <h3>Rentals & Equipment</h3>
             <p className="muted">
-              Manage bookings, utilization, and maintenance cycles together.
+              Tents, chairs, generators, machinery — if you rent it out, Faako
+              tracks it. Bookings, maintenance, the lot.
             </p>
             <ul className="solution-list">
               <li>
-                <strong>Asset utilization</strong>
-                See what is idle, reserved, or in transit.
+                <strong>Know what's where</strong>
+                Idle? Booked? On site? In the workshop? One screen tells you everything.
               </li>
               <li>
-                <strong>Service schedules</strong>
-                Prevent downtime with automated maintenance.
+                <strong>Maintenance on autopilot</strong>
+                Get reminded before something breaks. Not after.
               </li>
             </ul>
           </article>
+
           <article className="feature-card reveal industry-card" style={{ "--delay": "360ms" }}>
             <FontAwesomeIcon icon={faUserTie} />
             <h3>Professional Services</h3>
             <p className="muted">
-              Connect CRM, billing, and time tracking to client outcomes.
+              Consultants, agencies, project teams — connect what you're selling
+              to what you're actually delivering and billing.
             </p>
             <ul className="solution-list">
               <li>
-                <strong>Project profitability</strong>
-                Understand margin by client and team.
+                <strong>Know your margins</strong>
+                See exactly how much each client and project is actually making you.
               </li>
               <li>
-                <strong>Billing cadence</strong>
-                Standardize invoicing and approvals.
+                <strong>Invoice on time, every time</strong>
+                Set a rhythm. Invoices go out clean, approvals happen fast.
               </li>
             </ul>
           </article>
         </div>
       </section>
 
+      {/* ── Implementation Timeline ── */}
       <section className="page split timeline-section">
         <div className="workflow-copy reveal">
-          <p className="eyebrow">Implementation Timeline</p>
-          <h2>From audit to go-live in weeks.</h2>
+          <p className="eyebrow">Getting Started</p>
+          <h2>From first chat to go-live — in weeks, not months.</h2>
           <p className="lead">
-            We align stakeholders, configure your modules, and train teams
-            before launch—so adoption sticks from day one.
+            We do the heavy lifting. You keep running your business. By the time
+            we hit go-live, your team is already comfortable. Too clear.
           </p>
         </div>
         <div className="workflow-steps">
           <div className="step reveal" style={{ "--delay": "80ms" }}>
             <span>01</span>
             <div>
-              <h3>Discovery Audit</h3>
-              <p className="muted">Workflows, data, and approvals mapped.</p>
+              <h3>We Learn Your Business</h3>
+              <p className="muted">
+                We come to you. Map the workflows, understand the pain points,
+                and figure out exactly what needs to change.
+              </p>
             </div>
           </div>
           <div className="step reveal" style={{ "--delay": "160ms" }}>
             <span>02</span>
             <div>
-              <h3>Configuration Sprint</h3>
-              <p className="muted">Modules, integrations, and dashboards tailored.</p>
+              <h3>Build It Around You</h3>
+              <p className="muted">
+                Modules, integrations, dashboards — all set up to match how YOUR
+                team actually works. WhatsApp, Mobile Money, the lot.
+              </p>
             </div>
           </div>
           <div className="step reveal" style={{ "--delay": "240ms" }}>
             <span>03</span>
             <div>
-              <h3>Team Enablement</h3>
-              <p className="muted">Training, access roles, and process playbooks.</p>
+              <h3>Train Your People, Live</h3>
+              <p className="muted">
+                Real sessions. Real transactions. Not slides — hands on the
+                keyboard, running the stuff they'll do on day one.
+              </p>
             </div>
           </div>
           <div className="step reveal" style={{ "--delay": "320ms" }}>
             <span>04</span>
             <div>
-              <h3>Go-live + Optimization</h3>
-              <p className="muted">Phased rollout with KPI reviews and tuning.</p>
+              <h3>Go Live & Keep Optimising</h3>
+              <p className="muted">
+                We roll it out in phases so nothing breaks. Then we keep tuning
+                it — weekly check-ins at first, then monthly, forever.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
+      {/* ── Mid-page CTA ── */}
       <section className="page cta cta-compact reveal">
         <div className="section-header">
-          <p className="eyebrow">Build Your Backbone</p>
-          <h2>Ready to map your modules?</h2>
+          <p className="eyebrow">Ready?</p>
+          <h2>Let's figure out which modules your business actually needs.</h2>
           <p className="lead">
-            We will translate your goals into a rollout plan that your teams
-            can adopt with confidence.
+            Not a sales call. A real conversation — we'll map it out together and
+            show you exactly what it looks like for YOUR operation.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/configure">Configure your ERP</PrimaryButton>
+          <PrimaryButton to="/configure">Configure Your ERP</PrimaryButton>
           <Link className="button button-ghost" to="/contact">
-            Book a consultation
+            Talk to the Team
           </Link>
         </div>
       </section>
 
+      {/* ── Module Highlights ── */}
       <section className="section">
         <div className="section-header reveal">
-          <p className="eyebrow">Module Highlights</p>
-          <h2>Build the ERP stack your teams actually need.</h2>
+          <p className="eyebrow">The Modules</p>
+          <h2>Pick what you need. Add more as you grow.</h2>
           <p className="lead">
-            Mix and match modules to match your industry, then scale with
-            add-ons as you grow.
+            Start small, scale big. Every module snaps in cleanly — no reinstalls,
+            no headaches, no wahala.
           </p>
         </div>
         <div className="feature-grid">
@@ -274,89 +316,97 @@ export default function Solutions() {
             <FontAwesomeIcon icon={faHandshake} />
             <h3>CRM & Sales</h3>
             <p className="muted">
-              Manage pipelines, renewals, and customer success follow-ups.
+              Track your leads, close your deals, and never lose a client again.
+              Pipelines, follow-ups, renewals — all in one place.
             </p>
           </article>
           <article className="feature-card reveal" style={{ "--delay": "120ms" }}>
             <FontAwesomeIcon icon={faBoxesStacked} />
             <h3>Inventory</h3>
             <p className="muted">
-              Centralize stock movements, reorder points, and supplier data.
+              Every item, every movement, every location. Stock levels that are
+              actually accurate — not a guess from last Tuesday.
             </p>
           </article>
           <article className="feature-card reveal" style={{ "--delay": "240ms" }}>
             <FontAwesomeIcon icon={faChartLine} />
             <h3>Analytics</h3>
             <p className="muted">
-              Executive dashboards and forecasting tailored to Ghanaian markets.
+              Dashboards that show you what's actually happening — not what you
+              hope is happening. Built for the Ghanaian market.
             </p>
           </article>
           <article className="feature-card reveal" style={{ "--delay": "360ms" }}>
             <FontAwesomeIcon icon={faRoute} />
             <h3>Delivery</h3>
             <p className="muted">
-              Route planning, dispatch, and fulfillment confirmations.
+              Routes planned. Dispatches tracked. Deliveries confirmed. Your
+              drivers, your customers, your peace of mind — sorted.
             </p>
           </article>
           <article className="feature-card reveal" style={{ "--delay": "480ms" }}>
             <FontAwesomeIcon icon={faUserTie} />
             <h3>HR & Payroll</h3>
             <p className="muted">
-              Team records, payroll cycles, and performance tracking.
+              Payroll that runs on time. Records that don't get lost. A team
+              section that actually feels organised. Finally.
             </p>
           </article>
           <article className="feature-card reveal" style={{ "--delay": "600ms" }}>
             <FontAwesomeIcon icon={faShield} />
             <h3>Compliance</h3>
             <p className="muted">
-              Audit-ready workflows, approvals, and security policies.
+              GRA-ready. Audit-ready. Every approval logged, every workflow
+              locked down. Sleep easy when the auditors come.
             </p>
           </article>
         </div>
       </section>
 
+      {/* ── Security & Compliance ── */}
       <section className="page compliance-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Security & Compliance</p>
-          <h2>Controls that keep every team accountable.</h2>
+          <p className="eyebrow">Lock It Tight</p>
+          <h2>Your data is sacred. We treat it that way.</h2>
           <p className="lead">
-            Enterprise-grade permissions, audit trails, and backups keep your
-            data secure and your operations compliant.
+            Bank-level security, automatic backups, and permissions so tight that
+            only the right person sees the right thing. No exceptions.
           </p>
         </div>
         <div className="compliance-grid">
           <article className="compliance-card reveal">
-            <h3>Role-based access</h3>
-            <p>Define who can view, approve, or edit each workflow.</p>
+            <h3>Who Sees What</h3>
+            <p>Set exactly who can view, approve, or change anything in the system. Clean, simple, done.</p>
           </article>
           <article className="compliance-card reveal" style={{ "--delay": "120ms" }}>
-            <h3>Audit logs</h3>
-            <p>Track every change with timestamps and user history.</p>
+            <h3>Every Change Logged</h3>
+            <p>Someone edited something? We know who, when, and what. A full trail, always.</p>
           </article>
           <article className="compliance-card reveal" style={{ "--delay": "240ms" }}>
-            <h3>Encrypted backups</h3>
-            <p>Daily snapshots with secure storage and recovery protocols.</p>
+            <h3>Backups Every Day</h3>
+            <p>Encrypted. Automatic. If something goes wrong — which it won't — your data is safe.</p>
           </article>
           <article className="compliance-card reveal" style={{ "--delay": "360ms" }}>
-            <h3>Data residency</h3>
-            <p>Clear data governance aligned with regional requirements.</p>
+            <h3>Data Stays in Region</h3>
+            <p>Your business data stays where it should. Governed, secure, compliant. No questions asked.</p>
           </article>
         </div>
       </section>
 
+      {/* ── Integrations ── */}
       <section className="section integrations-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Integrations</p>
-          <h2>Connect the tools you already run.</h2>
+          <p className="eyebrow">Plays Nice With Everything</p>
+          <h2>Already using these? Great. We connect them.</h2>
           <p className="lead">
-            Sync payments, communications, and productivity apps to keep every
-            team aligned.
+            Mobile Money, WhatsApp, Google, Microsoft — if your team is already
+            using it, Faako plugs right in. No switching, no learning new tools.
           </p>
         </div>
         <div className="ribbon reveal">
           <div>
-            <h3>Popular connections</h3>
-            <p className="muted">Payments, messaging, and productivity in one flow.</p>
+            <h3>Hooked up and running</h3>
+            <p className="muted">Payments, messaging, productivity — all synced up.</p>
           </div>
           <div className="ribbon-tags">
             <span>MTN MoMo</span>
@@ -371,50 +421,54 @@ export default function Solutions() {
         </div>
       </section>
 
+      {/* ── Outcomes ── */}
       <section className="section outcomes-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Outcomes</p>
-          <h2>What teams see after go-live.</h2>
+          <p className="eyebrow">What Actually Happens</p>
+          <h2>Real numbers. From real businesses. After they switched.</h2>
           <p className="lead">
-            Clear data, faster decisions, and fewer operational surprises.
+            These aren't projections. These are what our clients told us — after
+            running Faako for a few months.
           </p>
         </div>
         <div className="stats-grid">
           <article className="stats-card reveal">
-            <span>GHS 120k</span>
-            <p>Working capital unlocked through faster collections.</p>
+            <span>₵120K</span>
+            <p>Cash freed up just from faster invoice collections. That's real working capital, back in your hands.</p>
           </article>
           <article className="stats-card reveal" style={{ "--delay": "120ms" }}>
             <span>-30%</span>
-            <p>Stockouts after inventory rules and reorder alerts.</p>
+            <p>Fewer stockouts. Reorder alerts kicked in and the "it finish" days stopped.</p>
           </article>
           <article className="stats-card reveal" style={{ "--delay": "240ms" }}>
             <span>2.6x</span>
-            <p>Faster month-end closes with unified finance data.</p>
+            <p>Faster month-end closes. Finance team actually gets their weekends back now.</p>
           </article>
           <article className="stats-card reveal" style={{ "--delay": "360ms" }}>
             <span>95%</span>
-            <p>On-time delivery rate after dispatch optimization.</p>
+            <p>On-time deliveries. Dispatch got sorted and customers stopped complaining.</p>
           </article>
         </div>
       </section>
 
+      {/* ── Final CTA ── */}
       <section className="page cta cta-compact reveal">
         <div className="section-header">
-          <p className="eyebrow">Next Step</p>
-          <h2>Map your modules and start configuring.</h2>
+          <p className="eyebrow">Your Move</p>
+          <h2>You've seen what Faako does.</h2>
           <p className="lead">
-            We will translate your priorities into a rollout plan and pricing
-            mix for your team.
+            30 minutes. That's all it takes for us to show you what this looks
+            like running YOUR business. No pressure. No commitment. Just clarity.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/configure">Configure your ERP</PrimaryButton>
+          <PrimaryButton to="/configure">Configure Your ERP</PrimaryButton>
           <Link className="button button-ghost" to="/case-studies">
-            View Case Studies
+            See the Stories
           </Link>
         </div>
       </section>
+    <WhatsApp />
     </section>
   );
 }
