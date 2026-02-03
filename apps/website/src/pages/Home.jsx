@@ -48,7 +48,7 @@ export default function Home() {
   const [errorCost, setErrorCost] = useState(500);
   const [trustStats, setTrustStats] = useState({
     monthlyTransactions: null,
-    inventoryItems: null,
+    inventoryUnits: null,
     locations: null,
   });
 
@@ -71,12 +71,12 @@ export default function Home() {
         }
         const payload = await response.json();
         const monthlyTransactions = Number(payload?.monthlyTransactions?.amount);
-        const inventoryItems = Number(payload?.inventoryItems);
+        const inventoryUnits = Number(payload?.inventoryUnits);
         const locations = Number(payload?.locations);
 
         setTrustStats({
           monthlyTransactions: Number.isFinite(monthlyTransactions) ? monthlyTransactions : null,
-          inventoryItems: Number.isFinite(inventoryItems) ? inventoryItems : null,
+          inventoryUnits: Number.isFinite(inventoryUnits) ? inventoryUnits : null,
           locations: Number.isFinite(locations) ? locations : null,
         });
       } catch (error) {
@@ -133,6 +133,15 @@ export default function Home() {
   const formatCount = (value) => {
     if (!Number.isFinite(value)) return "--";
     return `${Math.round(value).toLocaleString("en-US")}+`;
+  };
+
+  const formatCountThousands = (value) => {
+    if (!Number.isFinite(value)) return "--";
+    const thousands = Math.floor(value / 1000);
+    if (thousands <= 0) {
+      return formatCount(value);
+    }
+    return `${thousands.toLocaleString("en-US")}k+`;
   };
 
   const formatCurrencyGhs = (value) => {
@@ -425,8 +434,8 @@ export default function Home() {
             <small>And growing every single day</small>
           </div>
           <div className="trust-stat">
-            <strong className="stat-value">{formatCount(trustStats.inventoryItems)}</strong>
-            <p className="stat-label">Inventory items managed</p>
+            <strong className="stat-value">{formatCountThousands(trustStats.inventoryUnits)}</strong>
+            <p className="stat-label">Units managed</p>
             <small>Tracked across warehouses and storefronts</small>
           </div>
           <div className="trust-stat">
