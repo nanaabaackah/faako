@@ -4,9 +4,12 @@
   align-items: center;
   gap: 2rem;
   padding: 1.5rem var(--page-gutter);
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 10;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 100;
   background: var(--header-bg);
   border-bottom: 1px solid var(--header-border);
   backdrop-filter: blur(14px);

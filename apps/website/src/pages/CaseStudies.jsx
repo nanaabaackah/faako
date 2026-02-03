@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import AnimatedGeometricSVG from "../components/AnimatedGeometricSVG.jsx";
 
 const caseStudies = [
   {
@@ -18,39 +19,30 @@ const caseStudies = [
       "Real-time visibility into deployments, tasks, and system health in one dashboard.",
     image: "/imgs/case-studies/dashboard-case.png",
   },
-  {
-    title: "Food Distribution Backbone",
-    tag: "Supply Chain",
-    summary:
-      "Tracked procurement, deliveries, and vendor performance across 12 depots.",
-    image: "/imgs/case-studies/erp-case.png",
-  },
-  {
-    title: "Professional Services Hub",
-    tag: "Client Operations",
-    summary:
-      "Centralized CRM, billing, and timesheets for a growing advisory firm.",
-    image: "/imgs/case-studies/dashboard-case.png",
-  },
 ];
 
 export default function CaseStudies() {
   return (
-    <section className="page case-studies-page">
-      <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-        <p className="eyebrow">Case Studies</p>
-        <h1>Proof of impact across Ghanaian businesses.</h1>
-        <p className="lead">
-          See how operators use Faako to connect their data, teams, and daily
-          execution.
-        </p>
-        <div className="cta-actions">
-          <PrimaryButton to="/contact">Request a walkthrough</PrimaryButton>
-          <Link className="button button-ghost" to="/solutions">
-            Explore Solutions
-          </Link>
+    <section className="page case-studies-page page-stack">
+      <section className="case-hero split">
+        <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
+          <p className="eyebrow">Case Studies</p>
+          <h1>Proof of impact across Ghanaian businesses.</h1>
+          <p className="lead">
+            See how operators use Faako to connect their data, teams, and daily
+            execution.
+          </p>
+          <div className="cta-actions">
+            <PrimaryButton to="/contact">Request a walkthrough</PrimaryButton>
+            <Link className="button button-ghost" to="/solutions">
+              Explore Solutions
+            </Link>
+          </div>
         </div>
-      </div>
+        <figure className="stats-figure case-hero-figure reveal" style={{ "--delay": "120ms" }}>
+          <AnimatedGeometricSVG className="case-hero-art" />
+        </figure>
+      </section>
 
       <section className="page case-studies">
         <div className="section-header reveal">

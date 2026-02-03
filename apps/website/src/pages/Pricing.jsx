@@ -24,16 +24,25 @@ export default function Pricing() {
   };
 
   return (
-    <section className="page pricing">
+    <section className="page pricing page-stack">
       {/* 1. Hero Section */}
-      <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-        <p className="eyebrow">Pricing & Value</p>
-        <h1>ERP built for your specific workflow.</h1>
-        <p className="lead">
-          Stop paying for features you don't use. Choose a foundation, then
-          layer on the modules your African enterprise needs to thrive.
-        </p>
-      </div>
+      <section className="pricing-hero split">
+        <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
+          <p className="eyebrow">Pricing & Value</p>
+          <h1>ERP built for your specific workflow.</h1>
+          <p className="lead">
+            Stop paying for features you don't use. Choose a foundation, then
+            layer on the modules your African enterprise needs to thrive.
+          </p>
+        </div>
+          <figure className="stats-figure pricing-hero-figure reveal" style={{ "--delay": "120ms" }}>  
+            <img
+              className="pricing-hero-art"
+              src="/imgs/elements/11.gif"
+              alt="Faako ERP dashboard preview"
+            />
+          </figure>
+      </section>
 
       {/* 2. SaaS Subscription Tiers */}
       <div className="section-header reveal" style={{ "--delay": "80ms" }}>

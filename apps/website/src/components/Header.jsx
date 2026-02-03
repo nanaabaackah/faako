@@ -77,6 +77,9 @@ export default function Header({
         </Link>
       </div>
       <nav className="site-nav" aria-label="Primary" id="primary-navigation">
+        <Link to="/about" onClick={handleMobileNavClose}>
+          About
+        </Link>
         <Link to="/solutions" onClick={handleMobileNavClose}>
           Solutions
         </Link>
@@ -85,9 +88,6 @@ export default function Header({
         </Link>
         <Link to="/pricing" onClick={handleMobileNavClose}>
           Pricing
-        </Link>
-        <Link to="/about" onClick={handleMobileNavClose}>
-          About
         </Link>
       </nav>
       <div className="nav-actions">
