@@ -421,7 +421,7 @@ export default function Home() {
       <section className="page trust-indicators">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Growing Strong in Ghana</p>
-          <h2>Join 100+ Businesses Already Running on Faako</h2>
+          <h2>Join Businesses Already Running on Faako</h2>
           <p className="lead">Real companies, real growth, real results across Greater Accra and beyond.</p>
         </div>
         
