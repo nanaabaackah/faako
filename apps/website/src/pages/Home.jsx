@@ -33,6 +33,7 @@ import {
   faCheck,
   faTimes,
   faCheckCircle,
+  faTriangleExclamation,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import TrustedBy from "../components/TrustedBy.jsx";
@@ -42,7 +43,8 @@ import WhatsApp from "../components/WhatsApp.jsx";
 
 export default function Home() {
   const trustApiBase = (import.meta.env.VITE_KPI_BASE_URL || "").replace(/\/$/, "");
-  const [activeTab, setActiveTab] = useState("insights");
+  const [activeTab, setActiveTab] = useState("portals");
+  const [showAllModules, setShowAllModules] = useState(false);
   const [hoursPerWeek, setHoursPerWeek] = useState(10);
   const [ordersPerDay, setOrdersPerDay] = useState(50);
   const [errorCost, setErrorCost] = useState(500);
@@ -467,21 +469,52 @@ export default function Home() {
             <div className="tools-tab-buttons" role="tablist" aria-label="Module highlights">
               <button
                 type="button"
-                id="tools-tab-insights"
-                data-icon="I"
-                className={`tools-tab-button ${activeTab === "insights" ? "is-active" : ""}`}
+                id="tools-tab-portals"
+                className={`tools-tab-button ${activeTab === "portals" ? "is-active" : ""}`}
                 role="tab"
-                aria-selected={activeTab === "insights"}
-                aria-controls="tools-panel-insights"
-                tabIndex={activeTab === "insights" ? 0 : -1}
-                onClick={() => setActiveTab("insights")}
+                aria-selected={activeTab === "portals"}
+                aria-controls="tools-panel-portals"
+                tabIndex={activeTab === "portals" ? 0 : -1}
+                onClick={() => setActiveTab("portals")}
               >
-                Insights
+                <span className="tools-tab-icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={faGlobe} />
+                </span>
+                Portals
+              </button>
+              <button
+                type="button"
+                id="tools-tab-inventory"
+                className={`tools-tab-button ${activeTab === "inventory" ? "is-active" : ""}`}
+                role="tab"
+                aria-selected={activeTab === "inventory"}
+                aria-controls="tools-panel-inventory"
+                tabIndex={activeTab === "inventory" ? 0 : -1}
+                onClick={() => setActiveTab("inventory")}
+              >
+                <span className="tools-tab-icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={faBoxesStacked} />
+                </span>
+                Inventory
+              </button>
+              <button
+                type="button"
+                id="tools-tab-dashboard"
+                className={`tools-tab-button ${activeTab === "dashboard" ? "is-active" : ""}`}
+                role="tab"
+                aria-selected={activeTab === "dashboard"}
+                aria-controls="tools-panel-dashboard"
+                tabIndex={activeTab === "dashboard" ? 0 : -1}
+                onClick={() => setActiveTab("dashboard")}
+              >
+                <span className="tools-tab-icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={faChartPie} />
+                </span>
+                Dashboard
               </button>
               <button
                 type="button"
                 id="tools-tab-workflow"
-                data-icon="W"
                 className={`tools-tab-button ${activeTab === "workflow" ? "is-active" : ""}`}
                 role="tab"
                 aria-selected={activeTab === "workflow"}
@@ -489,33 +522,76 @@ export default function Home() {
                 tabIndex={activeTab === "workflow" ? 0 : -1}
                 onClick={() => setActiveTab("workflow")}
               >
-                Workflow
+                <span className="tools-tab-icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={faUserTie} />
+                </span>
+                CRM
               </button>
               <button
                 type="button"
-                id="tools-tab-automations"
-                data-icon="A"
-                className={`tools-tab-button ${activeTab === "automations" ? "is-active" : ""}`}
+                id="tools-tab-accounting"
+                className={`tools-tab-button ${activeTab === "accounting" ? "is-active" : ""}`}
                 role="tab"
-                aria-selected={activeTab === "automations"}
-                aria-controls="tools-panel-automations"
-                tabIndex={activeTab === "automations" ? 0 : -1}
-                onClick={() => setActiveTab("automations")}
+                aria-selected={activeTab === "accounting"}
+                aria-controls="tools-panel-accounting"
+                tabIndex={activeTab === "accounting" ? 0 : -1}
+                onClick={() => setActiveTab("accounting")}
               >
-                Automations
+                <span className="tools-tab-icon" aria-hidden="true">
+                  <FontAwesomeIcon icon={faMoneyBillWave} />
+                </span>
+                Accounting
+              </button>
+              <button type="button" className="tools-tab-more">
+                <Link to="/case-studies">
+                    See More <FontAwesomeIcon icon={faArrowRight} />
+                </Link>
               </button>
             </div>
 
             <div className="tools-tab-panel">
               <div
-                id="tools-panel-insights"
-                className={`tools-tab-panel-card ${activeTab === "insights" ? "is-visible" : ""}`}
+                id="tools-panel-portals"
+                className={`tools-tab-panel-card ${activeTab === "portals" ? "is-visible" : ""}`}
                 role="tabpanel"
-                aria-labelledby="tools-tab-insights"
-                aria-hidden={activeTab !== "insights"}
+                aria-labelledby="tools-tab-portals"
+                aria-hidden={activeTab !== "portals"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/faako-erp-dashboard.png" alt="Insights dashboard preview" />
+                  <img src="/imgs/demo/demo10.png" alt="Portals preview" />
+                  <Link className="tools-tab-overlay" to="/contact">
+                    See use case <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </figure>
+              </div>
+
+              <div
+                id="tools-panel-inventory"
+                className={`tools-tab-panel-card ${activeTab === "inventory" ? "is-visible" : ""}`}
+                role="tabpanel"
+                aria-labelledby="tools-tab-inventory"
+                aria-hidden={activeTab !== "inventory"}
+              >
+                <figure className="tools-tab-figure">
+                  <img src="/imgs/demo/demo9.png" alt="Inventory preview" />
+                  <Link className="tools-tab-overlay" to="/contact">
+                    See use case <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </figure>
+              </div>
+
+              <div
+                id="tools-panel-dashboard"
+                className={`tools-tab-panel-card ${activeTab === "dashboard" ? "is-visible" : ""}`}
+                role="tabpanel"
+                aria-labelledby="tools-tab-dashboard"
+                aria-hidden={activeTab !== "dashboard"}
+              >
+                <figure className="tools-tab-figure">
+                  <img src="/imgs/demo/demo8.png" alt="Dashboard preview" />
+                  <Link className="tools-tab-overlay" to="/contact">
+                    See use case <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
                 </figure>
               </div>
 
@@ -527,27 +603,33 @@ export default function Home() {
                 aria-hidden={activeTab !== "workflow"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/faako-erp-orders.png" alt="Workflow management preview" />
+                  <img src="/imgs/demo/demo7.png" alt="Workflow management preview" />
+                  <Link className="tools-tab-overlay" to="/contact">
+                    See use case <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
                 </figure>
               </div>
 
               <div
-                id="tools-panel-automations"
-                className={`tools-tab-panel-card ${activeTab === "automations" ? "is-visible" : ""}`}
+                id="tools-panel-accounting"
+                className={`tools-tab-panel-card ${activeTab === "accounting" ? "is-visible" : ""}`}
                 role="tabpanel"
-                aria-labelledby="tools-tab-automations"
-                aria-hidden={activeTab !== "automations"}
+                aria-labelledby="tools-tab-accounting"
+                aria-hidden={activeTab !== "accounting"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/faako-erp-reports.png" alt="Automation overview preview" />
+                  <img src="/imgs/demo/demo6.png" alt="Automation overview preview" />
+                  <Link className="tools-tab-overlay" to="/contact">
+                    See use case <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
                 </figure>
               </div>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Video Demo Section */}
+        
+      {/* Video Demo Section 
       <section className="page video-demo">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">See It In Action</p>
@@ -556,7 +638,7 @@ export default function Home() {
         
         <div className="video-container reveal" data-scroll style={{ "--delay": "100ms" }}>
           <div className="video-wrapper">
-            {/* Replace with your actual video URL */}
+            Replace with your actual video URL
             <div className="video-placeholder">
               <div className="video-play-button">
                 <FontAwesomeIcon icon={faArrowRight} />
@@ -564,13 +646,12 @@ export default function Home() {
               </div>
               <img src="/imgs/demo/video-thumbnail.png" alt="Faako demo video thumbnail" />
             </div>
-            {/* When you have the video, replace above with: */}
-            {/* <iframe 
+            <iframe 
               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
               title="Faako ERP Demo - See How It Works"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
               allowFullScreen
-            /> */}
+            /> 
           </div>
           <div className="video-caption">
             <h3>From Excel Chaos to Dashboard Clarity</h3>
@@ -582,7 +663,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       <section className="page split how-it-works">
         <div className="workflow-copy reveal" data-scroll>
@@ -590,7 +671,7 @@ export default function Home() {
           <h2>We Handle Everything While You Run Your Business</h2>
           <p className="lead">
             No long manuals. No IT headaches. We map your current hustle, build the system, 
-            and train your team — all while your operations keep flowing.
+            and train your team - all while your operations keep flowing.
           </p>
         </div>
         <div className="workflow-steps">
@@ -710,12 +791,6 @@ export default function Home() {
       </section>
 
       <section id="consulting" className="page consulting-section">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div
           className="section-header reveal"
           style={{ "--delay": "0ms" }}
@@ -767,7 +842,7 @@ export default function Home() {
             >
               <h3>Stock & Supply Chain</h3>
               <p>
-                Stop losing money to phantom inventory and "it finish" surprises. 
+                Stop losing money to phantom inventory and "it's finished" surprises. 
                 Track every item from warehouse to delivery.
               </p>
             </article>
@@ -778,8 +853,8 @@ export default function Home() {
             >
               <h3>Real Money Dashboards</h3>
               <p>
-                See your actual profits, not Excel guesswork. Know exactly where 
-                every cedi is going — no more "e dey somewhere."
+                See your actual profits, now exactly where 
+                every pesewa is going."
               </p>
             </article>
             <article
@@ -789,7 +864,7 @@ export default function Home() {
             >
               <h3>Built for How YOU Work</h3>
               <p>
-                Your delivery guy uses WhatsApp? Your accountant loves Excel? 
+                Your customers use WhatsApp? Your vendors use Momo? 
                 We connect everything to work YOUR way.
               </p>
             </article>
@@ -802,8 +877,7 @@ export default function Home() {
           <p className="eyebrow">Bank-Level Protection</p>
           <h2>Your Business Data is Sacred</h2>
           <p className="lead">
-            We protect your numbers like they're our own. Military-grade security 
-            that even the big international banks use.
+            We protect your numbers like they're our own because we care.
           </p>
         </div>
         <div className="compliance-grid">
@@ -820,8 +894,9 @@ export default function Home() {
             <p>Automatic cloud backups mean your business survives even if your laptop doesn't.</p>
           </div>
           <div className="compliance-card">
-            <h3>Fort Knox Security</h3>
-            <p>Your data is encrypted like credit card info — hackers see only gibberish.</p>
+            <h3>Security</h3>
+            <p>Your data is encrypted and safe. 
+              We do not save any banking or card details on our system</p>
           </div>
         </div>
       </section>
@@ -830,7 +905,7 @@ export default function Home() {
       <section className="page pricing-preview">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Transparent Pricing</p>
-          <h2>Plans That Scale With Your Hustle</h2>
+          <h2>Plans That Scale With Your Business</h2>
           <p className="lead">No hidden fees. No surprises. No wahala. Cancel anytime.</p>
         </div>
         
@@ -843,7 +918,7 @@ export default function Home() {
             </div>
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Up to 10 users</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Core modules (Inventory, Sales, Finance)</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Core modules (CRM, Inventory, Sales, Finance)</li>
               <li><FontAwesomeIcon icon={faCheck} /> WhatsApp integration</li>
               <li><FontAwesomeIcon icon={faCheck} /> Mobile Money support</li>
               <li><FontAwesomeIcon icon={faCheck} /> Monthly data backups</li>
@@ -906,15 +981,9 @@ export default function Home() {
       </section>
 
       <section className="page cta reveal" data-scroll>
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="cta-content">
           <h2>Ready to Stop the Spreadsheet Madness?</h2>
-          <p className="lead">Let's show you what running a modern African business actually looks like.</p>
+          <p className="lead">Let's show you what running a modern business actually looks like.</p>
         </div>
         <div className="cta-actions">
           <PrimaryButton to="/contact">See Faako in Action (Free Demo)</PrimaryButton>
@@ -922,12 +991,6 @@ export default function Home() {
       </section>
 
       <section id="solutions" className="page solutions-section">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">The Platform</p>
           <h2>Comprehensive ERP Solutions</h2>
@@ -998,12 +1061,6 @@ export default function Home() {
       </section>
 
       <section id="modules" className="page section modules-section">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Installable Apps</p>
           <h2>Build your stack, one module at a time</h2>
@@ -1012,7 +1069,7 @@ export default function Home() {
           </p>
         </div>
 
-        <div className="install-module-grid">
+        <div className={`install-module-grid ${showAllModules ? "is-expanded" : "is-collapsed"}`}>
           <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "60ms" }}>
             <div className="module-pill-icon"><FontAwesomeIcon icon={faGlobe} /></div>
             <h3>Website</h3>
@@ -1103,17 +1160,6 @@ export default function Home() {
             <h3>Marketing</h3>
             <p>Campaign tracking and customer outreach.</p>
           </article>
-          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1140ms" }}>
-            <div className="module-pill-icon"><FontAwesomeIcon icon={faGear} /></div>
-            <h3>Settings</h3>
-            <p>System preferences, tax rules, and templates.</p>
-          </article>
-          <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1200ms" }}>
-            <div className="module-pill-icon"><FontAwesomeIcon icon={faPenToSquare} /></div>
-            <h3>Template Mode</h3>
-            <p>Website layouts and content edits without code.</p>
-          </article>
-
           <article className="install-module-pill reveal scroll-reveal" data-scroll style={{ "--delay": "1260ms" }}>
             <div className="module-pill-icon"><FontAwesomeIcon icon={faCartShopping} /></div>
             <h3>Procurement</h3>
@@ -1145,15 +1191,19 @@ export default function Home() {
             <p>Advanced reporting, forecasting, and BI exports.</p>
           </article>
         </div>
+        <div className="install-module-actions">
+          <button
+            type="button"
+            className="button button-ghost install-module-more"
+            onClick={() => setShowAllModules((prev) => !prev)}
+            aria-expanded={showAllModules}
+          >
+            {showAllModules ? "Show fewer apps" : "See more apps"}
+          </button>
+        </div>
       </section>
 
       <section className="page cta reveal" data-scroll>
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="cta-content">
           <h2>Ready for an ERP audit?</h2>
           <p className="lead">
@@ -1191,91 +1241,127 @@ export default function Home() {
               <tr>
                 <td className="feature-name">Real-time inventory tracking</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Manual updates, always outdated</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Manual updates, always outdated</span>
+                  </div>
                 </td>
                 <td className="comparison-warning">
-                  <span className="icon-warning">⚠️</span>
-                  <span>Separate system, extra cost</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTriangleExclamation}/>
+                    <span>Separate system, extra cost</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Live tracking, all locations</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Live tracking, all locations</span>
+                  </div>
                 </td>
               </tr>
               <tr>
                 <td className="feature-name">Team collaboration</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Lost in WhatsApp chaos</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Lost in WhatsApp chaos</span>
+                  </div>
                 </td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Email back and forth</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Email back and forth</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Built-in workflows & approvals</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Built-in workflows & approvals</span>
+                  </div>
                 </td>
               </tr>
               <tr>
                 <td className="feature-name">Mobile Money integration</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Manual entry, errors everywhere</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Manual entry, errors everywhere</span>
+                  </div>
                 </td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Not available in Ghana</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Not available in Ghana</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Direct MTN, Vodafone, AirtelTigo</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Direct MTN, Vodafone, AirtelTigo</span>
+                  </div>
                 </td>
               </tr>
               <tr>
                 <td className="feature-name">Multi-location support</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Impossible to manage</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Impossible to manage</span>
+                  </div>
                 </td>
                 <td className="comparison-warning">
-                  <span className="icon-warning">⚠️</span>
-                  <span>Complex, expensive setup</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTriangleExclamation}/>
+                    <span>Complex, expensive setup</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Built-in, unlimited locations</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Built-in, unlimited locations</span>
+                  </div>
                 </td>
               </tr>
               <tr>
                 <td className="feature-name">Local support team</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>DIY, Google is your friend</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>DIY, Google is your friend</span>
+                  </div>
                 </td>
                 <td className="comparison-warning">
-                  <span className="icon-warning">⚠️</span>
-                  <span>Overseas support only</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTriangleExclamation}/>
+                    <span>Overseas support only</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Ghana-based team, same timezone</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Ghana-based team, same timezone</span>
+                  </div>
                 </td>
               </tr>
               <tr>
                 <td className="feature-name">Setup & training</td>
                 <td className="comparison-no">
-                  <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                  <span>Figure it out yourself</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>Figure it out yourself</span>
+                  </div>
                 </td>
                 <td className="comparison-warning">
-                  <span className="icon-warning">⚠️</span>
-                  <span>Extra $$$, limited availability</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTriangleExclamation}/>
+                    <span>Extra $$$, limited availability</span>
+                  </div>
                 </td>
                 <td className="comparison-yes highlight">
-                  <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                  <span>Included, we visit your office</span>
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Included, we visit your office</span>
+                  </div>
                 </td>
               </tr>
               <tr className="price-row">
@@ -1304,12 +1390,6 @@ export default function Home() {
 
       {/* --- Expertise Section --- */}
       <section id="expertise" className="page expertise-section">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="expertise-content reveal" data-scroll>
           <p className="eyebrow">Why Choose Faako</p>
           <h2>We Don't Just Sell Software,<br/>We Transform Your Operations</h2>
@@ -1368,10 +1448,6 @@ export default function Home() {
                 <FontAwesomeIcon icon={faCheckCircle} className="check-icon" />
                 <span><strong>Send invoices from site visits</strong> — Close deals on the spot</span>
               </li>
-              <li>
-                <FontAwesomeIcon icon={faCheckCircle} className="check-icon" />
-                <span><strong>Works on 3G</strong> — Yes, really. Optimized for Ghana's network</span>
-              </li>
             </ul>
             <div className="mobile-badges">
               <div className="mobile-badge">
@@ -1390,108 +1466,13 @@ export default function Home() {
           </div>
           <div className="mobile-preview reveal" data-scroll style={{ "--delay": "150ms" }}>
             <div className="mobile-mockup">
-              <img src="/imgs/demo/mobile-dashboard.png" alt="Faako mobile dashboard" />
+              <div className="mobile-mockup-scroll">
+                <img src="/imgs/demo/demo4.png" alt="Faako mobile dashboard" />
+              </div>
               <div className="mobile-feature-callout">
-                <span>👆 Tap anywhere to navigate</span>
+                <span>👆 Scroll to navigate</span>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Implementation Timeline Section */}
-      <section className="page timeline-section">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">The Journey</p>
-          <h2>Your First 60 Days With Faako</h2>
-          <p className="lead">From first call to full operation — here's exactly what happens</p>
-        </div>
-        
-        <div className="timeline">
-          <div className="timeline-item reveal" data-scroll style={{ "--delay": "80ms" }}>
-            <div className="timeline-marker">
-              <span className="timeline-week">Week 1</span>
-              <div className="timeline-dot"></div>
-            </div>
-            <div className="timeline-content">
-              <h3>Discovery & Setup</h3>
-              <ul className="timeline-checklist">
-                <li>☑️ We visit your office (or you visit ours!)</li>
-                <li>☑️ Map your current workflows — how things actually work</li>
-                <li>☑️ Set up your Faako account with your branding</li>
-                <li>☑️ Start importing your existing data</li>
-              </ul>
-              <p className="timeline-outcome">
-                <strong>Outcome:</strong> You have a working Faako instance with your data
-              </p>
-            </div>
-          </div>
-          
-          <div className="timeline-item reveal" data-scroll style={{ "--delay": "160ms" }}>
-            <div className="timeline-marker">
-              <span className="timeline-week">Week 2-3</span>
-              <div className="timeline-dot"></div>
-            </div>
-            <div className="timeline-content">
-              <h3>Configuration & Training</h3>
-              <ul className="timeline-checklist">
-                <li>☑️ Customize modules to match YOUR business flow</li>
-                <li>☑️ Connect Mobile Money, WhatsApp, bank feeds</li>
-                <li>☑️ Train your core team (2-3 hands-on sessions)</li>
-                <li>☑️ Test with real transactions in a safe environment</li>
-              </ul>
-              <p className="timeline-outcome">
-                <strong>Outcome:</strong> Your team knows how to use Faako confidently
-              </p>
-            </div>
-          </div>
-          
-          <div className="timeline-item reveal" data-scroll style={{ "--delay": "240ms" }}>
-            <div className="timeline-marker">
-              <span className="timeline-week">Week 4</span>
-              <div className="timeline-dot"></div>
-            </div>
-            <div className="timeline-content">
-              <h3>Soft Launch (Pilot)</h3>
-              <ul className="timeline-checklist">
-                <li>☑️ Go live with one location or department first</li>
-                <li>☑️ Daily check-ins with our team</li>
-                <li>☑️ Fix any hiccups immediately (they're normal!)</li>
-                <li>☑️ Gather feedback from your team</li>
-              </ul>
-              <p className="timeline-outcome">
-                <strong>Outcome:</strong> One part of your business running smoothly on Faako
-              </p>
-            </div>
-          </div>
-          
-          <div className="timeline-item highlight reveal" data-scroll style={{ "--delay": "320ms" }}>
-            <div className="timeline-marker">
-              <span className="timeline-week">Week 5-8</span>
-              <div className="timeline-dot success"></div>
-            </div>
-            <div className="timeline-content">
-              <h3>Full Rollout & Optimization</h3>
-              <ul className="timeline-checklist">
-                <li>☑️ Expand to all locations and departments</li>
-                <li>☑️ Train remaining staff members</li>
-                <li>☑️ Add advanced features based on feedback</li>
-                <li>☑️ Set up monthly strategy calls</li>
-              </ul>
-              <p className="timeline-outcome">
-                <strong>🎉 Outcome:</strong> Your entire business running on Faako!
-              </p>
-            </div>
-          </div>
-        </div>
-        
-        <div className="timeline-footer reveal" data-scroll style={{ "--delay": "400ms" }}>
-          <div className="timeline-note">
-            <h4>What Happens After?</h4>
-            <p>
-              We don't disappear! Monthly check-ins, ongoing optimization, and we're always 
-              a WhatsApp message away when you need us.
-            </p>
           </div>
         </div>
       </section>
