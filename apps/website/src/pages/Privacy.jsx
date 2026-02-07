@@ -7,8 +7,8 @@ export default function Privacy() {
         <p className="eyebrow">Privacy Policy</p>
         <h1>How we handle your data at Faako.</h1>
         <p className="lead">
-          We only collect what we need to deliver your ERP workspace and keep
-          it secure.
+          We only collect what we need to deliver your services and keep
+          everything secure.
         </p>
       </div>
 
@@ -28,7 +28,7 @@ export default function Privacy() {
 
         <h3>How we use data</h3>
         <ul>
-          <li>Provision and maintain your ERP workspace.</li>
+          <li>Provision and maintain your website, dashboards, or systems.</li>
           <li>Provide onboarding, support, and advisory services.</li>
           <li>Meet compliance obligations and prevent fraud.</li>
         </ul>

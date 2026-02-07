@@ -42,71 +42,10 @@ import FaqSection from "../components/FaqSection.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
 
 export default function Home() {
-  const trustApiBase = (import.meta.env.VITE_KPI_BASE_URL || "").replace(/\/$/, "");
   const [activeTab, setActiveTab] = useState("portals");
   const [showAllModules, setShowAllModules] = useState(false);
-  const [hoursPerWeek, setHoursPerWeek] = useState(10);
-  const [ordersPerDay, setOrdersPerDay] = useState(50);
-  const [errorCost, setErrorCost] = useState(500);
-  const [trustStats, setTrustStats] = useState({
-    monthlyTransactions: null,
-    inventoryUnits: null,
-    organizations: null,
-  });
-
-  // Calculate ROI
-  const timeSavings = hoursPerWeek * 52 * 50; // ₵50/hour value
-  const errorSavings = ordersPerDay * 365 * 0.02 * errorCost; // 2% error rate
-  const totalSavings = timeSavings + errorSavings;
 
   useEffect(() => {
-    if (!trustApiBase) return;
-    const controller = new AbortController();
-
-    const loadTrustStats = async () => {
-      try {
-        const response = await fetch(`${trustApiBase}/api/public/trust-stats`, {
-          signal: controller.signal,
-        });
-        if (!response.ok) {
-          throw new Error("Unable to load trust stats");
-        }
-        const payload = await response.json();
-        const monthlyTransactions = Number(payload?.monthlyTransactions?.amount);
-        const inventoryUnits = Number(payload?.inventoryUnits);
-        const organizations = Number(payload?.organizations);
-
-        setTrustStats({
-          monthlyTransactions: Number.isFinite(monthlyTransactions) ? monthlyTransactions : null,
-          inventoryUnits: Number.isFinite(inventoryUnits) ? inventoryUnits : null,
-          organizations: Number.isFinite(organizations) ? organizations : null,
-        });
-      } catch (error) {
-        if (error.name !== "AbortError") {
-          console.warn("Trust stats fetch failed", error);
-        }
-      }
-    };
-
-    loadTrustStats();
-    return () => controller.abort();
-  }, [trustApiBase]);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const nodes = document.querySelectorAll("[data-scroll]");
-    nodes.forEach((node) => observer.observe(node));
-
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -129,276 +68,31 @@ export default function Home() {
         });
       });
     }
-    return () => observer.disconnect();
+    return undefined;
   }, []);
-
-  const formatCount = (value) => {
-    if (!Number.isFinite(value)) return "--";
-    return `${Math.round(value).toLocaleString("en-US")}+`;
-  };
-
-  const formatCountThousands = (value) => {
-    if (!Number.isFinite(value)) return "--";
-    const thousands = Math.floor(value / 1000);
-    if (thousands <= 0) {
-      return formatCount(value);
-    }
-    return `${thousands.toLocaleString("en-US")}k+`;
-  };
-
-  const formatCurrencyGhs = (value) => {
-    if (!Number.isFinite(value)) return "—";
-    const formatted = new Intl.NumberFormat("en-US", {
-      notation: "compact",
-      maximumFractionDigits: 1,
-    }).format(value);
-    return `₵${formatted}+`;
-  };
 
   return (
     <>
-      <section className="page hero">
-        <div className="hero-copy reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">Designed for Modern Teams</p>
-          <h1>One System. Zero Guesswork.</h1>
-        </div>
-
-        <div className="hero-lead reveal" style={{ "--delay": "80ms" }}>
+      <section
+        className="page hero hero-v2 hero-centered hero-parallax"
+        style={{ "--hero-bg": "url('/imgs/backgrounds/9.png')" }}
+      >
+        <div className="hero-content" data-scroll>
+          <p className="eyebrow">SaaS + Tech Consulting for Ghana</p>
+          <h1>
+            Build smarter operations with{" "}
+            <span className="text-accent">custom software</span> made for Ghanaian SMEs.
+          </h1>
           <p className="lead">
-            Stop juggling disconnected apps and constant technical headaches. 
-            Faako provides the unified data backbone Ghanaian enterprises need to compete and grow on a world-class level.
+            We design and deliver websites, dashboards, ERP systems, and tailored apps
+            that remove bottlenecks and boost efficiency. From discovery to launch, we
+            work alongside your team.
           </p>
-        </div>
-
-        <div
-          className="hero-visual reveal scroll-reveal"
-          style={{ "--delay": "140ms" }}
-          data-scroll
-        >
-          <figure className="hero-illustration" data-scroll>
-          <svg
-            id="faako-logo-light"
-            className="faako-logo faako-logo--light"
-            viewBox="0 0 375 374.999991"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            aria-label="Faako logo"
-          >
-            <defs>
-                <clipPath id="fc7f98da92">
-                  <path
-                    d="M 154 5.601562 L 245 5.601562 L 245 164 L 154 164 Z M 154 5.601562 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="621c3da3fd">
-                  <path
-                    d="M 135 203 L 221 203 L 221 369.351562 L 135 369.351562 Z M 135 203 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="6738151a5f">
-                  <path
-                    d="M 203 154 L 369.351562 154 L 369.351562 240 L 203 240 Z M 203 154 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="8e2ea0f1aa">
-                  <path
-                    d="M 5.601562 130 L 164 130 L 164 221 L 5.601562 221 Z M 5.601562 130 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-              </defs>
-
-              <path
-                fill="#4a3931"
-                d="M 241.394531 301.429688 C 236.789062 301.429688 233.050781 297.699219 233.050781 293.089844 C 233.050781 288.484375 236.789062 284.746094 241.394531 284.746094 C 246 284.746094 249.734375 288.484375 249.734375 293.089844 C 249.734375 297.699219 246 301.429688 241.394531 301.429688 Z M 248.261719 276.597656 L 248.261719 183.722656 L 234.523438 183.722656 L 234.523438 276.601562 C 228.070312 279.292969 223.535156 285.660156 223.535156 293.089844 C 223.535156 302.953125 231.53125 310.949219 241.394531 310.949219 C 251.257812 310.949219 259.253906 302.953125 259.253906 293.089844 C 259.253906 285.660156 254.714844 279.289062 248.261719 276.597656 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#fc7f98da92)">
-                <path
-                  fill="#4a3931"
-                  d="M 172.535156 31.804688 C 167.929688 31.804688 164.195312 28.070312 164.195312 23.460938 C 164.195312 18.855469 167.929688 15.121094 172.535156 15.121094 C 177.144531 15.121094 180.878906 18.855469 180.878906 23.460938 C 180.878906 28.070312 177.144531 31.804688 172.535156 31.804688 Z M 226.496094 161.167969 C 226.882812 161.40625 227.253906 161.660156 227.617188 161.921875 C 229.671875 161.550781 231.773438 161.351562 233.917969 161.351562 L 244.828125 161.351562 C 242.316406 156.53125 238.503906 152.40625 233.65625 149.445312 C 224.515625 143.859375 213.363281 143.445312 203.828125 148.339844 C 198.589844 151.027344 192.460938 150.796875 187.433594 147.726562 C 182.40625 144.65625 179.40625 139.308594 179.40625 133.417969 L 179.40625 39.949219 C 185.859375 37.257812 190.394531 30.890625 190.394531 23.460938 C 190.394531 13.597656 182.398438 5.601562 172.535156 5.601562 C 162.671875 5.601562 154.675781 13.597656 154.675781 23.460938 C 154.675781 30.890625 159.214844 37.261719 165.667969 39.953125 L 165.667969 133.417969 C 165.667969 144.132812 171.128906 153.867188 180.273438 159.449219 C 189.417969 165.035156 200.570312 165.449219 210.101562 160.558594 C 215.339844 157.871094 221.46875 158.097656 226.496094 161.167969 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#242424"
-                d="M 133.597656 73.5625 C 138.203125 73.5625 141.9375 77.296875 141.9375 81.902344 C 141.9375 86.507812 138.203125 90.242188 133.597656 90.242188 C 128.988281 90.242188 125.253906 86.507812 125.253906 81.902344 C 125.253906 77.296875 128.988281 73.5625 133.597656 73.5625 Z M 126.730469 98.390625 L 126.730469 191.265625 L 133.417969 191.265625 C 135.996094 191.265625 138.429688 190.484375 140.464844 189.082031 L 140.464844 98.386719 C 146.917969 95.695312 151.453125 89.332031 151.453125 81.902344 C 151.453125 72.039062 143.457031 64.042969 133.597656 64.042969 C 123.734375 64.042969 115.738281 72.039062 115.738281 81.902344 C 115.738281 89.332031 120.273438 95.699219 126.730469 98.390625 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#621c3da3fd)">
-                <path
-                  fill="#242424"
-                  d="M 202.453125 359.867188 C 197.847656 359.867188 194.113281 356.136719 194.113281 351.53125 C 194.113281 346.921875 197.847656 343.1875 202.453125 343.1875 C 207.0625 343.1875 210.796875 346.921875 210.796875 351.53125 C 210.796875 356.136719 207.0625 359.867188 202.453125 359.867188 Z M 209.324219 335.039062 L 209.324219 233.917969 C 209.324219 223.203125 203.863281 213.472656 194.71875 207.882812 C 185.574219 202.300781 174.421875 201.886719 164.890625 206.777344 C 160.988281 208.777344 156.597656 209.15625 152.535156 207.960938 C 147.601562 211.203125 141.863281 213.15625 135.777344 213.558594 C 137.433594 215.1875 139.289062 216.640625 141.332031 217.886719 C 150.476562 223.476562 161.625 223.890625 171.160156 219 C 176.402344 216.308594 182.53125 216.539062 187.554688 219.609375 C 192.582031 222.679688 195.582031 228.03125 195.582031 233.917969 L 195.582031 335.042969 C 189.128906 337.734375 184.59375 344.101562 184.59375 351.53125 C 184.59375 361.394531 192.589844 369.386719 202.453125 369.386719 C 212.316406 369.386719 220.3125 361.394531 220.3125 351.53125 C 220.3125 344.101562 215.773438 337.730469 209.324219 335.039062 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <g clipPath="url(#6738151a5f)">
-                <path
-                  fill="#737373"
-                  d="M 351.53125 180.878906 C 346.921875 180.878906 343.1875 177.144531 343.1875 172.535156 C 343.1875 167.929688 346.921875 164.191406 351.53125 164.191406 C 356.132812 164.191406 359.867188 167.929688 359.867188 172.535156 C 359.867188 177.144531 356.132812 180.878906 351.53125 180.878906 Z M 351.53125 154.679688 C 344.101562 154.679688 337.730469 159.214844 335.039062 165.667969 L 233.917969 165.667969 C 223.203125 165.667969 213.472656 171.128906 207.882812 180.273438 C 202.300781 189.417969 201.886719 200.570312 206.777344 210.101562 C 207.6875 211.875 208.25 213.75 208.496094 215.648438 C 211.816406 221.03125 213.640625 227.308594 213.640625 233.917969 L 213.640625 239.132812 C 215.234375 237.5 216.660156 235.667969 217.886719 233.65625 C 223.476562 224.515625 223.890625 213.363281 219 203.828125 C 216.308594 198.589844 216.539062 192.460938 219.605469 187.433594 C 222.679688 182.410156 228.03125 179.40625 233.917969 179.40625 L 335.042969 179.40625 C 337.734375 185.859375 344.101562 190.394531 351.53125 190.394531 C 361.394531 190.394531 369.386719 182.398438 369.386719 172.535156 C 369.386719 162.671875 361.394531 154.679688 351.53125 154.679688 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#737373"
-                d="M 81.902344 249.734375 C 77.292969 249.734375 73.558594 246 73.558594 241.394531 C 73.558594 236.789062 77.292969 233.050781 81.902344 233.050781 C 86.507812 233.050781 90.242188 236.789062 90.242188 241.394531 C 90.242188 246 86.507812 249.734375 81.902344 249.734375 Z M 191.265625 234.523438 L 98.390625 234.523438 C 95.699219 228.070312 89.332031 223.535156 81.902344 223.535156 C 72.039062 223.535156 64.042969 231.53125 64.042969 241.394531 C 64.042969 251.257812 72.039062 259.253906 81.902344 259.253906 C 89.332031 259.253906 95.699219 254.714844 98.390625 248.261719 L 191.265625 248.261719 L 191.265625 234.523438 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#8e2ea0f1aa)">
-                <path
-                  fill="#a78254"
-                  d="M 23.460938 210.796875 C 18.855469 210.796875 15.121094 207.0625 15.121094 202.453125 C 15.121094 197.847656 18.855469 194.113281 23.460938 194.113281 C 28.070312 194.113281 31.804688 197.847656 31.804688 202.453125 C 31.804688 207.0625 28.070312 210.796875 23.460938 210.796875 Z M 161.167969 148.496094 C 161.839844 147.398438 162.621094 146.40625 163.488281 145.511719 C 162.089844 141.710938 161.351562 137.632812 161.351562 133.417969 L 161.351562 130.164062 C 156.53125 132.671875 152.40625 136.484375 149.445312 141.332031 C 143.859375 150.476562 143.445312 161.625 148.335938 171.160156 C 151.023438 176.402344 150.796875 182.53125 147.726562 187.554688 C 144.65625 192.582031 139.308594 195.582031 133.417969 195.582031 L 39.949219 195.582031 C 37.257812 189.128906 30.890625 184.59375 23.460938 184.59375 C 13.597656 184.59375 5.601562 192.589844 5.601562 202.453125 C 5.601562 212.316406 13.597656 220.3125 23.460938 220.3125 C 30.890625 220.3125 37.261719 215.773438 39.949219 209.324219 L 133.417969 209.324219 C 144.132812 209.324219 153.863281 203.863281 159.449219 194.71875 C 165.035156 185.574219 165.449219 174.421875 160.558594 164.890625 C 157.871094 159.648438 158.097656 153.519531 161.167969 148.496094 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#a78254"
-                d="M 293.089844 141.9375 C 288.484375 141.9375 284.746094 138.203125 284.746094 133.597656 C 284.746094 128.988281 288.484375 125.253906 293.089844 125.253906 C 297.699219 125.253906 301.429688 128.988281 301.429688 133.597656 C 301.429688 138.203125 297.699219 141.9375 293.089844 141.9375 Z M 293.089844 115.738281 C 285.660156 115.738281 279.289062 120.277344 276.597656 126.730469 L 183.722656 126.730469 L 183.722656 133.417969 C 183.722656 135.996094 184.503906 138.429688 185.90625 140.46875 L 276.601562 140.46875 C 279.292969 146.917969 285.660156 151.453125 293.089844 151.453125 C 302.953125 151.453125 310.949219 143.460938 310.949219 133.597656 C 310.949219 123.734375 302.953125 115.738281 293.089844 115.738281 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-  
-          </svg>
-          <svg
-            id="faako-logo-dark"
-            className="faako-logo faako-logo--dark"
-            viewBox="0 0 375 374.999991"
-            preserveAspectRatio="xMidYMid meet"
-            role="img"
-            aria-label="Faako logo"
-          >
-            <defs>
-                <clipPath id="fc7f98da92-dark">
-                  <path
-                    d="M 154 5.601562 L 245 5.601562 L 245 164 L 154 164 Z M 154 5.601562 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="621c3da3fd-dark">
-                  <path
-                    d="M 135 203 L 221 203 L 221 369.351562 L 135 369.351562 Z M 135 203 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="6738151a5f-dark">
-                  <path
-                    d="M 203 154 L 369.351562 154 L 369.351562 240 L 203 240 Z M 203 154 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-                <clipPath id="8e2ea0f1aa-dark">
-                  <path
-                    d="M 5.601562 130 L 164 130 L 164 221 L 5.601562 221 Z M 5.601562 130 "
-                    clipRule="nonzero"
-                  />
-                </clipPath>
-              </defs>
-
-              <path
-                fill="#fff"
-                d="M 241.394531 301.429688 C 236.789062 301.429688 233.050781 297.699219 233.050781 293.089844 C 233.050781 288.484375 236.789062 284.746094 241.394531 284.746094 C 246 284.746094 249.734375 288.484375 249.734375 293.089844 C 249.734375 297.699219 246 301.429688 241.394531 301.429688 Z M 248.261719 276.597656 L 248.261719 183.722656 L 234.523438 183.722656 L 234.523438 276.601562 C 228.070312 279.292969 223.535156 285.660156 223.535156 293.089844 C 223.535156 302.953125 231.53125 310.949219 241.394531 310.949219 C 251.257812 310.949219 259.253906 302.953125 259.253906 293.089844 C 259.253906 285.660156 254.714844 279.289062 248.261719 276.597656 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#fc7f98da92-dark)">
-                <path
-                  fill="#fff"
-                  d="M 172.535156 31.804688 C 167.929688 31.804688 164.195312 28.070312 164.195312 23.460938 C 164.195312 18.855469 167.929688 15.121094 172.535156 15.121094 C 177.144531 15.121094 180.878906 18.855469 180.878906 23.460938 C 180.878906 28.070312 177.144531 31.804688 172.535156 31.804688 Z M 226.496094 161.167969 C 226.882812 161.40625 227.253906 161.660156 227.617188 161.921875 C 229.671875 161.550781 231.773438 161.351562 233.917969 161.351562 L 244.828125 161.351562 C 242.316406 156.53125 238.503906 152.40625 233.65625 149.445312 C 224.515625 143.859375 213.363281 143.445312 203.828125 148.339844 C 198.589844 151.027344 192.460938 150.796875 187.433594 147.726562 C 182.40625 144.65625 179.40625 139.308594 179.40625 133.417969 L 179.40625 39.949219 C 185.859375 37.257812 190.394531 30.890625 190.394531 23.460938 C 190.394531 13.597656 182.398438 5.601562 172.535156 5.601562 C 162.671875 5.601562 154.675781 13.597656 154.675781 23.460938 C 154.675781 30.890625 159.214844 37.261719 165.667969 39.953125 L 165.667969 133.417969 C 165.667969 144.132812 171.128906 153.867188 180.273438 159.449219 C 189.417969 165.035156 200.570312 165.449219 210.101562 160.558594 C 215.339844 157.871094 221.46875 158.097656 226.496094 161.167969 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#fff"
-                d="M 133.597656 73.5625 C 138.203125 73.5625 141.9375 77.296875 141.9375 81.902344 C 141.9375 86.507812 138.203125 90.242188 133.597656 90.242188 C 128.988281 90.242188 125.253906 86.507812 125.253906 81.902344 C 125.253906 77.296875 128.988281 73.5625 133.597656 73.5625 Z M 126.730469 98.390625 L 126.730469 191.265625 L 133.417969 191.265625 C 135.996094 191.265625 138.429688 190.484375 140.464844 189.082031 L 140.464844 98.386719 C 146.917969 95.695312 151.453125 89.332031 151.453125 81.902344 C 151.453125 72.039062 143.457031 64.042969 133.597656 64.042969 C 123.734375 64.042969 115.738281 72.039062 115.738281 81.902344 C 115.738281 89.332031 120.273438 95.699219 126.730469 98.390625 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#621c3da3fd-dark)">
-                <path
-                  fill="#fff"
-                  d="M 202.453125 359.867188 C 197.847656 359.867188 194.113281 356.136719 194.113281 351.53125 C 194.113281 346.921875 197.847656 343.1875 202.453125 343.1875 C 207.0625 343.1875 210.796875 346.921875 210.796875 351.53125 C 210.796875 356.136719 207.0625 359.867188 202.453125 359.867188 Z M 209.324219 335.039062 L 209.324219 233.917969 C 209.324219 223.203125 203.863281 213.472656 194.71875 207.882812 C 185.574219 202.300781 174.421875 201.886719 164.890625 206.777344 C 160.988281 208.777344 156.597656 209.15625 152.535156 207.960938 C 147.601562 211.203125 141.863281 213.15625 135.777344 213.558594 C 137.433594 215.1875 139.289062 216.640625 141.332031 217.886719 C 150.476562 223.476562 161.625 223.890625 171.160156 219 C 176.402344 216.308594 182.53125 216.539062 187.554688 219.609375 C 192.582031 222.679688 195.582031 228.03125 195.582031 233.917969 L 195.582031 335.042969 C 189.128906 337.734375 184.59375 344.101562 184.59375 351.53125 C 184.59375 361.394531 192.589844 369.386719 202.453125 369.386719 C 212.316406 369.386719 220.3125 361.394531 220.3125 351.53125 C 220.3125 344.101562 215.773438 337.730469 209.324219 335.039062 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <g clipPath="url(#6738151a5f-dark)">
-                <path
-                  fill="#fff"
-                  d="M 351.53125 180.878906 C 346.921875 180.878906 343.1875 177.144531 343.1875 172.535156 C 343.1875 167.929688 346.921875 164.191406 351.53125 164.191406 C 356.132812 164.191406 359.867188 167.929688 359.867188 172.535156 C 359.867188 177.144531 356.132812 180.878906 351.53125 180.878906 Z M 351.53125 154.679688 C 344.101562 154.679688 337.730469 159.214844 335.039062 165.667969 L 233.917969 165.667969 C 223.203125 165.667969 213.472656 171.128906 207.882812 180.273438 C 202.300781 189.417969 201.886719 200.570312 206.777344 210.101562 C 207.6875 211.875 208.25 213.75 208.496094 215.648438 C 211.816406 221.03125 213.640625 227.308594 213.640625 233.917969 L 213.640625 239.132812 C 215.234375 237.5 216.660156 235.667969 217.886719 233.65625 C 223.476562 224.515625 223.890625 213.363281 219 203.828125 C 216.308594 198.589844 216.539062 192.460938 219.605469 187.433594 C 222.679688 182.410156 228.03125 179.40625 233.917969 179.40625 L 335.042969 179.40625 C 337.734375 185.859375 344.101562 190.394531 351.53125 190.394531 C 361.394531 190.394531 369.386719 182.398438 369.386719 172.535156 C 369.386719 162.671875 361.394531 154.679688 351.53125 154.679688 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#fff"
-                d="M 81.902344 249.734375 C 77.292969 249.734375 73.558594 246 73.558594 241.394531 C 73.558594 236.789062 77.292969 233.050781 81.902344 233.050781 C 86.507812 233.050781 90.242188 236.789062 90.242188 241.394531 C 90.242188 246 86.507812 249.734375 81.902344 249.734375 Z M 191.265625 234.523438 L 98.390625 234.523438 C 95.699219 228.070312 89.332031 223.535156 81.902344 223.535156 C 72.039062 223.535156 64.042969 231.53125 64.042969 241.394531 C 64.042969 251.257812 72.039062 259.253906 81.902344 259.253906 C 89.332031 259.253906 95.699219 254.714844 98.390625 248.261719 L 191.265625 248.261719 L 191.265625 234.523438 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-
-              <g clipPath="url(#8e2ea0f1aa-dark)">
-                <path
-                  fill="#fff"
-                  d="M 23.460938 210.796875 C 18.855469 210.796875 15.121094 207.0625 15.121094 202.453125 C 15.121094 197.847656 18.855469 194.113281 23.460938 194.113281 C 28.070312 194.113281 31.804688 197.847656 31.804688 202.453125 C 31.804688 207.0625 28.070312 210.796875 23.460938 210.796875 Z M 161.167969 148.496094 C 161.839844 147.398438 162.621094 146.40625 163.488281 145.511719 C 162.089844 141.710938 161.351562 137.632812 161.351562 133.417969 L 161.351562 130.164062 C 156.53125 132.671875 152.40625 136.484375 149.445312 141.332031 C 143.859375 150.476562 143.445312 161.625 148.335938 171.160156 C 151.023438 176.402344 150.796875 182.53125 147.726562 187.554688 C 144.65625 192.582031 139.308594 195.582031 133.417969 195.582031 L 39.949219 195.582031 C 37.257812 189.128906 30.890625 184.59375 23.460938 184.59375 C 13.597656 184.59375 5.601562 192.589844 5.601562 202.453125 C 5.601562 212.316406 13.597656 220.3125 23.460938 220.3125 C 30.890625 220.3125 37.261719 215.773438 39.949219 209.324219 L 133.417969 209.324219 C 144.132812 209.324219 153.863281 203.863281 159.449219 194.71875 C 165.035156 185.574219 165.449219 174.421875 160.558594 164.890625 C 157.871094 159.648438 158.097656 153.519531 161.167969 148.496094 "
-                  fillOpacity="1"
-                  fillRule="nonzero"
-                />
-              </g>
-
-              <path
-                fill="#fff"
-                d="M 293.089844 141.9375 C 288.484375 141.9375 284.746094 138.203125 284.746094 133.597656 C 284.746094 128.988281 288.484375 125.253906 293.089844 125.253906 C 297.699219 125.253906 301.429688 128.988281 301.429688 133.597656 C 301.429688 138.203125 297.699219 141.9375 293.089844 141.9375 Z M 293.089844 115.738281 C 285.660156 115.738281 279.289062 120.277344 276.597656 126.730469 L 183.722656 126.730469 L 183.722656 133.417969 C 183.722656 135.996094 184.503906 138.429688 185.90625 140.46875 L 276.601562 140.46875 C 279.292969 146.917969 285.660156 151.453125 293.089844 151.453125 C 302.953125 151.453125 310.949219 143.460938 310.949219 133.597656 C 310.949219 123.734375 302.953125 115.738281 293.089844 115.738281 "
-                fillOpacity="1"
-                fillRule="nonzero"
-              />
-  
-          </svg>
-          </figure>
-
-        </div>
-
-        <div className="hero-actions">
-          <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
-          <Link className="button button-ghost" to="/contact">
-            View ERP Features
-          </Link>
-        </div>
-
-        <div className="hero-metrics">
-          <div className="metric">
-            <span>Audit</span>
-            <p>Workflows mapped</p>
-          </div>
-          <div className="metric">
-            <span>Deploy</span>
-            <p>Custom ERP setup</p>
-          </div>
-          <div className="metric" data-scroll>
-            <span>Sustain</span>
-            <p>24/7 Tech Advisory</p>
+          <div className="hero-actions">
+            <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
+            <Link className="button button-ghost" to="/contact">
+              Explore Services
+            </Link>
           </div>
         </div>
       </section>
@@ -422,28 +116,76 @@ export default function Home() {
       {/* Social Proof Section */}
       <section className="page trust-indicators">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Growing Strong in Ghana</p>
-          <h2>Join Businesses Already Running on Faako</h2>
-          <p className="lead">Real companies, real growth, real results across Greater Accra and beyond.</p>
+          <p className="eyebrow">Built for Ghanaian businesses</p>
+          <h2>Clear workflows. Visible numbers. Teams aligned.</h2>
+          <p className="lead">We focus on the basics that make software stick: discovery, adoption, and support.</p>
+        </div>
+
+        <div className="ribbon trust-ribbon reveal" data-scroll style={{ "--delay": "60ms" }}>
+          <div className="ribbon-copy">
+            <p className="pill">What you get</p>
+            <strong>Local build + advisory support.</strong>
+            <p className="muted">We run the project while your team keeps operating.</p>
+          </div>
+          <div className="ribbon-tags">
+            <span>Discovery workshops</span>
+            <span>System design</span>
+            <span>Build + launch</span>
+            <span>Training + support</span>
+          </div>
         </div>
         
-        <div className="trust-stats reveal" data-scroll style={{ "--delay": "100ms" }}>
-          <div className="trust-stat">
-            <strong className="stat-value">
-              {formatCurrencyGhs(trustStats.monthlyTransactions)}
-            </strong>
-            <p className="stat-label">In transactions processed monthly</p>
-            <small>And growing every single day</small>
+        <div className="trust-grid reveal" data-scroll style={{ "--delay": "100ms" }}>
+          <article className="trust-card">
+            <span className="trust-icon">
+              <FontAwesomeIcon icon={faHandshake} />
+            </span>
+            <h3>Business-first discovery</h3>
+            <p>We sit with your team and map the real workflow before any build starts.</p>
+            <div className="trust-tags">
+              <span>Onsite discovery</span>
+              <span>Process mapping</span>
+            </div>
+          </article>
+          <article className="trust-card">
+            <span className="trust-icon">
+              <FontAwesomeIcon icon={faShield} />
+            </span>
+            <h3>Clean data setup</h3>
+            <p>We clean and migrate your sheets, approvals, and balances without disrupting operations.</p>
+            <div className="trust-tags">
+              <span>Data cleanup</span>
+              <span>Go-live checklist</span>
+            </div>
+          </article>
+          <article className="trust-card">
+            <span className="trust-icon">
+              <FontAwesomeIcon icon={faHeadset} />
+            </span>
+            <h3>Local support</h3>
+            <p>Fast response on WhatsApp and onsite check-ins so your team keeps moving.</p>
+            <div className="trust-tags">
+              <span>Local support</span>
+              <span>Training sessions</span>
+            </div>
+          </article>
+        </div>
+
+        <div className="trust-commitments reveal" data-scroll style={{ "--delay": "180ms" }}>
+          <div className="trust-commit">
+            <span className="trust-commit-label">Implementation</span>
+            <strong>Blueprint → build → launch</strong>
+            <p>We handle the project plan while your team keeps selling.</p>
           </div>
-          <div className="trust-stat">
-            <strong className="stat-value">{formatCountThousands(trustStats.inventoryUnits)}</strong>
-            <p className="stat-label">Inventory managed</p>
-            <small>Tracked across warehouses and storefronts</small>
+          <div className="trust-commit">
+            <span className="trust-commit-label">Adoption</span>
+            <strong>Training that sticks</strong>
+            <p>Role-based guides, playbooks, and hands-on sessions.</p>
           </div>
-          <div className="trust-stat">
-            <strong className="stat-value">{formatCount(trustStats.organizations)}</strong>
-            <p className="stat-label">Organizations managed</p>
-            <small>Growing across industries in Ghana</small>
+          <div className="trust-commit">
+            <span className="trust-commit-label">Continuity</span>
+            <strong>Always improving</strong>
+            <p>Quarterly reviews to refine workflows and reports.</p>
           </div>
         </div>
         
@@ -461,12 +203,12 @@ export default function Home() {
 
       <section id="features" className="page features-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Tools</p>
-          <h2>The features that keep Faako grounded.</h2>
+          <p className="eyebrow">Services</p>
+          <h2>Websites, dashboards, ERP, and more - built to fit.</h2>
         </div>
         <div className="tools-tabs reveal" data-scroll>
           <div className="tools-tab-menu">
-            <div className="tools-tab-buttons" role="tablist" aria-label="Module highlights">
+            <div className="tools-tab-buttons" role="tablist" aria-label="Service highlights">
               <button
                 type="button"
                 id="tools-tab-portals"
@@ -480,7 +222,7 @@ export default function Home() {
                 <span className="tools-tab-icon" aria-hidden="true">
                   <FontAwesomeIcon icon={faGlobe} />
                 </span>
-                Portals
+                Websites
               </button>
               <button
                 type="button"
@@ -495,7 +237,7 @@ export default function Home() {
                 <span className="tools-tab-icon" aria-hidden="true">
                   <FontAwesomeIcon icon={faBoxesStacked} />
                 </span>
-                Inventory
+                ERP Core
               </button>
               <button
                 type="button"
@@ -510,7 +252,7 @@ export default function Home() {
                 <span className="tools-tab-icon" aria-hidden="true">
                   <FontAwesomeIcon icon={faChartPie} />
                 </span>
-                Dashboard
+                Dashboards
               </button>
               <button
                 type="button"
@@ -540,7 +282,7 @@ export default function Home() {
                 <span className="tools-tab-icon" aria-hidden="true">
                   <FontAwesomeIcon icon={faMoneyBillWave} />
                 </span>
-                Accounting
+                Finance
               </button>
               <button type="button" className="tools-tab-more">
                 <Link to="/case-studies">
@@ -558,7 +300,7 @@ export default function Home() {
                 aria-hidden={activeTab !== "portals"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/demo10.png" alt="Portals preview" />
+                  <img src="/imgs/demo/demo10.png" alt="Website preview" loading="lazy" decoding="async" />
                   <Link className="tools-tab-overlay" to="/contact">
                     See use case <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
@@ -573,7 +315,7 @@ export default function Home() {
                 aria-hidden={activeTab !== "inventory"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/demo9.png" alt="Inventory preview" />
+                  <img src="/imgs/demo/demo9.png" alt="ERP preview" loading="lazy" decoding="async" />
                   <Link className="tools-tab-overlay" to="/contact">
                     See use case <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
@@ -588,7 +330,7 @@ export default function Home() {
                 aria-hidden={activeTab !== "dashboard"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/demo8.png" alt="Dashboard preview" />
+                  <img src="/imgs/demo/demo8.png" alt="Dashboard preview" loading="lazy" decoding="async" />
                   <Link className="tools-tab-overlay" to="/contact">
                     See use case <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
@@ -603,7 +345,7 @@ export default function Home() {
                 aria-hidden={activeTab !== "workflow"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/demo7.png" alt="Workflow management preview" />
+                  <img src="/imgs/demo/demo7.png" alt="CRM preview" loading="lazy" decoding="async" />
                   <Link className="tools-tab-overlay" to="/contact">
                     See use case <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
@@ -618,7 +360,7 @@ export default function Home() {
                 aria-hidden={activeTab !== "accounting"}
               >
                 <figure className="tools-tab-figure">
-                  <img src="/imgs/demo/demo6.png" alt="Automation overview preview" />
+                  <img src="/imgs/demo/demo6.png" alt="Finance overview preview" loading="lazy" decoding="async" />
                   <Link className="tools-tab-overlay" to="/contact">
                     See use case <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
@@ -648,7 +390,7 @@ export default function Home() {
             </div>
             <iframe 
               src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-              title="Faako ERP Demo - See How It Works"
+              title="Faako System Demo - See How It Works"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope"
               allowFullScreen
             /> 
@@ -667,124 +409,33 @@ export default function Home() {
 
       <section className="page split how-it-works">
         <div className="workflow-copy reveal" data-scroll>
-          <p className="eyebrow">No Stress Process</p>
-          <h2>We Handle Everything While You Run Your Business</h2>
+          <p className="eyebrow">Simple Process</p>
+          <h2>We handle the build while you run the business</h2>
           <p className="lead">
-            No long manuals. No IT headaches. We map your current hustle, build the system, 
-            and train your team - all while your operations keep flowing.
+            No long manuals. No IT headaches. We map your workflows, design the right
+            system, and train your team while operations keep flowing.
           </p>
         </div>
         <div className="workflow-steps">
           <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "80ms" }}>
             <span>01</span>
             <div>
-              <h3>We Visit & Learn Your Flow</h3>
-              <p className="muted">Sit with your team, understand the real processes — not just what's on paper.</p>
+              <h3>Discover and audit your flow</h3>
+              <p className="muted">Sit with your team and understand the real process, not just what's on paper.</p>
             </div>
           </div>
           <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "160ms" }}>
             <span>02</span>
             <div>
-              <h3>Build Your Custom System</h3>
-              <p className="muted">Configure modules, connect Mobile Money, Slack, WhatsApp — whatever you use.</p>
+              <h3>Design and build your system</h3>
+              <p className="muted">Build modules, connect Mobile Money, Slack, WhatsApp, and the tools you use.</p>
             </div>
           </div>
           <div className="step reveal scroll-reveal" data-scroll style={{ "--delay": "240ms" }}>
             <span>03</span>
             <div>
-              <h3>Train & Launch Together</h3>
-              <p className="muted">Phased rollout with training, KPI tracking, and optimization.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ROI Calculator Section */}
-      <section className="page roi-calculator">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Calculate Your Savings</p>
-          <h2>How Much Is Chaos Actually Costing You?</h2>
-          <p className="lead">Move the sliders to see your potential annual savings with Faako</p>
-        </div>
-        
-        <div className="calculator-container">
-          <div className="calculator-inputs reveal" data-scroll>
-            <div className="calc-input-group">
-              <label>
-                <span className="label-text">Hours per week on manual data entry & reconciliation</span>
-                <input 
-                  type="range" 
-                  min="1" 
-                  max="40" 
-                  value={hoursPerWeek}
-                  onChange={(e) => setHoursPerWeek(Number(e.target.value))}
-                  className="calc-slider"
-                />
-                <span className="value-display">{hoursPerWeek} hours/week</span>
-              </label>
-            </div>
-            
-            <div className="calc-input-group">
-              <label>
-                <span className="label-text">Orders or transactions you process daily</span>
-                <input 
-                  type="range" 
-                  min="10" 
-                  max="500"
-                  step="10"
-                  value={ordersPerDay}
-                  onChange={(e) => setOrdersPerDay(Number(e.target.value))}
-                  className="calc-slider"
-                />
-                <span className="value-display">{ordersPerDay} orders/day</span>
-              </label>
-            </div>
-            
-            <div className="calc-input-group">
-              <label>
-                <span className="label-text">Average cost when mistakes happen (wrong orders, inventory errors)</span>
-                <input 
-                  type="range" 
-                  min="50" 
-                  max="5000" 
-                  step="50"
-                  value={errorCost}
-                  onChange={(e) => setErrorCost(Number(e.target.value))}
-                  className="calc-slider"
-                />
-                <span className="value-display">₵{errorCost.toLocaleString()} per error</span>
-              </label>
-            </div>
-          </div>
-          
-          <div className="calculator-results reveal" data-scroll style={{ "--delay": "150ms" }}>
-            <h3>Your Potential Annual Savings</h3>
-            <div className="savings-breakdown">
-              <div className="savings-item">
-                <div className="savings-amount">₵{timeSavings.toLocaleString()}</div>
-                <p className="savings-label">Time saved annually</p>
-                <small>(valued at ₵50/hour)</small>
-              </div>
-              <div className="savings-divider">+</div>
-              <div className="savings-item">
-                <div className="savings-amount">₵{errorSavings.toLocaleString()}</div>
-                <p className="savings-label">Fewer costly errors</p>
-                <small>(assuming 2% error rate reduced by 80%)</small>
-              </div>
-              <div className="savings-divider">=</div>
-              <div className="savings-item total-savings">
-                <div className="savings-amount highlight">₵{totalSavings.toLocaleString()}</div>
-                <p className="savings-label">Total annual savings</p>
-              </div>
-            </div>
-            <div className="calculator-cta">
-              <p className="roi-multiplier">
-                That's <strong>{Math.round(totalSavings / 6500)}x</strong> your Faako Growth plan subscription cost!
-              </p>
-              <p className="roi-note">
-                Plus the time you'll save to actually grow your business instead of fighting with spreadsheets.
-              </p>
-              <PrimaryButton to="/contact">Show Me How to Get There</PrimaryButton>
+              <h3>Launch, train, and support</h3>
+              <p className="muted">Phased rollout with training, KPI tracking, and ongoing improvements.</p>
             </div>
           </div>
         </div>
@@ -796,10 +447,10 @@ export default function Home() {
           style={{ "--delay": "0ms" }}
           data-scroll
         >
-          <h2>More Than Software — We're Your Tech Partners</h2>
+          <h2>More than software - we are your tech partners</h2>
           <p>
-            Every Ghanaian business is unique. Cookie-cutter solutions don't work. 
-            That's why we build WITH you, not just FOR you.
+            Every Ghanaian business is unique. Cookie-cutter solutions do not work.
+            We build with you, not just for you.
           </p>
         </div>
         <div className="consulting-body">
@@ -840,10 +491,10 @@ export default function Home() {
               style={{ "--delay": "200ms" }}
               data-scroll
             >
-              <h3>Stock & Supply Chain</h3>
+              <h3>Websites that win customers</h3>
               <p>
-                Stop losing money to phantom inventory and "it's finished" surprises. 
-                Track every item from warehouse to delivery.
+                Fast, mobile-first sites with clear calls to action, WhatsApp contact,
+                and simple lead capture.
               </p>
             </article>
             <article
@@ -851,10 +502,10 @@ export default function Home() {
               style={{ "--delay": "260ms" }}
               data-scroll
             >
-              <h3>Real Money Dashboards</h3>
+              <h3>Dashboards that drive decisions</h3>
               <p>
-                See your actual profits, now exactly where 
-                every pesewa is going."
+                Live KPIs for sales, inventory, and service delivery with automatic
+                reports your team actually uses.
               </p>
             </article>
             <article
@@ -862,10 +513,10 @@ export default function Home() {
               style={{ "--delay": "320ms" }}
               data-scroll
             >
-              <h3>Built for How YOU Work</h3>
+              <h3>ERP and custom systems</h3>
               <p>
-                Your customers use WhatsApp? Your vendors use Momo? 
-                We connect everything to work YOUR way.
+                Inventory, billing, approvals, and workflows tied together in one
+                system, built around how you work.
               </p>
             </article>
           </div>
@@ -874,29 +525,31 @@ export default function Home() {
 
       <section className="page compliance-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Bank-Level Protection</p>
-          <h2>Your Business Data is Sacred</h2>
+          <p className="eyebrow">Secure by design</p>
+          <h2>Your business data stays protected</h2>
           <p className="lead">
-            We protect your numbers like they're our own because we care.
+            Access control, audit trails, and backups are built into every project.
           </p>
         </div>
         <div className="compliance-grid">
           <div className="compliance-card">
-            <h3>Who Sees What</h3>
+            <h3>Access control</h3>
             <p>Control exactly which staff can view sales, expenses, or customer data.</p>
           </div>
           <div className="compliance-card">
-            <h3>Paper Trail Everything</h3>
-            <p>See who changed what, when — perfect for catching mistakes early.</p>
+            <h3>Audit trails</h3>
+            <p>See who changed what and when, so mistakes are easier to catch.</p>
           </div>
           <div className="compliance-card">
-            <h3>Never Lose Data</h3>
-            <p>Automatic cloud backups mean your business survives even if your laptop doesn't.</p>
+            <h3>Reliable backups</h3>
+            <p>Automatic cloud backups keep you safe even if a device fails.</p>
           </div>
           <div className="compliance-card">
             <h3>Security</h3>
-            <p>Your data is encrypted and safe. 
-              We do not save any banking or card details on our system</p>
+            <p>
+              Your data is encrypted and safe. We do not store banking or card details
+              in our system.
+            </p>
           </div>
         </div>
       </section>
@@ -904,99 +557,98 @@ export default function Home() {
       {/* Pricing Section */}
       <section className="page pricing-preview">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Transparent Pricing</p>
-          <h2>Plans That Scale With Your Business</h2>
-          <p className="lead">No hidden fees. No surprises. No wahala. Cancel anytime.</p>
+          <p className="eyebrow">Flexible Pricing</p>
+          <h2>Engagements built for small Ghanaian businesses</h2>
+          <p className="lead">Choose a launch package now and add support as you grow.</p>
         </div>
         
         <div className="pricing-cards">
           <div className="pricing-card reveal" data-scroll>
-            <h3>Starter</h3>
+            <h3>Website Launch</h3>
             <div className="price-tag">
-              <span className="price">₵2,500</span>
-              <span className="period">/month</span>
+              <span className="price">From GHS 2,500</span>
+              <span className="period">project</span>
             </div>
             <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Up to 10 users</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Core modules (CRM, Inventory, Sales, Finance)</li>
-              <li><FontAwesomeIcon icon={faCheck} /> WhatsApp integration</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Mobile Money support</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Monthly data backups</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Email support</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Up to 5 pages</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Mobile-first design</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Lead capture + WhatsApp link</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Basic SEO + analytics</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Training handover</li>
+              <li><FontAwesomeIcon icon={faCheck} /> 2 weeks support</li>
             </ul>
             <p className="ideal-for">
-              <strong>Perfect for:</strong> Small retailers, service businesses, single-location operations
+              <strong>Perfect for:</strong> New businesses, service providers, local brands
             </p>
-            <PrimaryButton to="/contact">Start Your Trial</PrimaryButton>
+            <PrimaryButton to="/contact">Start a Website Project</PrimaryButton>
           </div>
           
           <div className="pricing-card featured reveal" data-scroll style={{ "--delay": "100ms" }}>
             <span className="badge">Most Popular</span>
-            <h3>Growth</h3>
+            <h3>Dashboards + Automation</h3>
             <div className="price-tag">
-              <span className="price">₵6,500</span>
-              <span className="period">/month</span>
+              <span className="price">From GHS 6,500</span>
+              <span className="period">project + support</span>
             </div>
             <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Up to 50 users</li>
-              <li><FontAwesomeIcon icon={faCheck} /> All modules + custom workflows</li>
-              <li><FontAwesomeIcon icon={faCheck} /> API integrations (Mobile Money, Banks, Slack)</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Multi-location support</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Dedicated account manager</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Daily backups + priority support</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Custom reports</li>
+              <li><FontAwesomeIcon icon={faCheck} /> KPI dashboard setup</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Data integrations (Sheets, POS, CRM)</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Role-based access</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Automated weekly reports</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Team training</li>
+              <li><FontAwesomeIcon icon={faCheck} /> 1 month support</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Custom metrics</li>
             </ul>
             <p className="ideal-for">
-              <strong>Perfect for:</strong> Multi-location businesses, logistics companies, growing distributors
+              <strong>Perfect for:</strong> Teams managing stock, sales, or operations
             </p>
-            <PrimaryButton to="/contact">Book a Demo</PrimaryButton>
+            <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
           </div>
           
           <div className="pricing-card reveal" data-scroll style={{ "--delay": "200ms" }}>
-            <h3>Enterprise</h3>
+            <h3>ERP + Custom Systems</h3>
             <div className="price-tag">
               <span className="price">Custom</span>
-              <span className="period">Let's talk</span>
+              <span className="period">scope-based</span>
             </div>
             <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Unlimited users</li>
-              <li><FontAwesomeIcon icon={faCheck} /> White-label options</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Custom module development</li>
-              <li><FontAwesomeIcon icon={faCheck} /> On-premise deployment available</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Advanced security features</li>
-              <li><FontAwesomeIcon icon={faCheck} /> 24/7 dedicated support team</li>
+              <li><FontAwesomeIcon icon={faCheck} /> ERP modules for inventory, sales, finance</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Workflow approvals and permissions</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Integrations for Mobile Money, banks, SMS</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Data migration and cleanup</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Onsite training</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Ongoing support options</li>
               <li><FontAwesomeIcon icon={faCheck} /> SLA guarantees</li>
             </ul>
             <p className="ideal-for">
-              <strong>Perfect for:</strong> Large distributors, manufacturers, enterprise organizations
+              <strong>Perfect for:</strong> Multi-location businesses, distributors, growing operations
             </p>
             <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
           </div>
         </div>
         
         <p className="pricing-note reveal" data-scroll style={{ "--delay": "300ms" }}>
-          ✨ All plans include setup assistance, team training, and data migration. 
-          <Link to="/pricing" className="text-link"> See detailed comparison <FontAwesomeIcon icon={faArrowRight} /></Link>
+          All engagements include discovery, training, and launch support.
+          <Link to="/pricing" className="text-link"> See detailed pricing <FontAwesomeIcon icon={faArrowRight} /></Link>
         </p>
       </section>
 
       <section className="page cta reveal" data-scroll>
         <div className="cta-content">
-          <h2>Ready to Stop the Spreadsheet Madness?</h2>
-          <p className="lead">Let's show you what running a modern business actually looks like.</p>
+          <h2>Ready to modernize your operations?</h2>
+          <p className="lead">We will map the fastest path to a better website, dashboard, or ERP.</p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">See Faako in Action (Free Demo)</PrimaryButton>
+          <PrimaryButton to="/contact">Book a Free Consultation</PrimaryButton>
         </div>
       </section>
 
       <section id="solutions" className="page solutions-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">The Platform</p>
-          <h2>Comprehensive ERP Solutions</h2>
+          <p className="eyebrow">What we deliver</p>
+          <h2>SaaS systems and consulting that improve efficiency</h2>
           <p className="lead">
-            We don't just provide tools; we re-engineer your workflows for
-            maximum efficiency.
+            We do not just provide tools; we build systems your team can actually run.
           </p>
         </div>
 
@@ -1005,17 +657,17 @@ export default function Home() {
           <div className="solution-pillar reveal" data-scroll style={{ "--delay": "100ms" }}>
             <div className="pillar-head">
               <div className="pillar-icon">01</div>
-              <h3>Operational Excellence</h3>
+              <h3>Digital presence</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Unified Inventory:</strong> Real-time tracking of stock levels across multiple warehouses with serialized asset management.
+                <strong>Business websites:</strong> Fast, mobile-first sites with clear calls to action.
               </li>
               <li>
-                <strong>Supply Chain Sync:</strong> Automated vendor procurement and purchase order approvals to prevent stockouts.
+                <strong>Lead capture:</strong> Forms, WhatsApp, booking links, and CRM handoff.
               </li>
               <li>
-                <strong>Logistics & Dispatch:</strong> Integrated route optimization and delivery tracking for field operations.
+                <strong>Online payments:</strong> Integrations for Mobile Money and card payments.
               </li>
             </ul>
           </div>
@@ -1024,17 +676,17 @@ export default function Home() {
           <div className="solution-pillar reveal" data-scroll style={{ "--delay": "200ms" }}>
             <div className="pillar-head">
               <div className="pillar-icon">02</div>
-              <h3>Financial Integrity</h3>
+              <h3>Operations systems</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Automated Accounting:</strong> Seamless flow from sales orders to ledger entries without manual data entry.
+                <strong>ERP modules:</strong> Inventory, sales, billing, and procurement in one system.
               </li>
               <li>
-                <strong>Revenue Tracking:</strong> Real-time visibility into cash flow, receivables, and payables.
+                <strong>Workflow approvals:</strong> Track requests, approvals, and handoffs without chaos.
               </li>
               <li>
-                <strong>Multi-Currency Support:</strong> Handle global transactions with automatic exchange rate updates.
+                <strong>Multi-location support:</strong> Manage branches, warehouses, or teams in one view.
               </li>
             </ul>
           </div>
@@ -1043,17 +695,17 @@ export default function Home() {
           <div className="solution-pillar reveal" data-scroll style={{ "--delay": "300ms" }}>
             <div className="pillar-head">
               <div className="pillar-icon">03</div>
-              <h3>Strategic Intelligence</h3>
+              <h3>Data and automation</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Custom Dashboards:</strong> KPIs tailored to your specific business goals—from conversion rates to asset ROI.
+                <strong>Dashboards:</strong> KPIs tailored to your specific business goals.
               </li>
               <li>
-                <strong>Predictive Analytics:</strong> Use historical data to forecast demand and optimize labor costs.
+                <strong>Automation:</strong> Scheduled reports, alerts, and integrations across tools.
               </li>
               <li>
-                <strong>Role-Based Access:</strong> Secure, granular permissions ensure the right people see the right data.
+                <strong>Role-based access:</strong> Secure, granular permissions for every team.
               </li>
             </ul>
           </div>
@@ -1062,10 +714,10 @@ export default function Home() {
 
       <section id="modules" className="page section modules-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Installable Apps</p>
-          <h2>Build your stack, one module at a time</h2>
+          <p className="eyebrow">Service Menu</p>
+          <h2>Build your stack, one service at a time</h2>
           <p className="lead">
-            Turn on only what you need. Add apps as your team grows, plus recommended add-ons for scale.
+            Start with a website or dashboard, then add ERP modules as your team grows.
           </p>
         </div>
 
@@ -1205,7 +857,7 @@ export default function Home() {
 
       <section className="page cta reveal" data-scroll>
         <div className="cta-content">
-          <h2>Ready for an ERP audit?</h2>
+          <h2>Ready for a tech audit?</h2>
           <p className="lead">
             We map your current stack, surface quick wins, and build a phased
             rollout plan tailored to your operations.
@@ -1222,8 +874,8 @@ export default function Home() {
       {/* Comparison Table Section */}
       <section className="page comparison-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Why Faako Wins</p>
-          <h2>Stop Cobbling Together 5 Different Tools</h2>
+          <p className="eyebrow">Why Faako</p>
+          <h2>Stop stitching together tools that do not talk</h2>
           <p className="lead">See how we compare to the old way of doing things</p>
         </div>
         
@@ -1232,102 +884,81 @@ export default function Home() {
             <thead>
               <tr>
                 <th className="feature-col">What You Need</th>
-                <th className="competitor-col">Excel + WhatsApp</th>
-                <th className="competitor-col">QuickBooks + Others</th>
-                <th className="highlight-col">Faako ERP</th>
+                <th className="competitor-col">DIY + spreadsheets</th>
+                <th className="competitor-col">Off-the-shelf tools</th>
+                <th className="highlight-col">Faako build + support</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td className="feature-name">Real-time inventory tracking</td>
+                <td className="feature-name">Website and online presence</td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Manual updates, always outdated</span>
+                    <span>Basic site, no strategy</span>
                   </div>
                 </td>
                 <td className="comparison-warning">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTriangleExclamation}/>
-                    <span>Separate system, extra cost</span>
+                    <span>Template only, limited customization</span>
                   </div>
                 </td>
                 <td className="comparison-yes highlight">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                    <span>Live tracking, all locations</span>
+                    <span>Custom site built for your customers</span>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td className="feature-name">Team collaboration</td>
+                <td className="feature-name">Dashboards and reporting</td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Lost in WhatsApp chaos</span>
+                    <span>Manual weekly reports</span>
                   </div>
                 </td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Email back and forth</span>
+                    <span>Data stuck in one tool</span>
                   </div>
                 </td>
                 <td className="comparison-yes highlight">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                    <span>Built-in workflows & approvals</span>
+                    <span>Live dashboards across your stack</span>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td className="feature-name">Mobile Money integration</td>
+                <td className="feature-name">Process automation</td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Manual entry, errors everywhere</span>
+                    <span>Manual follow-ups and reminders</span>
                   </div>
                 </td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Not available in Ghana</span>
+                    <span>Partial automation, extra tools</span>
                   </div>
                 </td>
                 <td className="comparison-yes highlight">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                    <span>Direct MTN, Vodafone, AirtelTigo</span>
+                    <span>Connected workflows across teams</span>
                   </div>
                 </td>
               </tr>
               <tr>
-                <td className="feature-name">Multi-location support</td>
+                <td className="feature-name">Local support</td>
                 <td className="comparison-no">
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>Impossible to manage</span>
-                  </div>
-                </td>
-                <td className="comparison-warning">
-                  <div className="comparison-cell">
-                    <FontAwesomeIcon icon={faTriangleExclamation}/>
-                    <span>Complex, expensive setup</span>
-                  </div>
-                </td>
-                <td className="comparison-yes highlight">
-                  <div className="comparison-cell">
-                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
-                    <span>Built-in, unlimited locations</span>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td className="feature-name">Local support team</td>
-                <td className="comparison-no">
-                  <div className="comparison-cell">
-                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
-                    <span>DIY, Google is your friend</span>
+                    <span>You are the support</span>
                   </div>
                 </td>
                 <td className="comparison-warning">
@@ -1340,6 +971,27 @@ export default function Home() {
                   <div className="comparison-cell">
                     <FontAwesomeIcon icon={faCheck} className="icon-yes" />
                     <span>Ghana-based team, same timezone</span>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td className="feature-name">Training and adoption</td>
+                <td className="comparison-no">
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTimes} className="icon-no" />
+                    <span>No training</span>
+                  </div>
+                </td>
+                <td className="comparison-warning">
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faTriangleExclamation}/>
+                    <span>Extra cost, limited availability</span>
+                  </div>
+                </td>
+                <td className="comparison-yes highlight">
+                  <div className="comparison-cell">
+                    <FontAwesomeIcon icon={faCheck} className="icon-yes" />
+                    <span>Included training and handover</span>
                   </div>
                 </td>
               </tr>
@@ -1365,18 +1017,18 @@ export default function Home() {
                 </td>
               </tr>
               <tr className="price-row">
-                <td className="feature-name"><strong>Monthly cost</strong></td>
+                <td className="feature-name"><strong>Typical cost</strong></td>
                 <td className="comparison-price">
-                  <span className="price">Free</span>
-                  <small>But costly mistakes daily</small>
+                  <span className="price">Hidden time cost</span>
+                  <small>Delays and rework</small>
                 </td>
                 <td className="comparison-price">
-                  <span className="price">₵3,000+</span>
-                  <small>Per tool, adds up fast</small>
+                  <span className="price">Monthly per tool</span>
+                  <small>Stacks add up fast</small>
                 </td>
                 <td className="comparison-price highlight">
-                  <span className="price">From ₵2,500</span>
-                  <small>Everything included</small>
+                  <span className="price">Project + support plan</span>
+                  <small>Clear scope and handover</small>
                 </td>
               </tr>
             </tbody>
@@ -1389,27 +1041,27 @@ export default function Home() {
       </section>
 
       {/* --- Expertise Section --- */}
-      <section id="expertise" className="page expertise-section">
+      <section id="expertise" className="page expertise-section page--panel">
         <div className="expertise-content reveal" data-scroll>
           <p className="eyebrow">Why Choose Faako</p>
-          <h2>We Don't Just Sell Software,<br/>We Transform Your Operations</h2>
+          <h2>We do not just sell software,<br/>we build working systems</h2>
           <p className="lead">
-            Installing an ERP isn't like downloading an app. It's rewiring how your entire 
-            business runs. Good thing we've done this many times before.
+            Software only helps when it fits how you work. We combine consulting, build,
+            and training so teams adopt fast.
           </p>
 
           <div className="expertise-items">
             <div className="exp-item">
-              <h4>Rescue Your Old Data</h4>
-              <p>Those 5 years of Excel sheets? WhatsApp receipts? Old POS records? We clean it up and move everything into one place.</p>
+              <h4>Clean up messy data</h4>
+              <p>We organize old spreadsheets, invoices, and customer lists so you start with clean data.</p>
             </div>
             <div className="exp-item">
-              <h4>Connect Your Actual Tools</h4>
-              <p>Mobile Money, Slack, WhatsApp Business, Stripe, your bank — whatever you actually use, we hook it up.</p>
+              <h4>Connect the tools you use</h4>
+              <p>Mobile Money, POS, WhatsApp Business, Google Sheets - we integrate what you already rely on.</p>
             </div>
             <div className="exp-item">
-              <h4>Train Your Team (For Real)</h4>
-              <p>We come to your office, sit with your people, and make sure everyone actually uses the system — not just the IT guy.</p>
+              <h4>Train your team</h4>
+              <p>We train your staff and stay close until the system becomes habit.</p>
             </div>
           </div>
         </div>
@@ -1429,24 +1081,24 @@ export default function Home() {
       <section className="page mobile-showcase">
         <div className="split-layout">
           <div className="mobile-copy reveal" data-scroll>
-            <p className="eyebrow">Works Everywhere You Do</p>
-            <h2>Your Team Runs Faako From Their Phones</h2>
+            <p className="eyebrow">Works Everywhere</p>
+            <h2>Your systems run on phone, tablet, and desktop</h2>
             <p className="lead">
-              Because let's be real — most of your team is on mobile. We built Faako to work perfectly 
-              on phones, tablets, and laptops.
+              Most teams work on mobile. We build every website, dashboard, and ERP module
+              to work on any screen.
             </p>
             <ul className="checklist">
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} className="check-icon" />
-                <span><strong>Approve orders from the car</strong> — No need to be at your desk</span>
+                <span><strong>Approve requests from the field</strong> - no need to be at your desk</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} className="check-icon" />
-                <span><strong>Check inventory from the warehouse</strong> — Real-time stock levels</span>
+                <span><strong>Check sales and stock</strong> - real-time visibility</span>
               </li>
               <li>
                 <FontAwesomeIcon icon={faCheckCircle} className="check-icon" />
-                <span><strong>Send invoices from site visits</strong> — Close deals on the spot</span>
+                <span><strong>Send invoices from site visits</strong> - close deals on the spot</span>
               </li>
             </ul>
             <div className="mobile-badges">
@@ -1467,7 +1119,7 @@ export default function Home() {
           <div className="mobile-preview reveal" data-scroll style={{ "--delay": "150ms" }}>
             <div className="mobile-mockup">
               <div className="mobile-mockup-scroll">
-                <img src="/imgs/demo/demo4.png" alt="Faako mobile dashboard" />
+                <img src="/imgs/demo/demo4.png" alt="Faako mobile dashboard" loading="lazy" decoding="async" />
               </div>
               <div className="mobile-feature-callout">
                 <span>👆 Scroll to navigate</span>
@@ -1481,25 +1133,25 @@ export default function Home() {
         className="page section testimonials"
         headerScroll
         cardScroll
-        eyebrow="Real Talk from Real Businesses"
-        title="Here's What Happens When You Stop the Chaos"
-        lead="No more 'let me check and get back to you.' No more guessing. Just clarity."
+        eyebrow="Real results from Ghanaian SMEs"
+        title="What changes when your systems work"
+        lead="No more 'let me check and get back to you.' Just clarity and speed."
         items={[
           {
             quote:
-              "Ah! We finally see everything — every order, every booking, every delivery. The team stopped that Excel back-and-forth overnight. Now we can actually plan ahead.",
-            author: "Operations Manager, Event Rentals (Accra)",
+              "Our website finally brings in serious inquiries, and the dashboard shows every order in one place. We can actually plan ahead now.",
+            author: "Operations lead, event rentals (Accra)",
           },
           {
             quote:
-              "The dashboards are too clear. We know what's moving, what's stuck, where to jump in. Our Monday meetings now take 15 minutes instead of 2 hours.",
+              "The dashboards are too clear. We know what is moving, what is stuck, and where to jump in. Our Monday meetings now take 20 minutes.",
             author: "COO, Logistics Company (Tema)",
             delay: "120ms",
           },
           {
             quote:
-              "Setup was fast oh! And the team didn't just hand us software and disappear. They stayed with us, trained everyone. We launched smoothly — no drama.",
-            author: "Founder, Multi-Location Retail Chain",
+              "Setup was fast, and the team did not just hand us software and disappear. They trained everyone and we launched smoothly.",
+            author: "Founder, retail chain",
             delay: "220ms",
           },
         ]}
@@ -1515,18 +1167,18 @@ export default function Home() {
         </div>
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">See It Working</p>
-          <h2>Real Businesses, Real Results</h2>
+          <h2>Websites, dashboards, and ERP in action</h2>
         </div>
 
         <div className="case-grid">
           <article className="case-card reveal" data-scroll>
             <div className="case-image">
-              <img src="/imgs/case-studies/erp-case.png" alt="Reebs ERP system" />
+              <img src="/imgs/case-studies/erp-case.png" alt="ERP system dashboard" loading="lazy" decoding="async" />
             </div>
             <div className="case-info">
-              <span className="case-tag">Party Rentals</span>
-              <h3>From WhatsApp Confusion to One Dashboard</h3>
-              <p>How a multi-location events company stopped losing equipment and started tracking every cedi.</p>
+              <span className="case-tag">ERP System</span>
+              <h3>From WhatsApp confusion to one ERP dashboard</h3>
+              <p>How a multi-location events company stopped losing equipment and tracked every cedi.</p>
               <Link to="/contact" className="text-link">
                 Read Their Story <FontAwesomeIcon icon={faArrowRight} />
               </Link>
@@ -1535,12 +1187,12 @@ export default function Home() {
 
           <article className="case-card reveal" data-scroll style={{ "--delay": "150ms" }}>
             <div className="case-image">
-              <img src="/imgs/case-studies/dashboard-case.png" alt="Developer dashboard" />
+              <img src="/imgs/case-studies/dashboard-case.png" alt="Developer dashboard" loading="lazy" decoding="async" />
             </div>
             <div className="case-info">
-              <span className="case-tag">Tech Startup</span>
-              <h3>Developer Team Stopped Playing Email Tennis</h3>
-              <p>Real-time visibility into who's working on what, what's deployed, and what needs attention.</p>
+              <span className="case-tag">Operations Dashboard</span>
+              <h3>Leadership finally saw the live numbers</h3>
+              <p>Real-time visibility into what is shipped, what is stuck, and what needs attention.</p>
               <Link to="/contact" className="text-link">
                 See How They Did It <FontAwesomeIcon icon={faArrowRight} />
               </Link>
@@ -1553,29 +1205,29 @@ export default function Home() {
         className="page faq-section"
         headerScroll
         eyebrow="Your Questions Answered"
-        title="Let's Address the Elephant in the Room"
-        lead="We know what you're thinking. Here's the real talk on timing, cost, and what happens after."
+        title="Let's address the big questions"
+        lead="Here is the real talk on timing, cost, and what happens after launch."
         items={[
           {
-            question: "How long before we're actually using this thing?",
+            question: "How long does a project take?",
             answer:
-              "Most teams are live in 4-8 weeks. We start with your most urgent pain points (usually inventory or billing), get those running, then add the rest as you're ready. No need to flip everything overnight.",
+              "Websites are usually 2-4 weeks. Dashboards take 4-6 weeks. ERP systems can take 6-10+ weeks depending on scope and data readiness.",
             open: true,
           },
           {
-            question: "What about our old Excel sheets and WhatsApp messages?",
+            question: "Can you work with our existing tools and data?",
             answer:
-              "We don't throw away your history. We extract, clean up, and import everything worth keeping — invoices, customer records, inventory logs, all of it. Your data comes with you.",
+              "Yes. We integrate with the tools you already use and clean or migrate spreadsheets, POS exports, and customer lists.",
           },
           {
-            question: "Can this work with how WE actually do things?",
+            question: "Can we start small and expand later?",
             answer:
-              "100%. We're not handing you some rigid template. We configure approvals, permissions, and workflows around how YOUR team actually operates. If your dispatch runs on WhatsApp, we connect WhatsApp.",
+              "Yes. Start with a website or dashboard, then add ERP modules as your team grows.",
           },
           {
-            question: "What happens after launch? Do you just disappear?",
+            question: "What happens after launch?",
             answer:
-              "Never. We do monthly check-ins to review what's working, optimize slow spots, and add features as you grow. Think of us as your tech partner, not just a vendor.",
+              "We provide training, documentation, and support plans. You can retain us for ongoing improvements.",
           },
         ]}
       />
@@ -1588,16 +1240,16 @@ export default function Home() {
           {/* Add image elements here */}
         </div>
         <div className="cta-content">
-          <h2>Let's Stop Talking and Show You</h2>
+          <h2>Let's map the right system for your business</h2>
           <p className="lead">
-            Get a personalized demo using YOUR industry, YOUR team structure, 
-            and YOUR actual pain points. No sales pitch — just real solutions.
+            Get a personalized walkthrough based on your industry, team structure,
+            and actual pain points. No sales pitch, just real solutions.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Book Your Free Demo</PrimaryButton>
-          <Link className="button button-ghost" to="/signup">
-            Or Start Your Trial
+          <PrimaryButton to="/contact">Book a Free Consultation</PrimaryButton>
+          <Link className="button button-ghost" to="/case-studies">
+            View Case Studies
           </Link>
         </div>
       </section>

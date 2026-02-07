@@ -27,9 +27,9 @@ export default function About() {
           <p className="eyebrow">About Faako</p>
           <h1>We're the ones who said "Ghanaian business deserves better." Then we built it.</h1>
           <p className="lead">
-            No more Excel chaos. No more "e dey somewhere." Faako was born right
-            here in Ghana — built by people who know the hustle, the market, and
-            exactly what it takes to scale a business on this continent.
+            No more Excel chaos. Faako was born right
+            here in Ghana — built by people who know the struggle, the market, and
+            exactly what it takes to scale a business with the right systems.
           </p>
           <div className="cta-actions">
             <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
@@ -52,23 +52,36 @@ export default function About() {
 
         <div className="split reveal" data-scroll style={{ "--delay": "100ms" }}>
           <div className="story-copy">
-            <p>
-              Picture this: a logistics boss in Tema, running one of the busiest
-              supply chains in the region, coordinating everything through three
-              WhatsApp groups, two Excel sheets, and a notebook that's seen better
-              days. Sound familiar? That was the reality for most growing businesses
-              in Ghana — and nobody was fixing it.
+            <p className="story-lead">
+              Faako started inside a kids party rental business in Ghana. The
+              pain was simple: stock never matched, and the tools made it worse.
             </p>
-            <p style={{ marginTop: "1rem" }}>
-              The big enterprise software? Too expensive. Too complicated. Built
-              for London and San Francisco — not for Accra and Kumasi. No Mobile
-              Money support. No idea how Ghanaian supply chains actually move. And
-              zero local support when things got stuck at 6pm on a Friday.
-            </p>
-            <p style={{ marginTop: "1rem" }}>
-              So we said: enough. We built Faako — the ERP that finally puts
-              African businesses first. Not as an afterthought. Not as a "local
-              version." As the main event.
+            <div className="story-grid">
+              <article className="story-card">
+                <h3>Manual stock counts</h3>
+                <p>
+                  Items were tracked by hand and counted every month (sometimes
+                  once a year), so the numbers were always behind reality.
+                </p>
+              </article>
+              <article className="story-card">
+                <h3>Spreadsheet bottleneck</h3>
+                <p>
+                  Inventory lived in a clunky Excel sheet that was hard for team
+                  members with little to no computer literacy.
+                </p>
+              </article>
+              <article className="story-card">
+                <h3>No-fit enterprise tools</h3>
+                <p>
+                  The big platforms were too expensive, too complex, and built
+                  for elsewhere — not for how Ghanaian businesses actually run.
+                </p>
+              </article>
+            </div>
+            <p className="story-quote">
+              So we built Faako — custom software and consulting made for African
+              businesses, as the main event.
             </p>
           </div>
           <div className="story-numbers">
@@ -78,13 +91,10 @@ export default function About() {
                   <FontAwesomeIcon icon={faMapMarkerAlt} /> Born in Ghana
                 </span>
                 <span>
-                  <FontAwesomeIcon icon={faCalendarAlt} /> Since 2022
+                  <FontAwesomeIcon icon={faCalendarAlt} /> Since 2026
                 </span>
                 <span>
-                  <FontAwesomeIcon icon={faUsers} /> 100+ businesses
-                </span>
-                <span>
-                  <FontAwesomeIcon icon={faChartLine} /> ₵45M+ flowing
+                  <FontAwesomeIcon icon={faUsers} /> Serving local businesses
                 </span>
               </div>
             </div>
@@ -96,7 +106,7 @@ export default function About() {
       <section className="section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What We're Really Here For</p>
-          <h2>One dashboard. One truth. Zero wahala.</h2>
+          <h2>One dashboard. One truth. Zero confusion.</h2>
           <p className="lead">
             When your whole team sees the same numbers at the same time — no more
             "let me check and get back to you," no more guessing where the cedis
@@ -111,8 +121,8 @@ export default function About() {
             </div>
             <h3>Ghana first. Always.</h3>
             <p className="muted">
-              Mobile Money? Built in. GRA compliance? Handled. We designed for the
-              way business actually runs on this side of the world — not some
+              Mobile Money? Built in. WhatsApp? Connected. Local compliance?
+              Handled. We design for how business actually runs here — not some
               textbook version of it.
             </p>
           </article>
@@ -168,7 +178,7 @@ export default function About() {
           <div className="step reveal" data-scroll style={{ "--delay": "140ms" }}>
             <span>02</span>
             <div>
-              <h3>Build Around YOUR Hustle</h3>
+              <h3>Build Around YOU</h3>
               <p className="muted">
                 Your dispatch runs on WhatsApp? Cool, we connect WhatsApp. Your
                 accountant lives in Excel? We pull that data in. Mobile Money
@@ -228,7 +238,7 @@ export default function About() {
             <h3>Built to Survive the Chaos</h3>
             <p className="muted">
               Staff change on Monday. New supplier on Tuesday. Peak season hits
-              Wednesday. African business moves fast — and Faako moves with it.
+              Wednesday. Business moves fast — and Faako moves with it.
               We build systems that don't break when things get hectic.
             </p>
           </article>
@@ -246,7 +256,7 @@ export default function About() {
         </div>
       </section>
 
-      {/* ── Impact Numbers ── */}
+      {/* ── Impact Numbers ── 
       <section className="section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">The Numbers Don't Lie</p>
@@ -275,7 +285,7 @@ export default function About() {
             <p className="muted">Locations. Accra, Kumasi, Tema, Takoradi — and we're still spreading.</p>
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* ── CTA ── */}
       <section className="cta reveal" data-scroll>
@@ -290,7 +300,7 @@ export default function About() {
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Book a Free Demo</PrimaryButton>
+          <PrimaryButton to="/contact">Book a Free Consultation</PrimaryButton>
           <Link className="button button-ghost" to="/">
             Back to Home <FontAwesomeIcon icon={faArrowRight} />
           </Link>
@@ -299,21 +309,16 @@ export default function About() {
       
       <WhatsApp />
 
-      {/* ── Trusted By ── */}
+      {/* ── Trusted By ── 
       <TrustedBy
         className="page trust-strip"
         eyebrow="The Family"
         title="These businesses already made the switch."
-        lead="From hustlers in Accra to enterprise teams in Kumasi — Faako is the engine behind their daily operations."
+        lead="From small teams in Accra to enterprise operations in Kumasi — Faako powers their daily work."
         logos={[
-          "Reebs",
-          "Atlas Rentals",
-          "Northbridge",
-          "Summit Events",
-          "Clearline Logistics",
-          "VentureWorks",
+          { name: "Reebs", src: "/imgs/company-logos/reebs_logo.svg" },
         ]}
-      />
+      />*/}
     </section>
   );
 }

@@ -285,17 +285,17 @@ export default function ModuleConfig() {
   return (
     <section className="page module-config">
       <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-        <p className="eyebrow">Module Configuration</p>
-        <h1>Design your ERP backbone before we build it.</h1>
+        <p className="eyebrow">Project Blueprint</p>
+        <h1>Design your system blueprint before we build it.</h1>
         <p className="lead">
-          Select the exact modules your business needs today. We will use this
-          blueprint to generate your Faako workspace after signup.
+          Select the building blocks your business needs today. We will use this
+          blueprint to shape your project scope and rollout.
         </p>
         <div className="ribbon">
           <div>
             <p className="eyebrow">Setup Flow</p>
             <h3>
-              Signup <FontAwesomeIcon icon={faArrowRight} /> Configure{" "}
+              Discovery <FontAwesomeIcon icon={faArrowRight} /> Configure{" "}
               <FontAwesomeIcon icon={faArrowRight} /> Launch
             </h3>
           </div>
@@ -310,8 +310,8 @@ export default function ModuleConfig() {
       <div className="module-config-body">
         <div className="module-config-main">
           <div className="section-header reveal" style={{ "--delay": "80ms" }}>
-            <p className="eyebrow">Core Backbone</p>
-            <h2>Every plan includes the essentials.</h2>
+            <p className="eyebrow">Core Building Blocks</p>
+            <h2>Every project starts with the essentials.</h2>
             <p className="lead">
               These modules power finance, inventory, and people operations
               across your organization.
@@ -378,12 +378,12 @@ export default function ModuleConfig() {
             <p className="eyebrow">Blueprint Summary</p>
             <h3>Your current configuration</h3>
             <p className="muted">
-              We will review this with you before building the workspace.
+              We will review this with you before starting the build.
             </p>
           </div>
 
           <label>
-            Plan
+            Package
             <select value={plan} onChange={(event) => setPlan(event.target.value)}>
               <option value="Starter">Starter</option>
               <option value="Professional">Professional</option>
@@ -417,13 +417,13 @@ export default function ModuleConfig() {
           </label>
 
           <label>
-            Billing cycle
+            Support cadence
             <select
               value={billingCycle}
               onChange={(event) => setBillingCycle(event.target.value)}
             >
               <option value="monthly">Monthly</option>
-              <option value="annual">Annual (save 15-20%)</option>
+              <option value="annual">Annual planning</option>
             </select>
           </label>
 
@@ -475,22 +475,22 @@ export default function ModuleConfig() {
                 <p className="muted">No add-ons selected yet.</p>
               )}
             </div>
-            <div className="config-meta">
-              <span>Plan: {plan}</span>
-              <span>Team: {teamSize}</span>
-              <span>Billing: {billingCycle}</span>
-              <span>Currency: {currency}</span>
-              <span>Timeline: {implementation}</span>
-              <span>Advisory: {needsConsulting ? "Included" : "Not included"}</span>
-            </div>
+          <div className="config-meta">
+            <span>Plan: {plan}</span>
+            <span>Team: {teamSize}</span>
+            <span>Support: {billingCycle}</span>
+            <span>Currency: {currency}</span>
+            <span>Timeline: {implementation}</span>
+            <span>Advisory: {needsConsulting ? "Included" : "Not included"}</span>
           </div>
+        </div>
 
-          <PrimaryButton to="/dashboard">Confirm blueprint</PrimaryButton>
-          <Link className="button button-ghost" to="/signup">
-            Back to signup
-          </Link>
-        </form>
-      </div>
-    </section>
+        <PrimaryButton to="/dashboard">Request scope review</PrimaryButton>
+        <Link className="button button-ghost" to="/signup">
+          Back to intake
+        </Link>
+      </form>
+    </div>
+  </section>
   );
 }

@@ -17,14 +17,14 @@ export default function Solutions() {
     <section className="page solutions page-stack">
 
       {/* ── Hero ── */}
-      <section className="solutions-hero split">
+      <section className="solutions-hero split" id="solutions-hero">
         <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
           <p className="eyebrow">What Faako Does</p>
           <h1>Stop running your business in pieces. Connect everything.</h1>
           <p className="lead">
-            Finance, Ops, People — all talking to each other, all in one place.
+            Websites, dashboards, and operations systems that talk to each other.
             No more chasing info between WhatsApp groups and Excel sheets. Just
-            one dashboard that actually tells you what's going on.
+            one view that actually tells you what's going on.
           </p>
           <div className="cta-actions">
             <PrimaryButton to="/contact">Let's Build Yours</PrimaryButton>
@@ -39,99 +39,98 @@ export default function Solutions() {
             <span className="solutions-hero-orbit orbit-two" />
             <span className="solutions-hero-dot dot-one" />
             <span className="solutions-hero-dot dot-two" />
-            <span className="solutions-hero-chip chip-one">CRM</span>
-            <span className="solutions-hero-chip chip-two">Inventory</span>
-            <span className="solutions-hero-chip chip-three">Finance</span>
+            <span className="solutions-hero-chip chip-one">Websites</span>
+            <span className="solutions-hero-chip chip-two">Dashboards</span>
+            <span className="solutions-hero-chip chip-three">ERP</span>
           </div>
           <img
             className="solutions-hero-art"
             src="/imgs/elements/17.svg"
-            alt="Faako ERP dashboard preview"
+            alt="Faako dashboard preview"
           />
           <figcaption>Everything, in one place. Too clear.</figcaption>
         </figure>
       </section>
 
       {/* ── Core Pillars ── */}
-      <section className="page solutions-section">
+      <section className="page solutions-section" id="core-pillars">
         <div className="section-header reveal">
           <p className="eyebrow">The Three Pillars</p>
           <h2>The three things every business needs running smoothly.</h2>
           <p className="lead">
-            Money. Operations. People. When these three are synced up and talking
-            to each other, that's when the magic happens.
+            Digital presence. Operations. Data. When these three are synced up and
+            talking to each other, that's when the magic happens.
           </p>
         </div>
         <div className="solutions-container">
 
-          <article className="solution-pillar reveal">
+          <article className="solution-pillar reveal" id="finance">
             <div className="pillar-head">
               <div className="pillar-icon">01</div>
-              <h3>Know Your Money</h3>
+              <h3>Digital Presence</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Cash Flow — Too Clear</strong>
-                See every invoice, every expense, every cedi moving in and out.
-                In real time. No guessing.
+                <strong>Business Websites</strong>
+                Fast, mobile-first sites with clear calls to action and lead capture.
               </li>
               <li>
-                <strong>Dashboards That Make Sense</strong>
-                Revenue, margins, GRA-ready reports — all in one screen. Your
-                Monday morning meeting just got a lot shorter.
+                <strong>Lead Capture + Booking</strong>
+                Forms, WhatsApp, and booking links that turn visitors into customers.
               </li>
               <li>
-                <strong>Paper Trail on Everything</strong>
-                Every approval, every change, logged automatically. If GRA comes
-                knocking, you're ready.
+                <strong>Payments Ready</strong>
+                Mobile Money and card payment integrations where needed.
               </li>
             </ul>
           </article>
 
-          <article className="solution-pillar reveal" style={{ "--delay": "120ms" }}>
+          <article
+            className="solution-pillar reveal"
+            id="operations"
+            style={{ "--delay": "120ms" }}
+          >
             <div className="pillar-head">
               <div className="pillar-icon">02</div>
-              <h3>Run Ops Like a Machine</h3>
+              <h3>Operations Systems</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Never Lose Stock Again</strong>
-                Warehouse in, warehouse out, delivery confirmed. No more "it
-                finish" surprises. Every item tracked from shelf to door.
+                <strong>Inventory + Orders</strong>
+                Stock, sales, and billing tracked in one system across locations.
               </li>
               <li>
-                <strong>Approvals That Actually Move</strong>
-                Set up routing and approvals that work while you sleep. Orders go
-                out. Payments get signed off. No bottlenecks.
+                <strong>Approvals That Move</strong>
+                Routing and approvals that keep work moving without bottlenecks.
               </li>
               <li>
-                <strong>See Your Deliveries Live</strong>
-                Driver left? Package en route? Delivered? You'll know before the
-                customer even asks.
+                <strong>Field Visibility</strong>
+                Deliveries, dispatch, and service status tracked in real time.
               </li>
             </ul>
           </article>
 
-          <article className="solution-pillar reveal" style={{ "--delay": "240ms" }}>
+          <article
+            className="solution-pillar reveal"
+            id="people"
+            style={{ "--delay": "240ms" }}
+          >
             <div className="pillar-head">
               <div className="pillar-icon">03</div>
-              <h3>Keep Your Team Sharp</h3>
+              <h3>Data & Automation</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>One Place for Your People</strong>
-                HR records, payroll, timesheets — done. No more juggling files.
-                Everyone's info, clean and in one spot.
+                <strong>Dashboards That Make Sense</strong>
+                Revenue, margins, and performance KPIs in one screen.
               </li>
               <li>
-                <strong>See Who's Winning</strong>
-                Role-based dashboards so every person knows their targets and how
-                they're doing. No surprises at review time.
+                <strong>Automated Reports</strong>
+                Weekly and monthly summaries delivered to the right people.
               </li>
               <li>
-                <strong>Lock It Down</strong>
-                Permissions set up so only the right people see the right stuff.
-                Tight, clean, no drama.
+                <strong>Role-Based Access</strong>
+                Permissions set up so only the right people see the right data.
               </li>
             </ul>
           </article>
@@ -139,23 +138,23 @@ export default function Solutions() {
       </section>
 
       {/* ── Industry Verticals ── */}
-      <section className="section industry-section">
+      <section className="section industry-section" id="industries">
         <div className="section-header reveal">
           <p className="eyebrow">Who's Already Using It</p>
           <h2>Built for the businesses that keep Ghana moving.</h2>
           <p className="lead">
             From the trucks on the road to the shops on the high street — Faako
-            is already running operations like yours. Here's how.
+            is already powering systems like yours. Here's how.
           </p>
         </div>
         <div className="feature-grid">
 
-          <article className="feature-card reveal industry-card">
+          <article className="feature-card reveal industry-card" id="industry-logistics">
             <FontAwesomeIcon icon={faRoute} />
             <h3>Logistics & Distribution</h3>
             <p className="muted">
               The guys moving goods from A to B across Ghana. Routes, dispatches,
-              deliveries — all tracked, all visible, zero wahala.
+              deliveries — all tracked, all visible, zero problems.
             </p>
             <ul className="solution-list">
               <li>
@@ -169,7 +168,11 @@ export default function Solutions() {
             </ul>
           </article>
 
-          <article className="feature-card reveal industry-card" style={{ "--delay": "120ms" }}>
+          <article
+            className="feature-card reveal industry-card"
+            id="industry-retail"
+            style={{ "--delay": "120ms" }}
+          >
             <FontAwesomeIcon icon={faCartShopping} />
             <h3>Retail & Trading</h3>
             <p className="muted">
@@ -189,7 +192,11 @@ export default function Solutions() {
             </ul>
           </article>
 
-          <article className="feature-card reveal industry-card" style={{ "--delay": "240ms" }}>
+          <article
+            className="feature-card reveal industry-card"
+            id="industry-rentals"
+            style={{ "--delay": "240ms" }}
+          >
             <FontAwesomeIcon icon={faBoxesStacked} />
             <h3>Rentals & Equipment</h3>
             <p className="muted">
@@ -208,7 +215,11 @@ export default function Solutions() {
             </ul>
           </article>
 
-          <article className="feature-card reveal industry-card" style={{ "--delay": "360ms" }}>
+          <article
+            className="feature-card reveal industry-card"
+            id="industry-services"
+            style={{ "--delay": "360ms" }}
+          >
             <FontAwesomeIcon icon={faUserTie} />
             <h3>Professional Services</h3>
             <p className="muted">
@@ -284,17 +295,17 @@ export default function Solutions() {
       </section>
 
       {/* ── Mid-page CTA ── */}
-      <section className="page cta cta-compact reveal">
+      <section className="page cta reveal">
         <div className="section-header">
           <p className="eyebrow">Ready?</p>
-          <h2>Let's figure out which modules your business actually needs.</h2>
+          <h2>Let's figure out what your business actually needs.</h2>
           <p className="lead">
             Not a sales call. A real conversation — we'll map it out together and
             show you exactly what it looks like for YOUR operation.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/configure">Configure Your ERP</PrimaryButton>
+          <PrimaryButton to="/contact">Book a consultation</PrimaryButton>
           <Link className="button button-ghost" to="/contact">
             Talk to the Team
           </Link>
@@ -304,7 +315,7 @@ export default function Solutions() {
       {/* ── Module Highlights ── */}
       <section className="section">
         <div className="section-header reveal">
-          <p className="eyebrow">The Modules</p>
+          <p className="eyebrow">Building Blocks</p>
           <h2>Pick what you need. Add more as you grow.</h2>
           <p className="lead">
             Start small, scale big. Every module snaps in cleanly — no reinstalls,
@@ -366,11 +377,11 @@ export default function Solutions() {
       {/* ── Security & Compliance ── */}
       <section className="page compliance-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Lock It Tight</p>
-          <h2>Your data is sacred. We treat it that way.</h2>
+          <p className="eyebrow">Security & Compliance</p>
+          <h2>Your data is protected. We treat it that way.</h2>
           <p className="lead">
-            Bank-level security, automatic backups, and permissions so tight that
-            only the right person sees the right thing. No exceptions.
+            Strong security, automatic backups, and permissions so only the right
+            person sees the right thing.
           </p>
         </div>
         <div className="compliance-grid">
@@ -421,7 +432,7 @@ export default function Solutions() {
         </div>
       </section>
 
-      {/* ── Outcomes ── */}
+      {/* ── Outcomes ── 
       <section className="section outcomes-section">
         <div className="section-header reveal">
           <p className="eyebrow">What Actually Happens</p>
@@ -449,7 +460,7 @@ export default function Solutions() {
             <p>On-time deliveries. Dispatch got sorted and customers stopped complaining.</p>
           </article>
         </div>
-      </section>
+      </section>*/}
 
       {/* ── Final CTA ── */}
       <section className="page cta cta-compact reveal">
@@ -462,7 +473,7 @@ export default function Solutions() {
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/configure">Configure Your ERP</PrimaryButton>
+          <PrimaryButton to="/contact">Start a project</PrimaryButton>
           <Link className="button button-ghost" to="/case-studies">
             See the Stories
           </Link>

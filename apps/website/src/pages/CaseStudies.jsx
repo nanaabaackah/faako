@@ -3,25 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import AnimatedGeometricSVG from "../components/AnimatedGeometricSVG.jsx";
-
-const caseStudies = [
-  {
-    title: "Party Rental ERP System",
-    tag: "ERP Implementation",
-    summary:
-      "Unified inventory, finance, and logistics for a multi-location rentals team.",
-    image: "/imgs/case-studies/erp-case.png",
-  },
-  {
-    title: "Developer Command Center",
-    tag: "Productivity Suite",
-    summary:
-      "Real-time visibility into deployments, tasks, and system health in one dashboard.",
-    image: "/imgs/case-studies/dashboard-case.png",
-  },
-];
+import { caseStudies } from "../data/caseStudies.js";
 
 export default function CaseStudies() {
+  const orderedCaseStudies = caseStudies.length
+    ? [caseStudies[caseStudies.length - 1], ...caseStudies.slice(0, -1)]
+    : [];
+
   return (
     <section className="page case-studies-page page-stack">
       <section className="case-hero split">
@@ -29,8 +17,8 @@ export default function CaseStudies() {
           <p className="eyebrow">Case Studies</p>
           <h1>Proof of impact across Ghanaian businesses.</h1>
           <p className="lead">
-            See how operators use Faako to connect their data, teams, and daily
-            execution.
+            See how teams use Faako to build websites, dashboards, and systems
+            that keep work moving.
           </p>
           <div className="cta-actions">
             <PrimaryButton to="/contact">Request a walkthrough</PrimaryButton>
@@ -47,33 +35,40 @@ export default function CaseStudies() {
       <section className="page case-studies">
         <div className="section-header reveal">
           <p className="eyebrow">Success Blueprints</p>
-          <h2>ERP deployments with measurable results.</h2>
+          <h2>Projects with measurable results.</h2>
           <p className="lead">
-            These teams aligned their finance, operations, and talent in a
+            These teams aligned their website, data, and operations in a
             single system.
           </p>
         </div>
 
-        <div className="case-grid">
-          {caseStudies.map((item, index) => (
-            <article
-              key={item.title}
-              className="case-card reveal"
-              style={{ "--delay": `${index * 120}ms` }}
-            >
-              <div className="case-image">
-                <img src={item.image} alt={item.title} />
-              </div>
-              <div className="case-info">
-                <span className="case-tag">{item.tag}</span>
-                <h3>{item.title}</h3>
-                <p>{item.summary}</p>
-                <Link to="/contact" className="text-link">
-                  View project <FontAwesomeIcon icon={faArrowRight} />
-                </Link>
-              </div>
-            </article>
-          ))}
+        <div className="case-grid case-grid--bento">
+          {orderedCaseStudies.map((item, index) => {
+            const cardClasses = ["case-card", "reveal"];
+            if (index === 0) cardClasses.push("case-card--spotlight");
+            if (index === 1) cardClasses.push("case-card--tall");
+            if (index === 2) cardClasses.push("case-card--wide");
+
+            return (
+              <article
+                key={item.title}
+                className={cardClasses.join(" ")}
+                style={{ "--delay": `${index * 120}ms` }}
+              >
+                <div className="case-image">
+                  <img src={item.thumbnail} alt={item.title} />
+                </div>
+                <div className="case-info">
+                  <span className="case-tag">{item.tag}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.summary}</p>
+                  <Link to={`/case-studies/${item.slug}`} className="text-link">
+                    View project <FontAwesomeIcon icon={faArrowRight} />
+                  </Link>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </section>

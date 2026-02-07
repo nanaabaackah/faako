@@ -147,7 +147,7 @@ export default function Dashboard() {
             <p className="eyebrow">Faako Workspace</p>
             <h2>Dashboard</h2>
             <p className="muted">
-              Your unified ERP overview for Finance, Ops, and Talent.
+              Your unified operations overview for Finance, Ops, and Talent.
             </p>
           </div>
 

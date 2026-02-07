@@ -19,21 +19,21 @@ export default function Terms() {
           your account information secure.
         </p>
 
-        <h3>Subscriptions</h3>
+        <h3>Engagements</h3>
         <ul>
-          <li>Plans renew on the billing cycle selected at signup.</li>
-          <li>Upgrades and module changes can be requested anytime.</li>
+          <li>Project scopes are confirmed before kickoff.</li>
+          <li>Support retainers are billed on the cadence selected in your agreement.</li>
         </ul>
 
         <h3>Service delivery</h3>
         <ul>
           <li>Implementation timelines depend on data quality and scope.</li>
-          <li>Support is delivered based on your selected plan.</li>
+          <li>Support is delivered based on your selected engagement.</li>
         </ul>
 
         <h3>Liability</h3>
         <ul>
-          <li>Faako provides the platform as-is with continuous improvements.</li>
+          <li>Faako provides the platform and services as-is with continuous improvements.</li>
           <li>We are not liable for indirect losses related to third-party tools.</li>
         </ul>
 

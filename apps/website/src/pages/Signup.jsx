@@ -50,23 +50,23 @@ export default function Signup() {
   return (
     <section className="page signup">
       <div className="signup-copy reveal" style={{ "--delay": "0ms" }}>
-        <p className="eyebrow">Single Source Signup</p>
-        <h1>Build your unified Faako headquarters.</h1>
+        <p className="eyebrow">Project Intake</p>
+        <h1>Tell us about the system you need.</h1>
         <p className="lead">
-          Tell us about your operations and we will weave finance, inventory,
-          and people into one global workspace with a single source of truth.
+          Tell us about your operations and we will propose the right website,
+          dashboard, or ERP system for your team.
         </p>
         <div className="signup-list">
           <div>
-            <h4>Onboarding sprint</h4>
-            <p>We map your modules and workflows in the first week.</p>
+            <h4>Discovery sprint</h4>
+            <p>We map your workflows and priorities in the first week.</p>
           </div>
           <div>
-            <h4>Data migration</h4>
-            <p>Import existing sheets, tools, and inventory lists.</p>
+            <h4>Scope + timeline</h4>
+            <p>We define the build scope, timeline, and deliverables.</p>
           </div>
           <div>
-            <h4>Team training</h4>
+            <h4>Training plan</h4>
             <p>Hands-on sessions for managers and operators.</p>
           </div>
         </div>
@@ -111,10 +111,10 @@ export default function Signup() {
           type="submit"
           disabled={status.state === "loading"}
         >
-          {status.state === "loading" ? "Sending..." : "Request access"}
+          {status.state === "loading" ? "Sending..." : "Request a quote"}
         </button>
         <Link className="button button-ghost" to="/configure">
-          Configure modules
+          Project blueprint
         </Link>
         {status.message ? (
           <p className={`form-note ${status.state}`} role="status">

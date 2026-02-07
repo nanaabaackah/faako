@@ -12,13 +12,13 @@ export default function Login() {
         <p className="eyebrow">Welcome Back</p>
         <h1>Sign in to your Faako workspace.</h1>
         <p className="lead">
-          Access your dashboards, module configuration, and implementation
-          updates in one place.
+          Access your dashboards, project scope, and implementation updates in
+          one place.
         </p>
         <div className="auth-meta">
           <span>Need an account?</span>
           <Link to="/signup" className="text-link">
-            Start onboarding
+            Start intake
           </Link>
         </div>
       </div>

@@ -135,13 +135,13 @@ export default function AnimatedLogoSVG({ className = "" }) {
 
         @keyframes fillPulse {
           0% {
-            fill-opacity: 1;
+            fill-opacity: 0;
           }
           45% {
-            fill-opacity: 0.55;
+            fill-opacity: 1;
           }
           60% {
-            fill-opacity: 0.22;
+            fill-opacity: 0;
           }
           80% {
             fill-opacity: 0;

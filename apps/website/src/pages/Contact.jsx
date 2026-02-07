@@ -5,10 +5,10 @@ export default function Contact() {
     <section className="page contact">
       <div className="contact-copy reveal" style={{ "--delay": "0ms" }}>
         <p className="eyebrow">Contact</p>
-        <h1>Let’s talk about your single source of truth.</h1>
+        <h1>Let’s talk about the system your business needs.</h1>
         <p className="lead">
-          Reach the Faako team for demos, partnership conversations, or support
-          on unifying your finance, inventory, and people operations.
+          Reach the Faako team for consultations, quotes, or support
+          on websites, dashboards, and operations systems.
         </p>
         <div className="contact-list">
           <div>
@@ -33,14 +33,14 @@ export default function Contact() {
       <div className="form card contact-card reveal" style={{ "--delay": "140ms" }}>
         <h3>Start the conversation</h3>
         <p className="muted">
-          Share your goals and we will tailor a rollout plan for your team.
+          Share your goals and we will tailor a scope, timeline, and budget.
         </p>
         <div className="contact-actions">
           <a className="button button-primary" href="mailto:hello@faako.nanaabaackah.com">
             Email the team
           </a>
-          <Link className="button button-ghost" to="/signup">
-            Request a demo
+          <Link className="button button-ghost" to="/case-studies">
+            View case studies
           </Link>
         </div>
         <div className="contact-meta">

@@ -13,13 +13,13 @@ import NotFound from "./pages/NotFound.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Solutions from "./pages/Solutions.jsx";
 import CaseStudies from "./pages/CaseStudies.jsx";
+import CaseStudyDetail from "./pages/CaseStudyDetail.jsx";
 import About from "./pages/About.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Terms from "./pages/Terms.jsx";
 import Login from "./pages/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import "./styles/components/button.css";
-
 
 const themeStorageKey = "faako-theme";
 
@@ -114,6 +114,77 @@ export default function App() {
     }
   }, [location.pathname]);
 
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const prefersReducedMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const nodes = document.querySelectorAll("[data-scroll]");
+
+    if (prefersReducedMotion) {
+      nodes.forEach((node) => node.classList.add("is-visible"));
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+    );
+
+    nodes.forEach((node) => {
+      node.classList.remove("is-visible");
+      observer.observe(node);
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") {
+      return undefined;
+    }
+
+    const prefersReducedMotion =
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const sections = document.querySelectorAll(".page");
+
+    if (prefersReducedMotion) {
+      sections.forEach((section) => section.style.setProperty("--section-progress", "1"));
+      return undefined;
+    }
+
+    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          entry.target.style.setProperty(
+            "--section-progress",
+            entry.intersectionRatio.toFixed(3)
+          );
+        });
+      },
+      { threshold: thresholds }
+    );
+
+    sections.forEach((section) => {
+      section.style.setProperty("--section-progress", "1");
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, [location.pathname]);
+
   const handleThemeToggle = () => {
     const nextTheme = currentTheme === "dark" ? "light" : "dark";
     setTheme(nextTheme);
@@ -145,6 +216,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/case-studies" element={<CaseStudies />} />
+          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/configure" element={<ModuleConfig />} />
