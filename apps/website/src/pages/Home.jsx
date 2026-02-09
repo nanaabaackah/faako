@@ -34,6 +34,11 @@ import {
   faTimes,
   faCheckCircle,
   faTriangleExclamation,
+  faPhone,
+  faPhoneAlt,
+  faMobile,
+  faBolt,
+  faHandPointer,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import TrustedBy from "../components/TrustedBy.jsx";
@@ -80,13 +85,12 @@ export default function Home() {
         <div className="hero-content" data-scroll>
           <p className="eyebrow">SaaS + Tech Consulting for Ghana</p>
           <h1>
-            Build smarter operations with{" "}
-            <span className="text-accent">custom software</span> made for Ghanaian SMEs.
+            Smarter operations with{" "}
+            <span className="text-accent">custom software</span> for your business.
           </h1>
           <p className="lead">
-            We design and deliver websites, dashboards, ERP systems, and tailored apps
-            that remove bottlenecks and boost efficiency. From discovery to launch, we
-            work alongside your team.
+            We build websites, dashboards, and ERP systems that remove bottlenecks and
+            boost efficiency. From discovery to launch, we work alongside your team.
           </p>
           <div className="hero-actions">
             <PrimaryButton to="/contact">Book a Consultation</PrimaryButton>
@@ -1103,15 +1107,15 @@ export default function Home() {
             </ul>
             <div className="mobile-badges">
               <div className="mobile-badge">
-                <span className="badge-icon">📱</span>
+                <span className="badge-icon"><FontAwesomeIcon icon={faMobile} /></span>
                 <span>iOS & Android Apps</span>
               </div>
               <div className="mobile-badge">
-                <span className="badge-icon">🌐</span>
+                <span className="badge-icon"><FontAwesomeIcon icon={faGlobe} /></span>
                 <span>Works in Any Browser</span>
               </div>
               <div className="mobile-badge">
-                <span className="badge-icon">⚡</span>
+                <span className="badge-icon"><FontAwesomeIcon icon={faBolt} /></span>
                 <span>Lightning Fast</span>
               </div>
             </div>
@@ -1122,7 +1126,7 @@ export default function Home() {
                 <img src="/imgs/demo/demo4.png" alt="Faako mobile dashboard" loading="lazy" decoding="async" />
               </div>
               <div className="mobile-feature-callout">
-                <span>👆 Scroll to navigate</span>
+                <span><FontAwesomeIcon icon={faHandPointer} /> Scroll to navigate</span>
               </div>
             </div>
           </div>
@@ -1159,12 +1163,6 @@ export default function Home() {
 
       {/* --- Case Studies Section --- */}
       <section id="case-studies" className="page case-studies">
-        <div className="section-bg" aria-hidden="true">
-          {/* Add background SVGs here */}
-        </div>
-        <div className="section-media">
-          {/* Add image elements here */}
-        </div>
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">See It Working</p>
           <h2>Websites, dashboards, and ERP in action</h2>

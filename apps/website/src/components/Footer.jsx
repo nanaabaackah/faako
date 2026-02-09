@@ -9,7 +9,7 @@ export default function Footer({ footerLogo }) {
         <div className="logo footer-logo">
           <img src={footerLogo} alt="Faako logo" loading="lazy" />
         </div>
-        <p>Faako: Systems that fit.</p>
+        <p>Faako: The Power of One.</p>
         <small>Accra, Ghana · Global Availability</small>
       </div>
       <div className="footer-links">
@@ -44,7 +44,7 @@ export default function Footer({ footerLogo }) {
         <Link to="/terms">Terms of Service</Link>
       </div>
       <div className="footer-bottom">
-        <span>&copy; {year} Faako Systems & Consulting. Made to matter.</span>
+        <span>&copy; {year} Faako Systems & Consulting. Made to matter. Made by Nana</span>
       </div>
     </footer>
   );
