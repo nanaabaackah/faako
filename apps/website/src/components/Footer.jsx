@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
+import FooterLanguagePicker from "./FooterLanguagePicker.jsx";
+import { moduleShowcaseItems } from "../data/modules.js";
 
 export default function Footer({ footerLogo }) {
   const year = new Date().getFullYear();
 
   return (
     <footer className="site-footer">
+      
       <div className="footer-brand">
         <div className="logo footer-logo">
           <img src={footerLogo} alt="Faako logo" loading="lazy" />
@@ -19,6 +22,17 @@ export default function Footer({ footerLogo }) {
         <Link to="/pricing">Pricing</Link>
         <Link to="/case-studies">Case Studies</Link>
         <Link to="/dashboard">Dashboard</Link>
+      </div>
+      <div className="footer-links footer-links--modules">
+        <span className="footer-title">Modules</span>
+        {moduleShowcaseItems.map((module) => (
+          <Link key={module.id} to={`/modules/${module.id}`}>
+            {module.title}
+          </Link>
+        ))}
+        <Link className="footer-more-link" to="/solutions#modules">
+          All Modules
+        </Link>
       </div>
       <div className="footer-links">
         <span className="footer-title">Use Cases</span>
@@ -42,6 +56,10 @@ export default function Footer({ footerLogo }) {
         <Link to="/contact">Support</Link>
         <Link to="/privacy">Privacy Policy</Link>
         <Link to="/terms">Terms of Service</Link>
+      </div>
+      <div className="footer-links footer-language">
+        <span className="footer-title">Language</span>
+        <FooterLanguagePicker />
       </div>
       <div className="footer-bottom">
         <span>&copy; {year} Faako Systems & Consulting. Made to matter. Made by Nana</span>

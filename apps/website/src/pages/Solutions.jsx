@@ -1,90 +1,182 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faChartLine,
-  faBoxesStacked,
-  faUserTie,
   faShield,
   faRoute,
   faHandshake,
-  faCartShopping,
+  faMoneyBillWave,
+  faArrowRight,
+  faCheck,
+  faCommentDots,
+  faTable,
+  faBookOpen,
+  faBrain,
+  faEnvelope,
+  faStore,
+  faTruckFast,
+  faCalendarCheck,
+  faIndustry,
+  faHelmetSafety,
+  faUtensils,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
+import { moduleShowcaseItems } from "../data/modules.js";
+
+// Import the device merge effect
+import { DeviceMergeLabeled } from "../components/DeviceMergeEffect.jsx";
 
 export default function Solutions() {
   return (
     <section className="page solutions page-stack">
 
-      {/* ── Hero ── */}
-      <section className="solutions-hero split" id="solutions-hero">
-        <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-          <p className="eyebrow">What Faako Does</p>
-          <h1>Stop running your business in pieces. Connect everything.</h1>
+      {/* ========================================
+          HERO SECTION - CONCISE
+          ======================================== */}
+      <section className="solutions-hero-v2 before-after">
+        <div className="hero-content reveal">
+          <p className="eyebrow">The Transformation</p>
+          <h1>
+            Stop juggling five systems. {' '}<br />
+            <span className="text-accent">Run everything from one place.</span>
+          </h1>
           <p className="lead">
-            Websites, dashboards, and operations systems that talk to each other.
-            No more chasing info between WhatsApp groups and Excel sheets. Just
-            one view that actually tells you what's going on.
+          Stop losing time. Stop losing money. Stop losing your mind.
+        </p>
+        <div className="hero-actions">
+          <PrimaryButton to="/contact">Start Your Transformation</PrimaryButton>
+          <Link className="button button-ghost" to="/case-studies">
+            See Case Studies
+          </Link>
+        </div>
+      </div>
+
+      <div className="hero-visual split-visual">
+        {/* Before State */}
+        <div className="before-state">
+          <div className="state-label state-label--before">Before</div>
+          <h3 className="state-title">Disconnected tools</h3>
+          <p className="state-subtitle">
+            Work is spread across chats, sheets, and memory.
           </p>
-          <div className="cta-actions">
-            <PrimaryButton to="/contact">Let's Build Yours</PrimaryButton>
-            <Link className="button button-ghost" to="/pricing">
-              See the Pricing
-            </Link>
+          <div className="chaos-items">
+            <div className="chaos-item" style={{ '--delay': '0s' }}>
+              <span>
+                <FontAwesomeIcon icon={faCommentDots} />
+                WhatsApp
+              </span>
+            </div>
+            <div className="chaos-item" style={{ '--delay': '0.2s' }}>
+              <span>
+                <FontAwesomeIcon icon={faTable} />
+                Excel
+              </span>
+            </div>
+            <div className="chaos-item" style={{ '--delay': '0.4s' }}>
+              <span>
+                <FontAwesomeIcon icon={faBookOpen} />
+                Notebook
+              </span>
+            </div>
+            <div className="chaos-item" style={{ '--delay': '0.6s' }}>
+              <span>
+                <FontAwesomeIcon icon={faBrain} />
+                Your Head
+              </span>
+            </div>
+            <div className="chaos-item" style={{ '--delay': '0.8s' }}>
+              <span>
+                <FontAwesomeIcon icon={faEnvelope} />
+                Email
+              </span>
+            </div>
+          </div>
+          <div className="state-meta">
+            <span>Slow updates</span>
+            <span>Missing records</span>
           </div>
         </div>
-        <figure className="stats-figure solutions-hero-figure reveal" style={{ "--delay": "120ms" }}>
-          <div className="solutions-hero-orbits" aria-hidden="true">
-            <span className="solutions-hero-orbit orbit-one" />
-            <span className="solutions-hero-orbit orbit-two" />
-            <span className="solutions-hero-dot dot-one" />
-            <span className="solutions-hero-dot dot-two" />
-            <span className="solutions-hero-chip chip-one">Websites</span>
-            <span className="solutions-hero-chip chip-two">Dashboards</span>
-            <span className="solutions-hero-chip chip-three">ERP</span>
-          </div>
-          <img
-            className="solutions-hero-art"
-            src="/imgs/elements/17.svg"
-            alt="Faako dashboard preview"
-          />
-          <figcaption>Everything, in one place. Too clear.</figcaption>
-        </figure>
-      </section>
 
-      {/* ── Core Pillars ── */}
+        {/* Arrow */}
+        <div className="transformation-arrow">
+          <FontAwesomeIcon icon={faArrowRight} />
+        </div>
+
+        {/* After State */}
+        <div className="after-state">
+          <div className="state-label state-label--after">After</div>
+          <h3 className="state-title">One clear system</h3>
+          <p className="state-subtitle">
+            Every team member sees the same live information in one place.
+          </p>
+          <div className="unified-system">
+            <div className="system-icon">
+              <div className="pulse-ring"></div>
+              <div className="system-core">
+                <img src="/assets/logos/logo2-white.svg" alt="Faako" />
+              </div>
+            </div>
+            <div className="system-label">One System</div>
+            <div className="system-benefits">
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                All data
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                One place
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                Real-time
+              </span>
+            </div>
+          </div>
+          <div className="state-meta state-meta--after">
+            <span>Live dashboard</span>
+            <span>Faster decisions</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+      {/* ========================================
+          CORE SERVICES - CONCISE
+          ======================================== */}
       <section className="page solutions-section" id="core-pillars">
         <div className="section-header reveal">
-          <p className="eyebrow">The Three Pillars</p>
-          <h2>The three things every business needs running smoothly.</h2>
+          <p className="eyebrow">Three Things You Need</p>
+          <h2>Website. Operations. Reports.</h2>
           <p className="lead">
-            Digital presence. Operations. Data. When these three are synced up and
-            talking to each other, that's when the magic happens.
+            When these three talk to each other, work gets easier.
           </p>
         </div>
+        
         <div className="solutions-container">
-
-          <article className="solution-pillar reveal" id="finance">
+          {/* Pillar 1 */}
+          <article className="solution-pillar reveal" id="digital">
             <div className="pillar-head">
               <div className="pillar-icon">01</div>
-              <h3>Digital Presence</h3>
+              <h3>Get Found & Get Paid</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Business Websites</strong>
-                Fast, mobile-first sites with clear calls to action and lead capture.
+                <strong>Business website</strong>
+                Customers find you. Forms capture leads.
               </li>
               <li>
-                <strong>Lead Capture + Booking</strong>
-                Forms, WhatsApp, and booking links that turn visitors into customers.
+                <strong>Payment options</strong>
+                Mobile Money. Bank transfers. Cash tracking.
               </li>
               <li>
-                <strong>Payments Ready</strong>
-                Mobile Money and card payment integrations where needed.
+                <strong>Lead capture</strong>
+                Every inquiry goes to WhatsApp or your CRM.
               </li>
             </ul>
           </article>
 
+          {/* Pillar 2 */}
           <article
             className="solution-pillar reveal"
             id="operations"
@@ -92,394 +184,378 @@ export default function Solutions() {
           >
             <div className="pillar-head">
               <div className="pillar-icon">02</div>
-              <h3>Operations Systems</h3>
+              <h3>Track Everything</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Inventory + Orders</strong>
-                Stock, sales, and billing tracked in one system across locations.
+                <strong>Real-time inventory</strong>
+                Know what's in stock across all locations.
               </li>
               <li>
-                <strong>Approvals That Move</strong>
-                Routing and approvals that keep work moving without bottlenecks.
+                <strong>Orders & deliveries</strong>
+                Track from sale to delivery confirmation.
               </li>
               <li>
-                <strong>Field Visibility</strong>
-                Deliveries, dispatch, and service status tracked in real time.
+                <strong>Money flow</strong>
+                Every sale, expense, payment — organized.
               </li>
             </ul>
           </article>
 
+          {/* Pillar 3 */}
           <article
             className="solution-pillar reveal"
-            id="people"
+            id="data"
             style={{ "--delay": "240ms" }}
           >
             <div className="pillar-head">
               <div className="pillar-icon">03</div>
-              <h3>Data & Automation</h3>
+              <h3>See The Numbers</h3>
             </div>
             <ul className="solution-list">
               <li>
-                <strong>Dashboards That Make Sense</strong>
-                Revenue, margins, and performance KPIs in one screen.
+                <strong>Daily dashboards</strong>
+                Sales, margins, stock — updated live.
               </li>
               <li>
-                <strong>Automated Reports</strong>
-                Weekly and monthly summaries delivered to the right people.
+                <strong>Performance tracking</strong>
+                Who's performing. What's selling.
               </li>
               <li>
-                <strong>Role-Based Access</strong>
-                Permissions set up so only the right people see the right data.
+                <strong>Weekly reports</strong>
+                Sent to WhatsApp every Monday morning.
               </li>
             </ul>
           </article>
         </div>
       </section>
 
-      {/* ── Industry Verticals ── */}
-      <section className="section industry-section" id="industries">
+      {/* ========================================
+          DEVICE COMPATIBILITY - NEW SECTION
+          ======================================== */}
+      <section className="page device-compatibility">
+        {/* DEVICE MERGE EFFECT */}
+        <DeviceMergeLabeled 
+          laptopSrc="/imgs/elements/dashboard-laptop.svg"
+          phoneSrc="/imgs/elements/dashboard-phone.svg"
+          startDistance={400}
+        >
+          <div className="section-header device-merge-effect__section-header">
+            <p className="eyebrow">Works Everywhere</p>
+            <h2>Built for desktop and mobile.</h2>
+            <p className="lead">
+              Your team uses phones. Your manager uses a laptop.
+              Same system. Same data. Zero friction.
+            </p>
+          </div>
+        </DeviceMergeLabeled>
+
+        {/* Features Grid */}
+        <div className="device-features reveal" style={{ "--delay": "200ms" }}>
+          <article className="device-feature">
+            <h4>Desktop Power</h4>
+            <p>Full dashboard. All reports. Complete control.</p>
+          </article>
+          
+          <article className="device-feature">
+            <h4>Mobile Freedom</h4>
+            <p>Update stock. Check orders. Approve payments. On the go.</p>
+          </article>
+          
+          <article className="device-feature">
+            <h4>Always Synced</h4>
+            <p>Change on phone? Desktop updates instantly. No delays.</p>
+          </article>
+        </div>
+      </section>
+
+      {/* ========================================
+          BUILT FOR GHANA - NEW SECTION
+          ======================================== */}
+      <section className="page ghana-features">
         <div className="section-header reveal">
-          <p className="eyebrow">Who's Already Using It</p>
-          <h2>Built for the businesses that keep Ghana moving.</h2>
-          <p className="lead">
-            From the trucks on the road to the shops on the high street — Faako
-            is already powering systems like yours. Here's how.
-          </p>
+          <p className="eyebrow">Made for Ghana</p>
+          <h2>Works with how you actually operate.</h2>
         </div>
-        <div className="feature-grid">
 
-          <article className="feature-card reveal industry-card" id="industry-logistics">
-            <FontAwesomeIcon icon={faRoute} />
-            <h3>Logistics & Distribution</h3>
-            <p className="muted">
-              The guys moving goods from A to B across Ghana. Routes, dispatches,
-              deliveries — all tracked, all visible, zero problems.
-            </p>
-            <ul className="solution-list">
-              <li>
-                <strong>Dispatch sorted</strong>
-                Know exactly where every delivery is at, every stage of the way.
-              </li>
-              <li>
-                <strong>Hold suppliers to account</strong>
-                Track how fast your partners deliver. No more guessing.
-              </li>
-            </ul>
+        <div className="feature-grid reveal" style={{ "--delay": "100ms" }}>
+          <article className="feature-card">
+            <FontAwesomeIcon icon={faMoneyBillWave} />
+            <h3>Mobile Money Built In</h3>
+            <p>MTN, Vodafone, AirtelTigo. Track every transaction.</p>
           </article>
 
-          <article
-            className="feature-card reveal industry-card"
-            id="industry-retail"
-            style={{ "--delay": "120ms" }}
-          >
-            <FontAwesomeIcon icon={faCartShopping} />
-            <h3>Retail & Trading</h3>
-            <p className="muted">
-              Whether it's one shop or five branches — stock stays full, prices
-              stay right, and you always know what's selling.
-            </p>
-            <ul className="solution-list">
-              <li>
-                <strong>Restock before it's too late</strong>
-                Automatic alerts when stock is running low. No more "it finish"
-                on a busy day.
-              </li>
-              <li>
-                <strong>Compare your branches</strong>
-                See which location is crushing it — and which one needs a nudge.
-              </li>
-            </ul>
-          </article>
-
-          <article
-            className="feature-card reveal industry-card"
-            id="industry-rentals"
-            style={{ "--delay": "240ms" }}
-          >
-            <FontAwesomeIcon icon={faBoxesStacked} />
-            <h3>Rentals & Equipment</h3>
-            <p className="muted">
-              Tents, chairs, generators, machinery — if you rent it out, Faako
-              tracks it. Bookings, maintenance, the lot.
-            </p>
-            <ul className="solution-list">
-              <li>
-                <strong>Know what's where</strong>
-                Idle? Booked? On site? In the workshop? One screen tells you everything.
-              </li>
-              <li>
-                <strong>Maintenance on autopilot</strong>
-                Get reminded before something breaks. Not after.
-              </li>
-            </ul>
-          </article>
-
-          <article
-            className="feature-card reveal industry-card"
-            id="industry-services"
-            style={{ "--delay": "360ms" }}
-          >
-            <FontAwesomeIcon icon={faUserTie} />
-            <h3>Professional Services</h3>
-            <p className="muted">
-              Consultants, agencies, project teams — connect what you're selling
-              to what you're actually delivering and billing.
-            </p>
-            <ul className="solution-list">
-              <li>
-                <strong>Know your margins</strong>
-                See exactly how much each client and project is actually making you.
-              </li>
-              <li>
-                <strong>Invoice on time, every time</strong>
-                Set a rhythm. Invoices go out clean, approvals happen fast.
-              </li>
-            </ul>
-          </article>
-        </div>
-      </section>
-
-      {/* ── Implementation Timeline ── */}
-      <section className="page split timeline-section">
-        <div className="workflow-copy reveal">
-          <p className="eyebrow">Getting Started</p>
-          <h2>From first chat to go-live — in weeks, not months.</h2>
-          <p className="lead">
-            We do the heavy lifting. You keep running your business. By the time
-            we hit go-live, your team is already comfortable. Too clear.
-          </p>
-        </div>
-        <div className="workflow-steps">
-          <div className="step reveal" style={{ "--delay": "80ms" }}>
-            <span>01</span>
-            <div>
-              <h3>We Learn Your Business</h3>
-              <p className="muted">
-                We come to you. Map the workflows, understand the pain points,
-                and figure out exactly what needs to change.
-              </p>
-            </div>
-          </div>
-          <div className="step reveal" style={{ "--delay": "160ms" }}>
-            <span>02</span>
-            <div>
-              <h3>Build It Around You</h3>
-              <p className="muted">
-                Modules, integrations, dashboards — all set up to match how YOUR
-                team actually works. WhatsApp, Mobile Money, the lot.
-              </p>
-            </div>
-          </div>
-          <div className="step reveal" style={{ "--delay": "240ms" }}>
-            <span>03</span>
-            <div>
-              <h3>Train Your People, Live</h3>
-              <p className="muted">
-                Real sessions. Real transactions. Not slides — hands on the
-                keyboard, running the stuff they'll do on day one.
-              </p>
-            </div>
-          </div>
-          <div className="step reveal" style={{ "--delay": "320ms" }}>
-            <span>04</span>
-            <div>
-              <h3>Go Live & Keep Optimising</h3>
-              <p className="muted">
-                We roll it out in phases so nothing breaks. Then we keep tuning
-                it — weekly check-ins at first, then monthly, forever.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ── Mid-page CTA ── */}
-      <section className="page cta reveal">
-        <div className="section-header">
-          <p className="eyebrow">Ready?</p>
-          <h2>Let's figure out what your business actually needs.</h2>
-          <p className="lead">
-            Not a sales call. A real conversation — we'll map it out together and
-            show you exactly what it looks like for YOUR operation.
-          </p>
-        </div>
-        <div className="cta-actions">
-          <PrimaryButton to="/contact">Book a consultation</PrimaryButton>
-          <Link className="button button-ghost" to="/contact">
-            Talk to the Team
-          </Link>
-        </div>
-      </section>
-
-      {/* ── Module Highlights ── */}
-      <section className="section">
-        <div className="section-header reveal">
-          <p className="eyebrow">Building Blocks</p>
-          <h2>Pick what you need. Add more as you grow.</h2>
-          <p className="lead">
-            Start small, scale big. Every module snaps in cleanly — no reinstalls,
-            no headaches, no wahala.
-          </p>
-        </div>
-        <div className="feature-grid">
-          <article className="feature-card reveal">
+          <article className="feature-card" style={{ "--delay": "120ms" }}>
             <FontAwesomeIcon icon={faHandshake} />
-            <h3>CRM & Sales</h3>
-            <p className="muted">
-              Track your leads, close your deals, and never lose a client again.
-              Pipelines, follow-ups, renewals — all in one place.
-            </p>
+            <h3>WhatsApp Integration</h3>
+            <p>Alerts, reports, customer inquiries — all through WhatsApp.</p>
           </article>
-          <article className="feature-card reveal" style={{ "--delay": "120ms" }}>
-            <FontAwesomeIcon icon={faBoxesStacked} />
-            <h3>Inventory</h3>
-            <p className="muted">
-              Every item, every movement, every location. Stock levels that are
-              actually accurate — not a guess from last Tuesday.
-            </p>
-          </article>
-          <article className="feature-card reveal" style={{ "--delay": "240ms" }}>
-            <FontAwesomeIcon icon={faChartLine} />
-            <h3>Analytics</h3>
-            <p className="muted">
-              Dashboards that show you what's actually happening — not what you
-              hope is happening. Built for the Ghanaian market.
-            </p>
-          </article>
-          <article className="feature-card reveal" style={{ "--delay": "360ms" }}>
-            <FontAwesomeIcon icon={faRoute} />
-            <h3>Delivery</h3>
-            <p className="muted">
-              Routes planned. Dispatches tracked. Deliveries confirmed. Your
-              drivers, your customers, your peace of mind — sorted.
-            </p>
-          </article>
-          <article className="feature-card reveal" style={{ "--delay": "480ms" }}>
-            <FontAwesomeIcon icon={faUserTie} />
-            <h3>HR & Payroll</h3>
-            <p className="muted">
-              Payroll that runs on time. Records that don't get lost. A team
-              section that actually feels organised. Finally.
-            </p>
-          </article>
-          <article className="feature-card reveal" style={{ "--delay": "600ms" }}>
+
+          <article className="feature-card" style={{ "--delay": "240ms" }}>
             <FontAwesomeIcon icon={faShield} />
-            <h3>Compliance</h3>
-            <p className="muted">
-              GRA-ready. Audit-ready. Every approval logged, every workflow
-              locked down. Sleep easy when the auditors come.
-            </p>
+            <h3>Works Offline</h3>
+            <p>Internet down? Keep working. Syncs when you're back online.</p>
+          </article>
+
+          <article className="feature-card" style={{ "--delay": "360ms" }}>
+            <FontAwesomeIcon icon={faRoute} />
+            <h3>Multi-Location Ready</h3>
+            <p>Accra, Kumasi, Takoradi — all locations in one view.</p>
           </article>
         </div>
       </section>
 
-      {/* ── Security & Compliance ── */}
-      <section className="page compliance-section">
+      {/* ========================================
+          HOW IT WORKS - CONCISE
+          ======================================== */}
+      <section className="page process-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Security & Compliance</p>
-          <h2>Your data is protected. We treat it that way.</h2>
-          <p className="lead">
-            Strong security, automatic backups, and permissions so only the right
-            person sees the right thing.
-          </p>
+          <p className="eyebrow">Our Process</p>
+          <h2>Fast setup. Clear steps.</h2>
         </div>
-        <div className="compliance-grid">
-          <article className="compliance-card reveal">
-            <h3>Who Sees What</h3>
-            <p>Set exactly who can view, approve, or change anything in the system. Clean, simple, done.</p>
-          </article>
-          <article className="compliance-card reveal" style={{ "--delay": "120ms" }}>
-            <h3>Every Change Logged</h3>
-            <p>Someone edited something? We know who, when, and what. A full trail, always.</p>
-          </article>
-          <article className="compliance-card reveal" style={{ "--delay": "240ms" }}>
-            <h3>Backups Every Day</h3>
-            <p>Encrypted. Automatic. If something goes wrong — which it won't — your data is safe.</p>
-          </article>
-          <article className="compliance-card reveal" style={{ "--delay": "360ms" }}>
-            <h3>Data Stays in Region</h3>
-            <p>Your business data stays where it should. Governed, secure, compliant. No questions asked.</p>
-          </article>
-        </div>
-      </section>
 
-      {/* ── Integrations ── */}
-      <section className="section integrations-section">
-        <div className="section-header reveal">
-          <p className="eyebrow">Plays Nice With Everything</p>
-          <h2>Already using these? Great. We connect them.</h2>
-          <p className="lead">
-            Mobile Money, WhatsApp, Google, Microsoft — if your team is already
-            using it, Faako plugs right in. No switching, no learning new tools.
-          </p>
-        </div>
-        <div className="ribbon reveal">
-          <div>
-            <h3>Hooked up and running</h3>
-            <p className="muted">Payments, messaging, productivity — all synced up.</p>
+        <div className="process-steps reveal" style={{ "--delay": "100ms" }}>
+          <div className="process-step">
+            <div className="step-number">01</div>
+            <div className="step-content">
+              <h4>We Visit</h4>
+              <p>Watch your workflow. Take notes.</p>
+            </div>
           </div>
-          <div className="ribbon-tags">
-            <span>MTN MoMo</span>
-            <span>Vodafone Cash</span>
-            <span>Hubtel</span>
-            <span>Paystack</span>
-            <span>Flutterwave</span>
-            <span>WhatsApp Business</span>
-            <span>Google Workspace</span>
-            <span>Microsoft 365</span>
+
+          <div className="process-step">
+            <div className="step-number">02</div>
+            <div className="step-content">
+              <h4>Design</h4>
+              <p>Build system that fits your process.</p>
+            </div>
+          </div>
+
+          <div className="process-step">
+            <div className="step-number">03</div>
+            <div className="step-content">
+              <h4>Launch</h4>
+              <p>Train team. Go live. Stay for support.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* ── Outcomes ── 
-      <section className="section outcomes-section">
+      {/* ========================================
+          MODULE OPTIONS - VISUAL
+          ======================================== */}
+      <section className="page modules-showcase" id="modules">
         <div className="section-header reveal">
-          <p className="eyebrow">What Actually Happens</p>
-          <h2>Real numbers. From real businesses. After they switched.</h2>
-          <p className="lead">
-            These aren't projections. These are what our clients told us — after
-            running Faako for a few months.
-          </p>
+          <p className="eyebrow">Pick Your Modules</p>
+          <h2>Start with essentials. Add more as you grow.</h2>
         </div>
-        <div className="stats-grid">
-          <article className="stats-card reveal">
-            <span>₵120K</span>
-            <p>Cash freed up just from faster invoice collections. That's real working capital, back in your hands.</p>
-          </article>
-          <article className="stats-card reveal" style={{ "--delay": "120ms" }}>
-            <span>-30%</span>
-            <p>Fewer stockouts. Reorder alerts kicked in and the "it finish" days stopped.</p>
-          </article>
-          <article className="stats-card reveal" style={{ "--delay": "240ms" }}>
-            <span>2.6x</span>
-            <p>Faster month-end closes. Finance team actually gets their weekends back now.</p>
-          </article>
-          <article className="stats-card reveal" style={{ "--delay": "360ms" }}>
-            <span>95%</span>
-            <p>On-time deliveries. Dispatch got sorted and customers stopped complaining.</p>
-          </article>
-        </div>
-      </section>*/}
 
-      {/* ── Final CTA ── */}
-      <section className="page cta cta-compact reveal">
-        <div className="section-header">
-          <p className="eyebrow">Your Move</p>
-          <h2>You've seen what Faako does.</h2>
-          <p className="lead">
-            30 minutes. That's all it takes for us to show you what this looks
-            like running YOUR business. No pressure. No commitment. Just clarity.
-          </p>
+        <div className="module-grid reveal" style={{ "--delay": "100ms" }}>
+          {moduleShowcaseItems.map((module, index) => (
+            <Link
+              key={module.id}
+              to={`/modules/${module.id}`}
+              className={`module-card module-card--${module.id}`}
+              style={{ "--delay": `${index * 80}ms` }}
+              aria-label={`View ${module.title} module details`}
+            >
+              <div className="module-card-head">
+                <span className="module-card-icon">
+                  <FontAwesomeIcon icon={module.icon} />
+                </span>
+                <span className="module-card-kicker">{module.kicker}</span>
+              </div>
+              <h4>{module.title}</h4>
+              <p>{module.description}</p>
+              <div className="module-card-signals">
+                {module.signals.map((signal) => (
+                  <span key={signal}>
+                    <FontAwesomeIcon icon={faCheck} />
+                    {signal}
+                  </span>
+                ))}
+              </div>
+              <div className="module-card-foot">
+                <span>{module.outcome}</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </div>
+            </Link>
+          ))}
         </div>
-        <div className="cta-actions">
-          <PrimaryButton to="/contact">Start a project</PrimaryButton>
-          <Link className="button button-ghost" to="/case-studies">
-            See the Stories
+
+        <div className="text-center" style={{ marginTop: '2rem' }}>
+          <Link to="/configure" className="button button-ghost">
+            See All Modules <FontAwesomeIcon icon={faArrowRight} />
           </Link>
         </div>
       </section>
-    <WhatsApp />
+
+      {/* ========================================
+          INDUSTRIES - NEW SECTION
+          ======================================== */}
+      <section className="page industries-section" id="industries">
+        <div className="section-header reveal">
+          <p className="eyebrow">Who We Serve</p>
+          <h2>Built for how you operate.</h2>
+        </div>
+
+        <div className="industries-grid reveal" style={{ "--delay": "100ms" }}>
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faStore} /> Retail
+            </h4>
+            <p>Shops, boutiques, stores</p>
+          </div>
+
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faTruckFast} /> Distribution
+            </h4>
+            <p>Wholesalers, suppliers</p>
+          </div>
+
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faCalendarCheck} /> Events
+            </h4>
+            <p>Rentals, planning, venues</p>
+          </div>
+
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faIndustry} /> Manufacturing
+            </h4>
+            <p>Production, assembly</p>
+          </div>
+
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faHelmetSafety} /> Construction
+            </h4>
+            <p>Projects, materials</p>
+          </div>
+
+          <div className="industry-card">
+            <h4>
+              <FontAwesomeIcon icon={faUtensils} /> Food & Bev
+            </h4>
+            <p>Restaurants, catering</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================
+          PROOF SECTION - CONCISE
+          ======================================== */}
+      <section className="page proof-section">
+        <div className="section-header reveal">
+          <p className="eyebrow">Real Results</p>
+          <h2>Systems that actually work.</h2>
+        </div>
+
+        <div className="proof-stats reveal" style={{ "--delay": "100ms" }}>
+          <div className="stat-card">
+            <div className="stat-value">75%</div>
+            <div className="stat-label">Less time on admin</div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-value">Zero</div>
+            <div className="stat-label">Lost orders</div>
+          </div>
+
+          <div className="stat-card">
+            <div className="stat-value">Real-time</div>
+            <div className="stat-label">Inventory updates</div>
+          </div>
+        </div>
+
+        <div className="text-center" style={{ marginTop: '2rem' }}>
+          <Link to="/case-studies" className="button button-ghost">
+            See Case Studies <FontAwesomeIcon icon={faArrowRight} />
+          </Link>
+        </div>
+      </section>
+
+      {/* ========================================
+          PRICING PREVIEW
+          ======================================== */}
+      <section className="page pricing-preview">
+        <div className="section-header reveal">
+          <p className="eyebrow">Pricing</p>
+          <h2>Clear costs. No surprises.</h2>
+        </div>
+
+        <div className="pricing-cards reveal" style={{ "--delay": "120ms" }}>
+          <div className="pricing-card">
+            <h3>Website</h3>
+            <div className="price-tag">
+              <span className="price">GH₵ 3,500</span>
+            </div>
+            <ul className="pricing-features">
+              <li><FontAwesomeIcon icon={faCheck} /> Mobile website</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Lead capture</li>
+              <li><FontAwesomeIcon icon={faCheck} /> 3-month support</li>
+            </ul>
+            <PrimaryButton to="/contact">Get Started</PrimaryButton>
+          </div>
+
+          <div className="pricing-card featured">
+            <span className="badge">Popular</span>
+            <h3>Website + Dashboard</h3>
+            <div className="price-tag">
+              <span className="price">GH₵ 12,000</span>
+            </div>
+            <ul className="pricing-features">
+              <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Sales tracking</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Inventory</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Reports</li>
+            </ul>
+            <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
+          </div>
+
+          <div className="pricing-card">
+            <h3>Complete System</h3>
+            <div className="price-tag">
+              <span className="price">Custom</span>
+            </div>
+            <ul className="pricing-features">
+              <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Multi-location</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Custom workflows</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Full support</li>
+            </ul>
+            <PrimaryButton to="/contact">Request Quote</PrimaryButton>
+          </div>
+        </div>
+
+        <p className="text-center" style={{ marginTop: '2rem', color: 'var(--muted)' }}>
+          <Link to="/pricing" className="text-link">
+            See detailed pricing <FontAwesomeIcon icon={faArrowRight} />
+          </Link>
+        </p>
+      </section>
+
+      {/* ========================================
+          FINAL CTA
+          ======================================== */}
+      <section className="page cta reveal">
+        <div className="cta-content">
+          <h2>Ready to connect everything?</h2>
+          <p className="lead">
+            Let's talk about what you need. No pressure. Just solutions.
+          </p>
+        </div>
+        <div className="cta-actions">
+          <PrimaryButton to="/contact">Book Free Call</PrimaryButton>
+          <Link className="button button-ghost" to="/case-studies">
+            View Case Studies
+          </Link>
+        </div>
+      </section>
+
+      <WhatsApp />
     </section>
   );
 }

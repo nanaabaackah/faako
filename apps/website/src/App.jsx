@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+import { animate } from "animejs";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import Home from "./pages/Home.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import ModuleConfig from "./pages/ModuleConfig.jsx";
+import ModuleDetail from "./pages/ModuleDetail.jsx";
 import Signup from "./pages/Signup.jsx";
 import Contact from "./pages/Contact.jsx";
 import NotFound from "./pages/NotFound.jsx";
@@ -122,67 +124,167 @@ export default function App() {
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const nodes = document.querySelectorAll("[data-scroll]");
+    const nodes = Array.from(
+      document.querySelectorAll("[data-scroll], .reveal"),
+    );
+
+    const parseDelayMs = (value) => {
+      const raw = value?.trim();
+      if (!raw) return 0;
+      if (raw.endsWith("ms")) return Number.parseFloat(raw) || 0;
+      if (raw.endsWith("s")) return (Number.parseFloat(raw) || 0) * 1000;
+      return Number.parseFloat(raw) || 0;
+    };
+    const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+
+    const getNodeDelay = (node) =>
+      parseDelayMs(node.style.getPropertyValue("--delay")) ||
+      parseDelayMs(getComputedStyle(node).getPropertyValue("--delay"));
+    const getFeatureVisualImage = (node) =>
+      node.classList.contains("feature-visual")
+        ? node.querySelector("img")
+        : null;
+    const featureVisualEntries = nodes
+      .map((node) => ({
+        node,
+        image: getFeatureVisualImage(node),
+      }))
+      .filter((entry) => entry.image);
+
+    const updateFeatureVisualZoom = () => {
+      if (!featureVisualEntries.length) {
+        return;
+      }
+
+      const viewportHeight = window.innerHeight || 1;
+
+      featureVisualEntries.forEach(({ node, image }) => {
+        const rect = node.getBoundingClientRect();
+        const start = viewportHeight;
+        const end = -rect.height * 0.35;
+        const progress = clamp((start - rect.top) / (start - end), 0, 1);
+        const scale = 1 + progress * 0.18;
+
+        image.style.transform = `scale(${scale.toFixed(4)})`;
+      });
+    };
 
     if (prefersReducedMotion) {
-      nodes.forEach((node) => node.classList.add("is-visible"));
+      nodes.forEach((node) => {
+        const featureImage = getFeatureVisualImage(node);
+        node.classList.add("is-visible");
+        node.style.opacity = "";
+        node.style.transform = "";
+        node.style.filter = "";
+        node.style.willChange = "auto";
+        if (featureImage) {
+          featureImage.style.transform = "";
+          featureImage.style.willChange = "auto";
+        }
+      });
       return undefined;
     }
+
+    let lastScrollY = window.scrollY;
+    let scrollDirection = "down";
+    const setScrollDirection = () => {
+      const currentY = window.scrollY;
+      if (currentY > lastScrollY + 1) {
+        scrollDirection = "down";
+      } else if (currentY < lastScrollY - 1) {
+        scrollDirection = "up";
+      }
+      lastScrollY = currentY;
+    };
+
+    const visibilityMap = new WeakMap();
+
+    const animateNode = (node, isEntering) => {
+      const enterFrom = scrollDirection === "down" ? 28 : -28;
+      const exitTo = scrollDirection === "down" ? -22 : 22;
+      const delay = isEntering ? getNodeDelay(node) : 0;
+
+      animate(node, {
+        opacity: isEntering ? [0, 1] : [1, 0],
+        translateY: isEntering ? [enterFrom, 0] : [0, exitTo],
+        filter: isEntering ? ["blur(6px)", "blur(0px)"] : ["blur(0px)", "blur(4px)"],
+        duration: isEntering ? 760 : 420,
+        delay,
+        ease: isEntering ? "outCubic" : "inQuad",
+        composition: "replace",
+      });
+    };
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.unobserve(entry.target);
+          const node = entry.target;
+          const isVisible = entry.isIntersecting;
+          const wasVisible = visibilityMap.get(node);
+
+          if (wasVisible === isVisible) {
+            return;
           }
+
+          visibilityMap.set(node, isVisible);
+          node.classList.toggle("is-visible", isVisible);
+          animateNode(node, isVisible);
         });
       },
-      { threshold: 0.12, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.22, rootMargin: "-5% 0px -8% 0px" }
     );
 
     nodes.forEach((node) => {
+      node.classList.add("js-observed-reveal");
+      const featureImage = getFeatureVisualImage(node);
       node.classList.remove("is-visible");
+      node.style.willChange = "transform, opacity, filter";
+      node.style.opacity = "0";
+      node.style.transform = "translateY(28px)";
+      node.style.filter = "blur(6px)";
+      if (featureImage) {
+        featureImage.style.transformOrigin = "50% 50%";
+        featureImage.style.willChange = "transform";
+      }
+      visibilityMap.set(node, false);
       observer.observe(node);
     });
 
-    return () => observer.disconnect();
-  }, [location.pathname]);
+    let zoomRafId = null;
+    const scheduleFeatureZoom = () => {
+      if (zoomRafId !== null) {
+        return;
+      }
+      zoomRafId = window.requestAnimationFrame(() => {
+        zoomRafId = null;
+        updateFeatureVisualZoom();
+      });
+    };
+    const handleScroll = () => {
+      setScrollDirection();
+      scheduleFeatureZoom();
+    };
 
-  useEffect(() => {
-    if (typeof window === "undefined") {
-      return undefined;
-    }
+    scheduleFeatureZoom();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", scheduleFeatureZoom);
 
-    const prefersReducedMotion =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const sections = document.querySelectorAll(".page");
-
-    if (prefersReducedMotion) {
-      sections.forEach((section) => section.style.setProperty("--section-progress", "1"));
-      return undefined;
-    }
-
-    const thresholds = Array.from({ length: 21 }, (_, i) => i / 20);
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          entry.target.style.setProperty(
-            "--section-progress",
-            entry.intersectionRatio.toFixed(3)
-          );
-        });
-      },
-      { threshold: thresholds }
-    );
-
-    sections.forEach((section) => {
-      section.style.setProperty("--section-progress", "1");
-      observer.observe(section);
-    });
-
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", scheduleFeatureZoom);
+      if (zoomRafId !== null) {
+        window.cancelAnimationFrame(zoomRafId);
+      }
+      nodes.forEach((node) => {
+        const featureImage = getFeatureVisualImage(node);
+        node.classList.remove("js-observed-reveal");
+        node.style.willChange = "auto";
+        if (featureImage) {
+          featureImage.style.willChange = "auto";
+        }
+      });
+    };
   }, [location.pathname]);
 
   const handleThemeToggle = () => {
@@ -220,6 +322,7 @@ export default function App() {
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/configure" element={<ModuleConfig />} />
+          <Route path="/modules/:moduleId" element={<ModuleDetail />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

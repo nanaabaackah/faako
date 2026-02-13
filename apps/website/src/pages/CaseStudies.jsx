@@ -9,11 +9,17 @@ export default function CaseStudies() {
   const orderedCaseStudies = caseStudies.length
     ? [caseStudies[caseStudies.length - 1], ...caseStudies.slice(0, -1)]
     : [];
+  const mosaicTileClasses = [
+    "case-card--mosaic-hero",
+    "case-card--mosaic-tall",
+    "case-card--mosaic-wide",
+    "case-card--mosaic-compact",
+  ];
 
   return (
     <section className="page case-studies-page page-stack">
       <section className="case-hero split">
-        <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
+        <div className="case-hero reveal" style={{ "--delay": "0ms" }}>
           <p className="eyebrow">Case Studies</p>
           <h1>Proof of impact across Ghanaian businesses.</h1>
           <p className="lead">
@@ -32,7 +38,7 @@ export default function CaseStudies() {
         </figure>
       </section>
 
-      <section className="page case-studies">
+      <section className="page case-studies section-seam-top section-surface-brown section-seam-bottom">
         <div className="section-header reveal">
           <p className="eyebrow">Success Blueprints</p>
           <h2>Projects with measurable results.</h2>
@@ -42,12 +48,13 @@ export default function CaseStudies() {
           </p>
         </div>
 
-        <div className="case-grid case-grid--bento">
+        <div className="case-grid case-grid--mosaic">
           {orderedCaseStudies.map((item, index) => {
-            const cardClasses = ["case-card", "reveal"];
-            if (index === 0) cardClasses.push("case-card--spotlight");
-            if (index === 1) cardClasses.push("case-card--tall");
-            if (index === 2) cardClasses.push("case-card--wide");
+            const cardClasses = [
+              "case-card",
+              "reveal",
+              mosaicTileClasses[index % mosaicTileClasses.length],
+            ];
 
             return (
               <article

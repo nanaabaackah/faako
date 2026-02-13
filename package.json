@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^7.1.0",
+    "animejs": "^4.3.5",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-router-dom": "^7.12.0"

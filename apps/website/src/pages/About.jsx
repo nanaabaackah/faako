@@ -23,12 +23,11 @@ export default function About() {
 
       {/* ── Hero ── */}
       <section className="about-hero split">
-        <div className="about-hero reveal" style={{ "--delay": "0ms" }}>
+        <div className="about-hero-copy reveal" style={{ "--delay": "0ms" }}>
           <p className="eyebrow">About Faako</p>
-          <h1>We're the ones who said "Ghanaian business deserves better." Then we built it.</h1>
+          <h1>Ghanaian business deserves better. So we built it.</h1>
           <p className="lead">
-            No more Excel chaos. Faako was born right
-            here in Ghana — built by people who know the struggle, the market, and
+            Built by people who know the market and
             exactly what it takes to scale a business with the right systems.
           </p>
           <div className="cta-actions">
@@ -38,13 +37,13 @@ export default function About() {
             </Link>
           </div>
         </div>
-        <figure className="stats-figure about-hero-figure reveal" style={{ "--delay": "120ms" }}>
+        <figure className="about-hero-figure reveal" style={{ "--delay": "120ms" }}>
           <AnimatedLogoSVG className="about-hero-art" />
         </figure>
       </section>
 
       {/* ── Origin Story ── */}
-      <section className="section">
+      <section className="section origin-story section-seam-top section-surface-brown section-seam-bottom">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">How It All Started</p>
           <h2>Born out of frustration. Fuelled by ambition.</h2>
@@ -79,10 +78,6 @@ export default function About() {
                 </p>
               </article>
             </div>
-            <p className="story-quote">
-              So we built Faako — custom software and consulting made for African
-              businesses, as the main event.
-            </p>
           </div>
           <div className="story-numbers">
             <div className="ribbon">
@@ -103,7 +98,7 @@ export default function About() {
       </section>
 
       {/* ── Mission ── */}
-      <section className="section">
+      <section className="section mission">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What We're Really Here For</p>
           <h2>One dashboard. One truth. Zero confusion.</h2>
@@ -152,7 +147,7 @@ export default function About() {
       </section>
 
       {/* ── How We Work ── */}
-      <section className="section">
+      <section className="section how-we-work section-seam-top section-surface-brown section-seam-bottom">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">How We Roll</p>
           <h2>Not just software. We fix the whole operation.</h2>
@@ -213,7 +208,7 @@ export default function About() {
       </section>
 
       {/* ── What We Value ── */}
-      <section className="section">
+      <section className="section values">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What Drives Us</p>
           <h2>The stuff that keeps us up at night — in a good way.</h2>

@@ -29,7 +29,8 @@ import {
   faShield,
   faPlug,
   faHeadset,
-  faArrowRight,
+  faLanguage,
+  faCircleQuestion,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 
@@ -241,19 +242,50 @@ export default function ModuleConfig() {
     );
   };
 
-  const handleAddOnKeyDown = (id) => (event) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      toggleAddOn(id);
-    }
-  };
-
   const selectedAddOnNames = useMemo(
     () =>
       addOnModules
         .filter((item) => selectedAddOns.includes(item.id))
         .map((item) => item.name),
     [selectedAddOns]
+  );
+  const totalConfiguredModules = coreModules.length + selectedAddOns.length;
+  const setupSteps = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "Choose package",
+        detail: `${plan} plan for ${teamSize} team`,
+        status: "complete",
+      },
+      {
+        id: 2,
+        title: "Set billing profile",
+        detail: `${currency} · ${billingCycle === "monthly" ? "Monthly support" : "Annual planning"}`,
+        status: "complete",
+      },
+      {
+        id: 3,
+        title: "Confirm core modules",
+        detail: `${coreModules.length} foundational modules included`,
+        status: "complete",
+      },
+      {
+        id: 4,
+        title: "Select add-on modules",
+        detail: selectedAddOns.length
+          ? `${selectedAddOns.length} optional modules selected`
+          : "Choose the modules needed for launch",
+        status: "current",
+      },
+      {
+        id: 5,
+        title: "Submit for scope review",
+        detail: "Faako team reviews and confirms rollout",
+        status: "upcoming",
+      },
+    ],
+    [billingCycle, currency, plan, selectedAddOns.length, teamSize]
   );
 
   useEffect(() => {
@@ -283,214 +315,252 @@ export default function ModuleConfig() {
   ]);
 
   return (
-    <section className="page module-config">
-      <div className="pricing-hero reveal" style={{ "--delay": "0ms" }}>
-        <p className="eyebrow">Project Blueprint</p>
-        <h1>Design your system blueprint before we build it.</h1>
-        <p className="lead">
-          Select the building blocks your business needs today. We will use this
-          blueprint to shape your project scope and rollout.
-        </p>
-        <div className="ribbon">
-          <div>
-            <p className="eyebrow">Setup Flow</p>
-            <h3>
-              Discovery <FontAwesomeIcon icon={faArrowRight} /> Configure{" "}
-              <FontAwesomeIcon icon={faArrowRight} /> Launch
-            </h3>
-          </div>
-          <div className="ribbon-tags">
-            <span>Requirements</span>
-            <span>Module Map</span>
-            <span>Deployment Plan</span>
-          </div>
-        </div>
-      </div>
+    <section className="page module-config module-config-wizard">
+      <div className="module-config-shell reveal" style={{ "--delay": "0ms" }}>
 
-      <div className="module-config-body">
-        <div className="module-config-main">
-          <div className="section-header reveal" style={{ "--delay": "80ms" }}>
-            <p className="eyebrow">Core Building Blocks</p>
-            <h2>Every project starts with the essentials.</h2>
-            <p className="lead">
-              These modules power finance, inventory, and people operations
-              across your organization.
-            </p>
-          </div>
-          <div className="module-grid">
-            {coreModules.map((module, index) => (
-              <article
-                key={module.id}
-                className="module-card reveal is-selected"
-                style={{ "--delay": `${120 + index * 60}ms` }}
-              >
-                <div className="module-card-header">
-                  <FontAwesomeIcon icon={module.icon} />
-                  <span className="module-pill-tag">{module.tag}</span>
+        <div className="module-config-layout">
+          <div className="module-config-main">
+            <section className="module-config-intro reveal" style={{ "--delay": "60ms" }}>
+              <p className="eyebrow">Step 4 of 5</p>
+              <h1>Connect your business modules</h1>
+              <p className="lead">
+                Choose the modules your team needs now. This blueprint guides
+                implementation, timeline, and rollout milestones.
+              </p>
+            </section>
+
+            <section className="module-config-panel reveal" style={{ "--delay": "120ms" }}>
+              <div className="module-config-panel-head">
+                <div>
+                  <h2>Core foundation</h2>
+                  <p>These modules are included in every implementation plan.</p>
                 </div>
-                <h3>{module.name}</h3>
-                <p className="muted">{module.description}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="section-header reveal" style={{ "--delay": "0ms" }}>
-            <p className="eyebrow">Add-on Modules</p>
-            <h2>Pick the building blocks that match your growth.</h2>
-            <p className="lead">
-              Toggle optional modules and we will tailor your rollout roadmap.
-            </p>
-          </div>
-          <div className="module-grid">
-            {addOnModules.map((module, index) => {
-              const isSelected = selectedAddOns.includes(module.id);
-              return (
-                <article
-                  key={module.id}
-                  className={`module-card reveal is-selectable ${
-                    isSelected ? "is-selected" : ""
-                  }`}
-                  style={{ "--delay": `${80 + index * 60}ms` }}
-                  onClick={() => toggleAddOn(module.id)}
-                  onKeyDown={handleAddOnKeyDown(module.id)}
-                  role="button"
-                  tabIndex={0}
-                  aria-pressed={isSelected}
-                >
-                  <div className="module-card-header">
-                    <FontAwesomeIcon icon={module.icon} />
-                    <span className="module-pill-tag">{module.tag}</span>
-                  </div>
-                  <h3>{module.name}</h3>
-                  <p className="muted">{module.description}</p>
-                  <div className="module-card-footer">
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                    {isSelected ? "Selected" : "Click to add"}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-
-        <form className="form card config-card">
-          <div className="config-header">
-            <p className="eyebrow">Blueprint Summary</p>
-            <h3>Your current configuration</h3>
-            <p className="muted">
-              We will review this with you before starting the build.
-            </p>
-          </div>
-
-          <label>
-            Package
-            <select value={plan} onChange={(event) => setPlan(event.target.value)}>
-              <option value="Starter">Starter</option>
-              <option value="Professional">Professional</option>
-              <option value="Enterprise">Enterprise</option>
-            </select>
-          </label>
-
-          <label>
-            Team size
-            <select
-              value={teamSize}
-              onChange={(event) => setTeamSize(event.target.value)}
-            >
-              <option value="1-10">1-10</option>
-              <option value="11-50">11-50</option>
-              <option value="51-200">51-200</option>
-              <option value="201+">201+</option>
-            </select>
-          </label>
-
-          <label>
-            Primary currency
-            <select
-              value={currency}
-              onChange={(event) => setCurrency(event.target.value)}
-            >
-              <option value="GHS">GHS</option>
-              <option value="USD">USD</option>
-              <option value="NGN">NGN</option>
-            </select>
-          </label>
-
-          <label>
-            Support cadence
-            <select
-              value={billingCycle}
-              onChange={(event) => setBillingCycle(event.target.value)}
-            >
-              <option value="monthly">Monthly</option>
-              <option value="annual">Annual planning</option>
-            </select>
-          </label>
-
-          <label>
-            Implementation window
-            <select
-              value={implementation}
-              onChange={(event) => setImplementation(event.target.value)}
-            >
-              <option value="2-4 weeks">2-4 weeks</option>
-              <option value="4-8 weeks">4-8 weeks</option>
-              <option value="8-12 weeks">8-12 weeks</option>
-            </select>
-          </label>
-
-          <label className="config-checkbox">
-            <input
-              type="checkbox"
-              checked={needsConsulting}
-              onChange={(event) => setNeedsConsulting(event.target.checked)}
-            />
-            Add advisory & implementation support
-          </label>
-
-          <div className="config-summary">
-            <div>
-              <h4>Included modules</h4>
-              <ul className="config-list">
+                <span className="module-config-status-pill is-complete">
+                  <FontAwesomeIcon icon={faCheckCircle} />
+                  Included
+                </span>
+              </div>
+              <div className="module-config-core-grid">
                 {coreModules.map((module) => (
-                  <li key={module.id}>
-                    <FontAwesomeIcon icon={faCheckCircle} />
-                    {module.name}
+                  <article key={module.id} className="module-config-core-item">
+                    <div className="module-config-core-header">
+                      <FontAwesomeIcon icon={module.icon} />
+                      <span className="module-pill-tag">{module.tag}</span>
+                    </div>
+                    <h3>{module.name}</h3>
+                    <p>{module.description}</p>
+                  </article>
+                ))}
+              </div>
+            </section>
+
+            <section className="module-config-panel reveal" style={{ "--delay": "180ms" }}>
+              <div className="module-config-panel-head">
+                <div>
+                  <h2>Optional modules</h2>
+                  <p>
+                    Activate only what you need for launch. You can add more
+                    modules later.
+                  </p>
+                </div>
+                <span className="module-config-status-pill">
+                  {selectedAddOns.length} selected
+                </span>
+              </div>
+              <div className="module-config-addon-list">
+                {addOnModules.map((module) => {
+                  const isSelected = selectedAddOns.includes(module.id);
+                  return (
+                    <article
+                      key={module.id}
+                      className={`module-config-addon-row ${
+                        isSelected ? "is-selected" : ""
+                      }`}
+                    >
+                      <div className="module-config-addon-copy">
+                        <div className="module-config-addon-title">
+                          <span className="module-config-addon-icon">
+                            <FontAwesomeIcon icon={module.icon} />
+                          </span>
+                          <h3>{module.name}</h3>
+                          <span className="module-config-addon-tag">{module.tag}</span>
+                        </div>
+                        <p>{module.description}</p>
+                      </div>
+                      <button
+                        type="button"
+                        className={`module-config-addon-action ${
+                          isSelected ? "is-selected" : ""
+                        }`}
+                        onClick={() => toggleAddOn(module.id)}
+                        aria-pressed={isSelected}
+                      >
+                        {isSelected ? "Selected" : "Add module"}
+                      </button>
+                    </article>
+                  );
+                })}
+              </div>
+              <div className="module-config-addon-meta">
+                <p className="muted">
+                  Need a custom workflow module? We can scope and attach it to
+                  this plan before launch.
+                </p>
+                <Link className="button button-ghost" to="/contact">
+                  Request custom module
+                </Link>
+              </div>
+            </section>
+
+            <section className="module-config-panel reveal" style={{ "--delay": "240ms" }}>
+              <div className="module-config-panel-head">
+                <div>
+                  <h2>Project preferences</h2>
+                  <p>Set delivery details so we can estimate your rollout.</p>
+                </div>
+              </div>
+              <div className="module-config-form">
+                <label>
+                  Package
+                  <select value={plan} onChange={(event) => setPlan(event.target.value)}>
+                    <option value="Starter">Starter</option>
+                    <option value="Professional">Professional</option>
+                    <option value="Enterprise">Enterprise</option>
+                  </select>
+                </label>
+                <label>
+                  Team size
+                  <select
+                    value={teamSize}
+                    onChange={(event) => setTeamSize(event.target.value)}
+                  >
+                    <option value="1-10">1-10</option>
+                    <option value="11-50">11-50</option>
+                    <option value="51-200">51-200</option>
+                    <option value="201+">201+</option>
+                  </select>
+                </label>
+                <label>
+                  Primary currency
+                  <select
+                    value={currency}
+                    onChange={(event) => setCurrency(event.target.value)}
+                  >
+                    <option value="GHS">GHS</option>
+                    <option value="USD">USD</option>
+                    <option value="NGN">NGN</option>
+                  </select>
+                </label>
+                <label>
+                  Support cadence
+                  <select
+                    value={billingCycle}
+                    onChange={(event) => setBillingCycle(event.target.value)}
+                  >
+                    <option value="monthly">Monthly</option>
+                    <option value="annual">Annual planning</option>
+                  </select>
+                </label>
+                <label>
+                  Implementation window
+                  <select
+                    value={implementation}
+                    onChange={(event) => setImplementation(event.target.value)}
+                  >
+                    <option value="2-4 weeks">2-4 weeks</option>
+                    <option value="4-8 weeks">4-8 weeks</option>
+                    <option value="8-12 weeks">8-12 weeks</option>
+                  </select>
+                </label>
+                <label className="module-config-checkbox">
+                  <input
+                    type="checkbox"
+                    checked={needsConsulting}
+                    onChange={(event) => setNeedsConsulting(event.target.checked)}
+                  />
+                  Add advisory and implementation support
+                </label>
+              </div>
+            </section>
+          </div>
+
+          <aside className="module-config-rail">
+            <section className="module-config-rail-card module-config-progress reveal" style={{ "--delay": "120ms" }}>
+              <h3>Setup progress</h3>
+              <ol className="module-config-step-list">
+                {setupSteps.map((step) => (
+                  <li
+                    key={step.id}
+                    className={`module-config-step is-${step.status}`}
+                  >
+                    <span className="module-config-step-marker">
+                      {step.status === "complete" ? (
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                      ) : (
+                        step.id
+                      )}
+                    </span>
+                    <div className="module-config-step-copy">
+                      <h4>{step.title}</h4>
+                      <p>{step.detail}</p>
+                    </div>
                   </li>
                 ))}
-              </ul>
-            </div>
-            <div>
-              <h4>Selected add-ons</h4>
-              {selectedAddOnNames.length ? (
-                <ul className="config-list">
-                  {selectedAddOnNames.map((name) => (
-                    <li key={name}>
-                      <FontAwesomeIcon icon={faCheckCircle} />
-                      {name}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="muted">No add-ons selected yet.</p>
-              )}
-            </div>
-          <div className="config-meta">
-            <span>Plan: {plan}</span>
-            <span>Team: {teamSize}</span>
-            <span>Support: {billingCycle}</span>
-            <span>Currency: {currency}</span>
-            <span>Timeline: {implementation}</span>
-            <span>Advisory: {needsConsulting ? "Included" : "Not included"}</span>
-          </div>
-        </div>
+              </ol>
+            </section>
 
-        <PrimaryButton to="/dashboard">Request scope review</PrimaryButton>
-        <Link className="button button-ghost" to="/signup">
-          Back to intake
-        </Link>
-      </form>
-    </div>
-  </section>
+            <section className="module-config-rail-card module-config-review reveal" style={{ "--delay": "180ms" }}>
+              <h3>Blueprint snapshot</h3>
+              <p className="module-config-summary-count">
+                {totalConfiguredModules} modules configured
+              </p>
+              <div className="module-config-meta-grid">
+                <span>{plan}</span>
+                <span>{teamSize} team</span>
+                <span>{currency}</span>
+                <span>{implementation}</span>
+                <span>{billingCycle === "monthly" ? "Monthly support" : "Annual planning"}</span>
+                <span>{needsConsulting ? "Advisory on" : "Self-managed"}</span>
+              </div>
+              <div>
+                <h4>Selected add-ons</h4>
+                {selectedAddOnNames.length ? (
+                  <ul className="module-config-summary-list">
+                    {selectedAddOnNames.map((name) => (
+                      <li key={name}>
+                        <FontAwesomeIcon icon={faCheckCircle} />
+                        <span>{name}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p className="muted">No add-ons selected yet.</p>
+                )}
+              </div>
+              <div className="module-config-rail-actions">
+                <PrimaryButton to="/dashboard">Request scope review</PrimaryButton>
+                <Link className="button button-ghost" to="/signup">
+                  Back to intake
+                </Link>
+              </div>
+            </section>
+
+            <section className="module-config-rail-card module-config-help reveal" style={{ "--delay": "240ms" }}>
+              <h4>
+                <FontAwesomeIcon icon={faCircleQuestion} />
+                Need help choosing?
+              </h4>
+              <p>
+                Our solutions team can map your workflows and recommend the
+                right launch stack.
+              </p>
+              <Link className="button button-ghost" to="/contact">
+                Contact us
+              </Link>
+            </section>
+          </aside>
+        </div>
+      </div>
+    </section>
   );
 }

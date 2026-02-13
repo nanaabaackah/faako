@@ -1,5 +1,4 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faWhatsapp } from "@fortawesome/free-brands-svg-icons";
+import { FaWhatsapp } from "react-icons/fa";
 
 export default function WhatsApp() {
   return (
@@ -12,11 +11,8 @@ export default function WhatsApp() {
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
       >
-        <FontAwesomeIcon icon={faWhatsapp} className="whatsapp-icon" />
+        <FaWhatsapp className="whatsapp-icon" aria-hidden="true" />
       </a>
     </div>
   );
 }
-
-
-      
