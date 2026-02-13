@@ -1,4 +1,3 @@
-import React from "react";
 import { Danger } from "iconsax-react";
 
 const FA_SIZE_MAP = {

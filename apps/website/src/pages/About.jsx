@@ -32,8 +32,8 @@ export default function About() {
           </p>
           <div className="cta-actions">
             <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
-            <Link className="button button-ghost" to="/case-studies">
-              See the Proof
+            <Link className="button button-ghost" to="/solutions">
+              Explore Solutions
             </Link>
           </div>
         </div>

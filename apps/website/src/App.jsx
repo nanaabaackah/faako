@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { animate } from "animejs";
@@ -15,15 +15,44 @@ import NotFound from "./pages/NotFound.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Solutions from "./pages/Solutions.jsx";
 import CaseStudies from "./pages/CaseStudies.jsx";
-import CaseStudyDetail from "./pages/CaseStudyDetail.jsx";
 import About from "./pages/About.jsx";
 import Privacy from "./pages/Privacy.jsx";
 import Terms from "./pages/Terms.jsx";
 import Login from "./pages/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
+import { getModuleById } from "./data/modules.js";
 import "./styles/components/button.css";
 
 const themeStorageKey = "faako-theme";
+const appTitle = "Faako";
+
+const getDocumentTitle = (pathname) => {
+  const normalizedPath = pathname.replace(/\/+$/, "") || "/";
+
+  if (normalizedPath.startsWith("/modules/")) {
+    const moduleId = normalizedPath.split("/")[2];
+    const module = getModuleById(moduleId);
+    return module ? `${module.title} Module | ${appTitle}` : `Module Details | ${appTitle}`;
+  }
+
+  const titleMap = {
+    "/": `Home | ${appTitle}`,
+    "/about": `About | ${appTitle}`,
+    "/solutions": `Solutions | ${appTitle}`,
+    "/configure": `Configure | ${appTitle}`,
+    "/pricing": `Pricing | ${appTitle}`,
+    "/case-studies": `Use-Case Scenarios | ${appTitle}`,
+    "/dashboard": `Dashboard | ${appTitle}`,
+    "/contact": `Contact | ${appTitle}`,
+    "/signup": `Sign Up | ${appTitle}`,
+    "/login": `Log In | ${appTitle}`,
+    "/forgot-password": `Reset Password | ${appTitle}`,
+    "/privacy": `Privacy Policy | ${appTitle}`,
+    "/terms": `Terms of Service | ${appTitle}`,
+  };
+
+  return titleMap[normalizedPath] || `Page Not Found | ${appTitle}`;
+};
 
 const getStoredTheme = () => {
   if (typeof window === "undefined") {
@@ -114,6 +143,14 @@ export default function App() {
     if (typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (typeof document === "undefined") {
+      return;
+    }
+
+    document.title = getDocumentTitle(location.pathname);
   }, [location.pathname]);
 
   useEffect(() => {
@@ -318,7 +355,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/solutions" element={<Solutions />} />
           <Route path="/case-studies" element={<CaseStudies />} />
-          <Route path="/case-studies/:slug" element={<CaseStudyDetail />} />
+          <Route path="/case-studies/:slug" element={<Navigate to="/case-studies" replace />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/configure" element={<ModuleConfig />} />

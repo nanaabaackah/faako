@@ -1,566 +1,718 @@
-import { useEffect, useMemo, useState } from "react";
+import { Fragment, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCheckCircle,
-  faChartLine,
+  faArrowRight,
   faGlobe,
-  faHandshake,
   faBoxesStacked,
+  faHandshake,
   faReceipt,
   faCalendarDays,
   faCalendarCheck,
-  faChartPie,
-  faFileInvoiceDollar,
-  faAddressBook,
+  faChartLine,
   faMoneyBillWave,
   faUserTie,
   faTruck,
-  faWrench,
-  faRoute,
-  faFolderOpen,
-  faUserShield,
-  faClock,
-  faBullhorn,
-  faGear,
-  faPenToSquare,
-  faCartShopping,
-  faBoxArchive,
-  faShield,
   faPlug,
   faHeadset,
-  faLanguage,
-  faCircleQuestion,
+  faLightbulb,
+  faCheck,
+  faStore,
+  faTruckFast,
+  faGlassCheers,
+  faBriefcase,
+  faIndustry,
+  faUtensils,
+  faBolt,
+  faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import WhatsApp from "../components/WhatsApp.jsx";
 
+// Core modules (always included)
 const coreModules = [
-  {
-    id: "inventory",
-    name: "Inventory",
-    description: "Serialized items, warehouses, and stock movement tracking.",
-    icon: faBoxesStacked,
-    tag: "Core",
-  },
-  {
-    id: "accounting",
-    name: "Accounting",
-    description: "General ledger, reconciliations, and closing.",
-    icon: faChartPie,
-    tag: "Core",
-  },
-  {
-    id: "invoicing",
-    name: "Invoicing",
-    description: "Billing schedules, deposits, and payment tracking.",
-    icon: faFileInvoiceDollar,
-    tag: "Core",
-  },
-  {
-    id: "hr",
-    name: "HR",
-    description: "Hiring, training, and team performance records.",
-    icon: faUserTie,
-    tag: "Core",
-  },
-  {
-    id: "users",
-    name: "Users",
-    description: "Roles, permissions, and access control.",
-    icon: faUserShield,
-    tag: "Core",
-  },
-];
-
-const addOnModules = [
   {
     id: "website",
     name: "Website",
-    description: "Public storefront, service pages, and lead capture.",
+    description: "Business website with lead capture and Mobile Money.",
     icon: faGlobe,
-    tag: "Growth",
+    tag: "Digital",
+    required: true,
+  },
+  {
+    id: "dashboard",
+    name: "Dashboard",
+    description: "Real-time view of sales, stock, and money flow.",
+    icon: faChartLine,
+    tag: "Core",
+    required: true,
+  },
+  {
+    id: "reports",
+    name: "Reports",
+    description: "Daily, weekly, monthly reports to WhatsApp or email.",
+    icon: faReceipt,
+    tag: "Core",
+    required: true,
+  },
+];
+
+// Add-on modules (optional)
+const addOnModules = [
+  {
+    id: "inventory",
+    name: "Inventory",
+    description: "Track stock across locations with serial numbers.",
+    icon: faBoxesStacked,
+    tag: "Operations",
+    popular: true,
   },
   {
     id: "crm",
     name: "CRM",
-    description: "Leads, client timelines, and sales follow-ups.",
+    description: "Manage leads, customers, and sales pipeline.",
     icon: faHandshake,
     tag: "Sales",
+    popular: true,
   },
   {
     id: "orders",
     name: "Orders",
-    description: "Quotes, order status, and fulfillment progress.",
+    description: "From quote to delivery confirmation.",
     icon: faReceipt,
-    tag: "Ops",
+    tag: "Operations",
+    popular: true,
   },
   {
     id: "bookings",
     name: "Bookings",
-    description: "Reservations, event timelines, and resource holds.",
+    description: "Reservations, event planning, resource scheduling.",
     icon: faCalendarDays,
-    tag: "Ops",
+    tag: "Scheduling",
   },
   {
     id: "scheduler",
     name: "Scheduler",
-    description: "Staff calendars, shifts, and job allocations.",
+    description: "Staff shifts, job assignments, availability.",
     icon: faCalendarCheck,
-    tag: "People",
-  },
-  {
-    id: "directory",
-    name: "Directory",
-    description: "Team contacts, customers, and vendor profiles.",
-    icon: faAddressBook,
-    tag: "People",
-  },
-  {
-    id: "expenses",
-    name: "Expenses",
-    description: "Operating costs, receipts, and approvals.",
-    icon: faMoneyBillWave,
-    tag: "Finance",
-  },
-  {
-    id: "vendors",
-    name: "Vendors",
-    description: "Supplier catalog, contracts, and lead times.",
-    icon: faTruck,
-    tag: "Supply",
-  },
-  {
-    id: "maintenance",
-    name: "Maintenance",
-    description: "Asset upkeep schedules and service history.",
-    icon: faWrench,
-    tag: "Ops",
+    tag: "Scheduling",
   },
   {
     id: "delivery",
     name: "Delivery",
-    description: "Routes, drivers, and drop-off confirmations.",
-    icon: faRoute,
-    tag: "Logistics",
+    description: "Routes, driver tracking, delivery confirmation.",
+    icon: faTruck,
+    tag: "Operations",
   },
   {
-    id: "documents",
-    name: "Documents",
-    description: "Contracts, files, and version control.",
-    icon: faFolderOpen,
-    tag: "Records",
+    id: "payments",
+    name: "Payments",
+    description: "Mobile Money, invoicing, payment tracking.",
+    icon: faMoneyBillWave,
+    tag: "Finance",
   },
   {
-    id: "timesheets",
-    name: "Timesheets",
-    description: "Hours logged, payroll exports, and approvals.",
-    icon: faClock,
+    id: "hr",
+    name: "HR & Payroll",
+    description: "Employee records, payroll, attendance.",
+    icon: faUserTie,
     tag: "People",
-  },
-  {
-    id: "marketing",
-    name: "Marketing",
-    description: "Campaign tracking and customer outreach.",
-    icon: faBullhorn,
-    tag: "Growth",
-  },
-  {
-    id: "settings",
-    name: "Settings",
-    description: "System preferences, tax rules, and templates.",
-    icon: faGear,
-    tag: "Admin",
-  },
-  {
-    id: "template-mode",
-    name: "Template Mode",
-    description: "Website layouts and content edits without code.",
-    icon: faPenToSquare,
-    tag: "Web",
-  },
-  {
-    id: "procurement",
-    name: "Procurement",
-    description: "Purchase requests, approvals, and vendor quotes.",
-    icon: faCartShopping,
-    tag: "Supply",
-  },
-  {
-    id: "asset-management",
-    name: "Asset Management",
-    description: "Equipment lifecycle tracking and depreciation.",
-    icon: faBoxArchive,
-    tag: "Assets",
   },
   {
     id: "integrations",
     name: "Integrations",
-    description: "Connect banking, email, SMS, and accounting tools.",
+    description: "Connect QuickBooks, Xero, WhatsApp Business API.",
     icon: faPlug,
     tag: "System",
   },
   {
-    id: "support-desk",
+    id: "support",
     name: "Support Desk",
-    description: "Tickets, SLAs, and customer service history.",
+    description: "Customer tickets, SLAs, service history.",
     icon: faHeadset,
     tag: "Support",
   },
   {
-    id: "compliance",
-    name: "Compliance",
-    description: "Audits, safety checks, and policy attestations.",
-    icon: faShield,
-    tag: "Governance",
-  },
-  {
     id: "analytics",
     name: "Analytics",
-    description: "Advanced reporting, forecasting, and BI exports.",
+    description: "Advanced reporting, forecasting, BI exports.",
     icon: faChartLine,
     tag: "Insights",
   },
 ];
 
+// Industry presets with FontAwesome icons
+const industryPresets = {
+  retail: {
+    name: "Retail & Shops",
+    icon: faStore,
+    iconColor: "#FF6B35",
+    modules: ["inventory", "crm", "orders", "payments"],
+    description: "Perfect for shops, boutiques, and retail chains",
+  },
+  distribution: {
+    name: "Distribution & Wholesale",
+    icon: faTruckFast,
+    iconColor: "#F7931E",
+    modules: ["inventory", "orders", "delivery", "crm", "payments"],
+    description: "Track stock across warehouses, manage deliveries",
+  },
+  events: {
+    name: "Events & Rentals",
+    icon: faGlassCheers,
+    iconColor: "#9B59B6",
+    modules: ["bookings", "inventory", "scheduler", "payments"],
+    description: "Manage bookings, track equipment, schedule staff",
+  },
+  services: {
+    name: "Professional Services",
+    icon: faBriefcase,
+    iconColor: "#3498DB",
+    modules: ["crm", "scheduler", "bookings", "payments"],
+    description: "Client management, appointments, billing",
+  },
+  manufacturing: {
+    name: "Manufacturing",
+    icon: faIndustry,
+    iconColor: "#E74C3C",
+    modules: ["inventory", "orders", "scheduler", "hr"],
+    description: "Production tracking, materials, labor",
+  },
+  food: {
+    name: "Food & Beverage",
+    icon: faUtensils,
+    iconColor: "#27AE60",
+    modules: ["inventory", "orders", "delivery", "scheduler"],
+    description: "Menu management, orders, deliveries",
+  },
+};
+
+const processSteps = [
+  {
+    title: "You Configure",
+    description: "Pick your modules. See your estimate in real time.",
+  },
+  {
+    title: "We Review",
+    description: "We call to confirm requirements and integrations.",
+  },
+  {
+    title: "We Build",
+    description: "Design, develop, test, and share weekly demos.",
+  },
+  {
+    title: "You Launch",
+    description: "Team training, go-live support, and optimization.",
+  },
+];
+
+const dependencyPairs = [
+  {
+    title: "Inventory + Delivery",
+    description:
+      "Track stock levels and delivery routes in one system. Perfect for distribution.",
+    firstIcon: faBoxesStacked,
+    secondIcon: faTruck,
+  },
+  {
+    title: "CRM + Orders",
+    description: "See customer history when they order. Close deals faster.",
+    firstIcon: faHandshake,
+    secondIcon: faReceipt,
+  },
+  {
+    title: "Bookings + Scheduler",
+    description: "Match bookings with staff availability. No double-booking.",
+    firstIcon: faCalendarDays,
+    secondIcon: faCalendarCheck,
+  },
+  {
+    title: "Payments + Reports",
+    description: "See money flow in real-time. Know exactly what's outstanding.",
+    firstIcon: faMoneyBillWave,
+    secondIcon: faChartLine,
+  },
+];
+
+const faqItems = [
+  {
+    title: "Can I start small and add modules later?",
+    description:
+      "Yes. Start with Website + Dashboard + Reports, then add modules as you grow. No rebuild needed.",
+  },
+  {
+    title: "What if I don't see a module I need?",
+    description:
+      "We build custom modules. Tell us what you need and we'll quote it as part of your plan.",
+  },
+  {
+    title: "Can I remove modules after launch?",
+    description:
+      "Yes. We usually recommend setting unused modules inactive so your historical data stays available.",
+  },
+  {
+    title: "How does pricing work for custom modules?",
+    description:
+      "Custom work is scoped by complexity. Most custom modules fall in the GH₵ 1,800–4,500 range.",
+  },
+  {
+    title: "Do modules work on mobile?",
+    description:
+      "Every module works on desktop, tablet, and phone with synchronized live data.",
+  },
+  {
+    title: "Can modules integrate with QuickBooks/Xero?",
+    description:
+      "Yes. Select the Integrations module and we can connect accounting and messaging tools.",
+  },
+];
+
+const hasSameModuleSet = (left, right) => {
+  if (left.length !== right.length) {
+    return false;
+  }
+  const leftSet = new Set(left);
+  return right.every((value) => leftSet.has(value));
+};
+
 export default function ModuleConfig() {
-  const [selectedAddOns, setSelectedAddOns] = useState([
-    "crm",
-    "analytics",
-    "integrations",
-  ]);
-  const [plan, setPlan] = useState("Professional");
-  const [teamSize, setTeamSize] = useState("11-50");
-  const [currency, setCurrency] = useState("GHS");
-  const [billingCycle, setBillingCycle] = useState("monthly");
-  const [implementation, setImplementation] = useState("4-8 weeks");
-  const [needsConsulting, setNeedsConsulting] = useState(true);
-  const configStorageKey = "faako-config";
+  const [selectedAddOns, setSelectedAddOns] = useState([]);
+  const [selectedIndustry, setSelectedIndustry] = useState(null);
+  const [showEstimate, setShowEstimate] = useState(false);
 
   const toggleAddOn = (id) => {
+    setShowEstimate(true);
     setSelectedAddOns((prev) =>
       prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
     );
   };
 
-  const selectedAddOnNames = useMemo(
-    () =>
-      addOnModules
-        .filter((item) => selectedAddOns.includes(item.id))
-        .map((item) => item.name),
-    [selectedAddOns]
-  );
-  const totalConfiguredModules = coreModules.length + selectedAddOns.length;
-  const setupSteps = useMemo(
-    () => [
-      {
-        id: 1,
-        title: "Choose package",
-        detail: `${plan} plan for ${teamSize} team`,
-        status: "complete",
-      },
-      {
-        id: 2,
-        title: "Set billing profile",
-        detail: `${currency} · ${billingCycle === "monthly" ? "Monthly support" : "Annual planning"}`,
-        status: "complete",
-      },
-      {
-        id: 3,
-        title: "Confirm core modules",
-        detail: `${coreModules.length} foundational modules included`,
-        status: "complete",
-      },
-      {
-        id: 4,
-        title: "Select add-on modules",
-        detail: selectedAddOns.length
-          ? `${selectedAddOns.length} optional modules selected`
-          : "Choose the modules needed for launch",
-        status: "current",
-      },
-      {
-        id: 5,
-        title: "Submit for scope review",
-        detail: "Faako team reviews and confirms rollout",
-        status: "upcoming",
-      },
-    ],
-    [billingCycle, currency, plan, selectedAddOns.length, teamSize]
-  );
+  const applyIndustryPreset = (industryKey) => {
+    setSelectedIndustry(industryKey);
+    setSelectedAddOns(industryPresets[industryKey].modules);
+    setShowEstimate(true);
+  };
+
+  const resetConfiguration = () => {
+    setSelectedAddOns([]);
+    setSelectedIndustry(null);
+    setShowEstimate(false);
+  };
 
   useEffect(() => {
-    if (typeof window === "undefined") {
-      return;
-    }
+    const matchedIndustryEntry = Object.entries(industryPresets).find(
+      ([, preset]) => hasSameModuleSet(selectedAddOns, preset.modules)
+    );
+    const nextIndustry = matchedIndustryEntry ? matchedIndustryEntry[0] : null;
+    setSelectedIndustry((current) =>
+      current === nextIndustry ? current : nextIndustry
+    );
+  }, [selectedAddOns]);
 
-    const payload = {
-      modules: [...coreModules.map((module) => module.id), ...selectedAddOns],
-      plan,
-      teamSize,
-      currency,
-      billingCycle,
-      implementation,
-      needsConsulting,
-    };
+  const estimatedPrice = useMemo(() => {
+    const basePrice = 8500;
+    const modulePrice = selectedAddOns.length * 1800;
+    return basePrice + modulePrice;
+  }, [selectedAddOns]);
 
-    window.localStorage.setItem(configStorageKey, JSON.stringify(payload));
-  }, [
-    selectedAddOns,
-    plan,
-    teamSize,
-    currency,
-    billingCycle,
-    implementation,
-    needsConsulting,
-  ]);
+  const estimatedTimeline = useMemo(() => {
+    const baseWeeks = 4;
+    const moduleWeeks = Math.ceil(selectedAddOns.length / 2);
+    return baseWeeks + moduleWeeks;
+  }, [selectedAddOns]);
+
+  const selectedAddOnModules = useMemo(
+    () => addOnModules.filter((module) => selectedAddOns.includes(module.id)),
+    [selectedAddOns]
+  );
 
   return (
-    <section className="page module-config module-config-wizard">
-      <div className="module-config-shell reveal" style={{ "--delay": "0ms" }}>
+    <section className="page module-config page-stack">
 
-        <div className="module-config-layout">
-          <div className="module-config-main">
-            <section className="module-config-intro reveal" style={{ "--delay": "60ms" }}>
-              <p className="eyebrow">Step 4 of 5</p>
-              <h1>Connect your business modules</h1>
-              <p className="lead">
-                Choose the modules your team needs now. This blueprint guides
-                implementation, timeline, and rollout milestones.
-              </p>
-            </section>
-
-            <section className="module-config-panel reveal" style={{ "--delay": "120ms" }}>
-              <div className="module-config-panel-head">
-                <div>
-                  <h2>Core foundation</h2>
-                  <p>These modules are included in every implementation plan.</p>
-                </div>
-                <span className="module-config-status-pill is-complete">
-                  <FontAwesomeIcon icon={faCheckCircle} />
-                  Included
-                </span>
-              </div>
-              <div className="module-config-core-grid">
-                {coreModules.map((module) => (
-                  <article key={module.id} className="module-config-core-item">
-                    <div className="module-config-core-header">
-                      <FontAwesomeIcon icon={module.icon} />
-                      <span className="module-pill-tag">{module.tag}</span>
-                    </div>
-                    <h3>{module.name}</h3>
-                    <p>{module.description}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="module-config-panel reveal" style={{ "--delay": "180ms" }}>
-              <div className="module-config-panel-head">
-                <div>
-                  <h2>Optional modules</h2>
-                  <p>
-                    Activate only what you need for launch. You can add more
-                    modules later.
-                  </p>
-                </div>
-                <span className="module-config-status-pill">
-                  {selectedAddOns.length} selected
-                </span>
-              </div>
-              <div className="module-config-addon-list">
-                {addOnModules.map((module) => {
-                  const isSelected = selectedAddOns.includes(module.id);
-                  return (
-                    <article
-                      key={module.id}
-                      className={`module-config-addon-row ${
-                        isSelected ? "is-selected" : ""
-                      }`}
-                    >
-                      <div className="module-config-addon-copy">
-                        <div className="module-config-addon-title">
-                          <span className="module-config-addon-icon">
-                            <FontAwesomeIcon icon={module.icon} />
-                          </span>
-                          <h3>{module.name}</h3>
-                          <span className="module-config-addon-tag">{module.tag}</span>
-                        </div>
-                        <p>{module.description}</p>
-                      </div>
-                      <button
-                        type="button"
-                        className={`module-config-addon-action ${
-                          isSelected ? "is-selected" : ""
-                        }`}
-                        onClick={() => toggleAddOn(module.id)}
-                        aria-pressed={isSelected}
-                      >
-                        {isSelected ? "Selected" : "Add module"}
-                      </button>
-                    </article>
-                  );
-                })}
-              </div>
-              <div className="module-config-addon-meta">
-                <p className="muted">
-                  Need a custom workflow module? We can scope and attach it to
-                  this plan before launch.
-                </p>
-                <Link className="button button-ghost" to="/contact">
-                  Request custom module
-                </Link>
-              </div>
-            </section>
-
-            <section className="module-config-panel reveal" style={{ "--delay": "240ms" }}>
-              <div className="module-config-panel-head">
-                <div>
-                  <h2>Project preferences</h2>
-                  <p>Set delivery details so we can estimate your rollout.</p>
-                </div>
-              </div>
-              <div className="module-config-form">
-                <label>
-                  Package
-                  <select value={plan} onChange={(event) => setPlan(event.target.value)}>
-                    <option value="Starter">Starter</option>
-                    <option value="Professional">Professional</option>
-                    <option value="Enterprise">Enterprise</option>
-                  </select>
-                </label>
-                <label>
-                  Team size
-                  <select
-                    value={teamSize}
-                    onChange={(event) => setTeamSize(event.target.value)}
-                  >
-                    <option value="1-10">1-10</option>
-                    <option value="11-50">11-50</option>
-                    <option value="51-200">51-200</option>
-                    <option value="201+">201+</option>
-                  </select>
-                </label>
-                <label>
-                  Primary currency
-                  <select
-                    value={currency}
-                    onChange={(event) => setCurrency(event.target.value)}
-                  >
-                    <option value="GHS">GHS</option>
-                    <option value="USD">USD</option>
-                    <option value="NGN">NGN</option>
-                  </select>
-                </label>
-                <label>
-                  Support cadence
-                  <select
-                    value={billingCycle}
-                    onChange={(event) => setBillingCycle(event.target.value)}
-                  >
-                    <option value="monthly">Monthly</option>
-                    <option value="annual">Annual planning</option>
-                  </select>
-                </label>
-                <label>
-                  Implementation window
-                  <select
-                    value={implementation}
-                    onChange={(event) => setImplementation(event.target.value)}
-                  >
-                    <option value="2-4 weeks">2-4 weeks</option>
-                    <option value="4-8 weeks">4-8 weeks</option>
-                    <option value="8-12 weeks">8-12 weeks</option>
-                  </select>
-                </label>
-                <label className="module-config-checkbox">
-                  <input
-                    type="checkbox"
-                    checked={needsConsulting}
-                    onChange={(event) => setNeedsConsulting(event.target.checked)}
-                  />
-                  Add advisory and implementation support
-                </label>
-              </div>
-            </section>
+      {/* ========================================
+          HERO SECTION
+          ======================================== */}
+      <section className="config-hero">
+        <div className="config-hero-content reveal" data-scroll>
+          <p className="eyebrow">System Builder</p>
+          <h1>
+            Build your system.<br />{" "}
+            <span className="text-accent">Pick what you need.</span>
+          </h1>
+          <p className="lead">
+            Start with the essentials. Add modules as you grow.
+            We'll show you the price and timeline instantly.
+          </p>
+          <div className="hero-actions">
+            <PrimaryButton to="/contact">Talk to a Solutions Expert</PrimaryButton>
+            <a className="button button-ghost" href="#addon-modules">
+              Build Custom Setup
+            </a>
           </div>
-
-          <aside className="module-config-rail">
-            <section className="module-config-rail-card module-config-progress reveal" style={{ "--delay": "120ms" }}>
-              <h3>Setup progress</h3>
-              <ol className="module-config-step-list">
-                {setupSteps.map((step) => (
-                  <li
-                    key={step.id}
-                    className={`module-config-step is-${step.status}`}
-                  >
-                    <span className="module-config-step-marker">
-                      {step.status === "complete" ? (
-                        <FontAwesomeIcon icon={faCheckCircle} />
-                      ) : (
-                        step.id
-                      )}
-                    </span>
-                    <div className="module-config-step-copy">
-                      <h4>{step.title}</h4>
-                      <p>{step.detail}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </section>
-
-            <section className="module-config-rail-card module-config-review reveal" style={{ "--delay": "180ms" }}>
-              <h3>Blueprint snapshot</h3>
-              <p className="module-config-summary-count">
-                {totalConfiguredModules} modules configured
-              </p>
-              <div className="module-config-meta-grid">
-                <span>{plan}</span>
-                <span>{teamSize} team</span>
-                <span>{currency}</span>
-                <span>{implementation}</span>
-                <span>{billingCycle === "monthly" ? "Monthly support" : "Annual planning"}</span>
-                <span>{needsConsulting ? "Advisory on" : "Self-managed"}</span>
-              </div>
-              <div>
-                <h4>Selected add-ons</h4>
-                {selectedAddOnNames.length ? (
-                  <ul className="module-config-summary-list">
-                    {selectedAddOnNames.map((name) => (
-                      <li key={name}>
-                        <FontAwesomeIcon icon={faCheckCircle} />
-                        <span>{name}</span>
-                      </li>
-                    ))}
-                  </ul>
-                ) : (
-                  <p className="muted">No add-ons selected yet.</p>
-                )}
-              </div>
-              <div className="module-config-rail-actions">
-                <PrimaryButton to="/dashboard">Request scope review</PrimaryButton>
-                <Link className="button button-ghost" to="/signup">
-                  Back to intake
-                </Link>
-              </div>
-            </section>
-
-            <section className="module-config-rail-card module-config-help reveal" style={{ "--delay": "240ms" }}>
-              <h4>
-                <FontAwesomeIcon icon={faCircleQuestion} />
-                Need help choosing?
-              </h4>
-              <p>
-                Our solutions team can map your workflows and recommend the
-                right launch stack.
-              </p>
-              <Link className="button button-ghost" to="/contact">
-                Contact us
-              </Link>
-            </section>
-          </aside>
         </div>
-      </div>
+
+        {/* Quick Stats */}
+        <div
+          className="config-stats reveal"
+          data-scroll
+          style={{ "--delay": "100ms" }}
+        >
+          <article className="stat-item">
+            <div className="stat-icon">
+              <FontAwesomeIcon icon={faBolt} />
+            </div>
+            <div className="stat-content">
+              <div className="stat-value">4-8 weeks</div>
+              <div className="stat-label">Average setup</div>
+            </div>
+          </article>
+
+          <article className="stat-item">
+            <div className="stat-icon">
+              <FontAwesomeIcon icon={faCheck} />
+            </div>
+            <div className="stat-content">
+              <div className="stat-value">{coreModules.length + selectedAddOns.length}</div>
+              <div className="stat-label">Modules in your stack</div>
+            </div>
+          </article>
+
+          <article className="stat-item">
+            <div className="stat-icon">
+              <FontAwesomeIcon icon={faLightbulb} />
+            </div>
+            <div className="stat-content">
+              <div className="stat-value">GH₵ 8.5k</div>
+              <div className="stat-label">Starting price</div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      {/* ========================================
+          INDUSTRY PRESETS
+          ======================================== */}
+      <section className="page industry-presets">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Quick Start</p>
+          <h2>Choose your industry for instant recommendations.</h2>
+          <p className="lead">
+            We've pre-configured the most common setups. Click to apply.
+          </p>
+        </div>
+
+        <div className="presets-grid">
+          {Object.entries(industryPresets).map(([key, preset], index) => (
+            <button
+              key={key}
+              type="button"
+              aria-pressed={selectedIndustry === key}
+              className={`preset-card reveal ${
+                selectedIndustry === key ? "is-active" : ""
+              }`}
+              data-scroll
+              style={{ "--delay": `${100 + index * 70}ms` }}
+              onClick={() => applyIndustryPreset(key)}
+            >
+              <div className="preset-icon-wrapper">
+                <FontAwesomeIcon
+                  icon={preset.icon}
+                  className="preset-icon"
+                  style={{ color: preset.iconColor }}
+                />
+              </div>
+              <h3>{preset.name}</h3>
+              <p>{preset.description}</p>
+              <div className="preset-meta">
+                <span className="preset-modules">{preset.modules.length} modules</span>
+                <span className="preset-state">
+                  {selectedIndustry === key ? "Applied" : "Apply"}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================
+          CORE MODULES
+          ======================================== */}
+      <section className="page core-modules-section">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Always Included</p>
+          <h2>Every system starts with these three.</h2>
+          <p className="lead">
+            These are the foundation. You get all three in every package.
+          </p>
+        </div>
+
+        <div className="config-module-grid">
+          {coreModules.map((module, index) => (
+            <article
+              key={module.id}
+              className="config-module-card is-core reveal"
+              data-scroll
+              style={{ "--delay": `${120 + index * 60}ms` }}
+            >
+              <div className="module-card-header">
+                <div className="module-icon">
+                  <FontAwesomeIcon icon={module.icon} />
+                </div>
+                <span className="module-tag core-tag">Core</span>
+              </div>
+              <h3>{module.name}</h3>
+              <p>{module.description}</p>
+              <div className="module-badge">
+                <FontAwesomeIcon icon={faCheck} /> Included
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================
+          ADD-ON MODULES
+          ======================================== */}
+      <section className="page addon-modules-section" id="addon-modules">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Add What You Need</p>
+          <h2>Pick the modules that match your business.</h2>
+          <p className="lead">
+            Click to select. We'll calculate your price and timeline.
+          </p>
+        </div>
+
+        <div className="module-selection-bar reveal" data-scroll style={{ "--delay": "80ms" }}>
+          <p>
+            <strong>{selectedAddOns.length}</strong> add-on module
+            {selectedAddOns.length === 1 ? "" : "s"} selected
+            {selectedIndustry ? ` · ${industryPresets[selectedIndustry].name} preset` : ""}
+          </p>
+          <button
+            type="button"
+            className="config-reset"
+            onClick={resetConfiguration}
+            disabled={!selectedAddOns.length && !showEstimate}
+          >
+            Reset configuration
+          </button>
+        </div>
+
+        <div className="config-module-grid">
+          {addOnModules.map((module, index) => {
+            const isSelected = selectedAddOns.includes(module.id);
+            return (
+              <button
+                key={module.id}
+                type="button"
+                aria-pressed={isSelected}
+                className={`config-module-card is-selectable reveal ${
+                  isSelected ? "is-selected" : ""
+                }`}
+                data-scroll
+                onClick={() => toggleAddOn(module.id)}
+                style={{ "--delay": `${80 + index * 60}ms` }}
+              >
+                <div className="module-card-header">
+                  <div className="module-icon">
+                    <FontAwesomeIcon icon={module.icon} />
+                  </div>
+                  <span className="module-tag">{module.tag}</span>
+                  {module.popular && !isSelected && (
+                    <span className="popular-badge">Popular</span>
+                  )}
+                </div>
+                <h3>{module.name}</h3>
+                <p>{module.description}</p>
+                <div className="module-price">+ GH₵ 1,800</div>
+                <div className="module-select">
+                  <FontAwesomeIcon icon={isSelected ? faCheckCircle : faCircle} />
+                  {isSelected ? "Added" : "Click to add"}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      {/* ========================================
+          PRICE ESTIMATE
+          ======================================== */}
+      {showEstimate && (
+        <section className="page estimate-section">
+          <div className="estimate-card reveal" data-scroll>
+            <div className="estimate-header">
+              <h3>Your Estimate</h3>
+              <p>Based on your selections</p>
+            </div>
+
+            <div className="estimate-breakdown">
+              <div className="estimate-row">
+                <span>Website + Dashboard + Reports</span>
+                <span>GH₵ 8,500</span>
+              </div>
+              {selectedAddOns.length > 0 && (
+                <div className="estimate-row">
+                  <span>{selectedAddOns.length} additional modules</span>
+                  <span>GH₵ {(selectedAddOns.length * 1800).toLocaleString()}</span>
+                </div>
+              )}
+              <div className="estimate-divider"></div>
+              <div className="estimate-row total">
+                <span>Estimated Total</span>
+                <span>GH₵ {estimatedPrice.toLocaleString()}</span>
+              </div>
+            </div>
+
+            {selectedAddOnModules.length > 0 ? (
+              <div className="estimate-tags">
+                {selectedAddOnModules.map((module) => (
+                  <span key={module.id} className="estimate-tag">
+                    {module.name}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <p className="estimate-placeholder">
+                Add-on modules will appear here as you select them.
+              </p>
+            )}
+
+            <div className="estimate-timeline">
+              <div className="timeline-item">
+                <FontAwesomeIcon icon={faCalendarCheck} />
+                <div>
+                  <strong>{estimatedTimeline} weeks</strong>
+                  <span>Estimated timeline</span>
+                </div>
+              </div>
+            </div>
+
+            <div className="estimate-actions">
+              <PrimaryButton to="/contact">Request Detailed Quote</PrimaryButton>
+              <Link to="/pricing" className="button button-ghost">
+                See Full Pricing
+              </Link>
+            </div>
+
+            <p className="estimate-note">
+              This is an estimate. Final price depends on complexity, integrations, and data migration needs.
+            </p>
+          </div>
+        </section>
+      )}
+
+      {/* ========================================
+          HOW IT WORKS
+          ======================================== */}
+      <section className="page config-process">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">What Happens Next</p>
+          <h2>From configuration to launch.</h2>
+        </div>
+
+        <div className="process-flow">
+          {processSteps.map((step, index) => (
+            <Fragment key={step.title}>
+              <div
+                className="flow-step reveal"
+                data-scroll
+                style={{ "--delay": `${80 + index * 120}ms` }}
+              >
+                <div className="flow-number">{`0${index + 1}`}</div>
+                <h4>{step.title}</h4>
+                <p>{step.description}</p>
+              </div>
+
+              {index < processSteps.length - 1 ? (
+                <div
+                  className="flow-arrow reveal"
+                  data-scroll
+                  style={{ "--delay": `${140 + index * 120}ms` }}
+                >
+                  <FontAwesomeIcon icon={faArrowRight} />
+                </div>
+              ) : null}
+            </Fragment>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================
+          MODULE DEPENDENCIES
+          ======================================== */}
+      <section className="page dependencies-section">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Good to Know</p>
+          <h2>Module combinations that work well together.</h2>
+        </div>
+
+        <div className="dependencies-grid">
+          {dependencyPairs.map((pair, index) => (
+            <div
+              key={pair.title}
+              className="dependency-card reveal"
+              data-scroll
+              style={{ "--delay": `${100 + index * 90}ms` }}
+            >
+              <div className="dependency-icons">
+                <FontAwesomeIcon icon={pair.firstIcon} className="dep-icon" />
+                <span className="dep-plus">+</span>
+                <FontAwesomeIcon icon={pair.secondIcon} className="dep-icon" />
+              </div>
+              <h4>{pair.title}</h4>
+              <p>{pair.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================
+          FAQ SECTION
+          ======================================== */}
+      <section className="page config-faq">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Questions</p>
+          <h2>Common configuration questions.</h2>
+        </div>
+
+        <div className="faq-grid">
+          {faqItems.map((item, index) => (
+            <div
+              key={item.title}
+              className="faq-card reveal"
+              data-scroll
+              style={{ "--delay": `${100 + index * 70}ms` }}
+            >
+              <h4>{item.title}</h4>
+              <p>{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ========================================
+          FINAL CTA
+          ======================================== */}
+      <section className="page cta reveal" data-scroll>
+        <div className="cta-content">
+          <h2>Ready to see your custom quote?</h2>
+          <p className="lead">
+            {selectedAddOns.length > 0
+              ? `You've selected ${selectedAddOns.length + 3} modules. Let's talk about your timeline and pricing.`
+              : "Choose your modules above, or talk to us to build a custom configuration."}
+          </p>
+        </div>
+        <div className="cta-actions">
+          <PrimaryButton to="/contact">Get Your Quote</PrimaryButton>
+          <Link className="button button-ghost" to="/pricing">
+            See Full Pricing
+          </Link>
+        </div>
+      </section>
+
+      <WhatsApp />
     </section>
   );
 }

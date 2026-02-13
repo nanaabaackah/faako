@@ -105,6 +105,21 @@ const dashboardMetrics = [
   },
 ];
 
+const rolloutTimeline = [
+  {
+    title: "Discovery complete",
+    detail: "Workflow mapping signed off by leadership and ops.",
+  },
+  {
+    title: "Build in progress",
+    detail: "Core modules are active in staging and awaiting user review.",
+  },
+  {
+    title: "Team onboarding",
+    detail: "Role-based training sessions are scheduled for launch week.",
+  },
+];
+
 export default function Dashboard() {
   const configStorageKey = "faako-config";
 
@@ -140,9 +155,9 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <section className="page dashboard">
+    <section className="page dashboard dashboard-page">
       <div className="app-shell dashboard-shell">
-        <aside className="dashboard-sidebar card">
+        <aside className="dashboard-sidebar card reveal" data-scroll style={{ "--delay": "0ms" }}>
           <div className="dashboard-brand">
             <p className="eyebrow">Faako Workspace</p>
             <h2>Dashboard</h2>
@@ -197,7 +212,7 @@ export default function Dashboard() {
         </aside>
 
         <main className="dashboard-main">
-          <header className="dashboard-hero reveal" style={{ "--delay": "0ms" }}>
+          <header className="dashboard-hero reveal" data-scroll style={{ "--delay": "80ms" }}>
             <div>
               <p className="eyebrow">Dashboard</p>
               <h1>Single Source of Truth</h1>
@@ -216,7 +231,7 @@ export default function Dashboard() {
 
           <section className="dashboard-metrics">
             {dashboardMetrics.map((metric) => (
-              <article key={metric.label} className="card reveal">
+              <article key={metric.label} className="card reveal" data-scroll>
                 <div className="dashboard-metric-header">
                   <span>{metric.label}</span>
                   <FontAwesomeIcon icon={metric.icon} />
@@ -228,7 +243,33 @@ export default function Dashboard() {
           </section>
 
           <section className="dashboard-section">
-            <div className="section-header reveal" style={{ "--delay": "100ms" }}>
+            <div className="section-header reveal" data-scroll style={{ "--delay": "120ms" }}>
+              <p className="eyebrow">Rollout Timeline</p>
+              <h2>Where your project currently stands.</h2>
+              <p className="lead">
+                This timeline helps your team align implementation checkpoints before launch.
+              </p>
+            </div>
+            <div className="dashboard-timeline">
+              {rolloutTimeline.map((item, index) => (
+                <article
+                  key={item.title}
+                  className="dashboard-timeline-item card reveal"
+                  data-scroll
+                  style={{ "--delay": `${140 + index * 70}ms` }}
+                >
+                  <span className="dashboard-timeline-index">{`0${index + 1}`}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p className="muted">{item.detail}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section className="dashboard-section">
+            <div className="section-header reveal" data-scroll style={{ "--delay": "100ms" }}>
               <p className="eyebrow">Backbone Health</p>
               <h2>Finance, Ops, and Talent in sync.</h2>
               <p className="lead">
@@ -237,7 +278,7 @@ export default function Dashboard() {
             </div>
             <div className="dashboard-grid">
               {coreModules.map((module) => (
-                <article key={module.id} className="module-card reveal">
+                <article key={module.id} className="module-card reveal" data-scroll>
                   <div className="module-card-header">
                     <FontAwesomeIcon icon={module.icon} />
                     <span className="module-pill-tag">{module.tag}</span>
@@ -250,7 +291,7 @@ export default function Dashboard() {
           </section>
 
           <section className="dashboard-section">
-            <div className="section-header reveal" style={{ "--delay": "0ms" }}>
+            <div className="section-header reveal" data-scroll style={{ "--delay": "0ms" }}>
               <p className="eyebrow">Active Modules</p>
               <h2>What is turned on for this workspace.</h2>
               <p className="lead">
@@ -259,7 +300,7 @@ export default function Dashboard() {
             </div>
             <div className="dashboard-module-grid">
               {configuredModuleIds.map((id) => (
-                <article key={id} className="dashboard-module-card card reveal">
+                <article key={id} className="dashboard-module-card card reveal" data-scroll>
                   <div className="dashboard-module-header">
                     <FontAwesomeIcon icon={faCircleCheck} />
                     <span>{moduleLabelMap.get(id) || id}</span>

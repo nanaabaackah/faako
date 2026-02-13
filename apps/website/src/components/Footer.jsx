@@ -7,8 +7,7 @@ export default function Footer({ footerLogo }) {
 
   return (
     <footer className="site-footer">
-      
-      <div className="footer-brand">
+      <div className="footer-links footer-brand footer-top">
         <div className="logo footer-logo">
           <img src={footerLogo} alt="Faako logo" loading="lazy" />
         </div>
@@ -20,7 +19,7 @@ export default function Footer({ footerLogo }) {
         <Link to="/solutions">Solutions</Link>
         <Link to="/configure">Project Blueprint</Link>
         <Link to="/pricing">Pricing</Link>
-        <Link to="/case-studies">Case Studies</Link>
+        <Link to="/case-studies">Use-Case Scenarios</Link>
         <Link to="/dashboard">Dashboard</Link>
       </div>
       <div className="footer-links footer-links--modules">
@@ -35,12 +34,12 @@ export default function Footer({ footerLogo }) {
         </Link>
       </div>
       <div className="footer-links">
-        <span className="footer-title">Use Cases</span>
-        <Link to="/case-studies/party-rental-erp">ERP Systems</Link>
-        <Link to="/case-studies/booking-portal">Booking Portal</Link>
-        <Link to="/case-studies/developer-command-center">Operations Dashboard</Link>
-        <Link to="/case-studies/portfolio-website">Business Website</Link>
-        <Link to="/case-studies">All Case Studies</Link>
+        <span className="footer-title">Example Flows</span>
+        <Link to="/modules/website">Lead Capture Website</Link>
+        <Link to="/modules/inventory">Inventory + Orders</Link>
+        <Link to="/modules/delivery">Delivery Operations</Link>
+        <Link to="/modules/hr">Team + Payroll</Link>
+        <Link to="/case-studies">All Scenarios</Link>
       </div>
       <div className="footer-links">
         <span className="footer-title">Resources</span>

@@ -9,14 +9,16 @@ import {
   Box,
   Cpu,
   Building,
+  Briefcase,
   Notification,
+  Filter,
   Calendar,
   CalendarTick,
   Calendar2,
   ShoppingCart,
   Chart1,
   Diagram,
-  Check,
+  TickSquare,
   TickCircle,
   MessageQuestion,
   Clock,
@@ -42,6 +44,7 @@ import {
   Moon,
   Edit,
   CommandSquare,
+  Glass,
   Receipt,
   Login,
   ArrowForward,
@@ -55,8 +58,10 @@ import {
   SecurityUser,
   User,
   Cup,
+  Flash,
   Wallet,
   CloseSquare,
+  RecordCircle,
 } from "iconsax-react";
 
 export const faAddressBook = Profile2User;
@@ -68,15 +73,18 @@ export const faBookOpen = Book;
 export const faBoxArchive = ArchiveBox;
 export const faBoxesStacked = Box;
 export const faBrain = Cpu;
+export const faBriefcase = Briefcase;
 export const faBuilding = Building;
 export const faBullhorn = Notification;
+export const faFilter = Filter;
 export const faCalendarAlt = Calendar;
+export const faCalendar = Calendar;
 export const faCalendarCheck = CalendarTick;
 export const faCalendarDays = Calendar2;
 export const faCartShopping = ShoppingCart;
 export const faChartLine = Chart1;
 export const faChartPie = Diagram;
-export const faCheck = Check;
+export const faCheck = TickSquare;
 export const faCheckCircle = TickCircle;
 export const faCircleCheck = TickCircle;
 export const faCircleQuestion = MessageQuestion;
@@ -104,11 +112,13 @@ export const faMoneyBillWave = Money;
 export const faMoon = Moon;
 export const faPenToSquare = Edit;
 export const faPlug = CommandSquare;
+export const faGlassCheers = Glass;
 export const faReceipt = Receipt;
 export const faRightToBracket = Login;
 export const faRocket = ArrowForward;
 export const faRoute = RouteSquare;
 export const faShield = Shield;
+export const faShieldHalved = Shield;
 export const faStore = Shop;
 export const faSun = Sun;
 export const faTable = TableDocument;
@@ -118,7 +128,9 @@ export const faUserShield = SecurityUser;
 export const faUserTie = User;
 export const faUsers = People;
 export const faUtensils = Cup;
+export const faBolt = Flash;
+export const faCircle = RecordCircle;
 export const faWallet = Wallet;
 export const faWrench = Setting;
+export const faX = CloseSquare;
 export const faXmark = CloseSquare;
-

@@ -23,8 +23,8 @@ export default function ModuleDetail() {
     .slice(0, 3);
 
   return (
-    <section className="page module-detail-page page-stack">
-      <header className="module-detail-hero reveal" style={{ "--delay": "0ms" }}>
+    <section className="page module-detail-page module-detail-page--v2 page-stack">
+      <header className="module-detail-hero reveal" data-scroll style={{ "--delay": "0ms" }}>
         <Link className="module-detail-back text-link" to="/solutions">
           <FontAwesomeIcon icon={faArrowLeft} />
           Back to modules
@@ -47,7 +47,7 @@ export default function ModuleDetail() {
 
         <div className="module-detail-stats">
           {module.metrics.map((metric) => (
-            <article className="module-detail-stat" key={metric.label}>
+            <article className="module-detail-stat reveal" data-scroll key={metric.label}>
               <strong>{metric.value}</strong>
               <span>{metric.label}</span>
             </article>
@@ -55,8 +55,21 @@ export default function ModuleDetail() {
         </div>
       </header>
 
+      <section className="module-detail-snapshot reveal" data-scroll style={{ "--delay": "60ms" }}>
+        <article className="module-detail-snapshot-card">
+          <p className="eyebrow">Expected Outcome</p>
+          <h2>{module.outcome || "Faster operations with clearer team visibility."}</h2>
+        </article>
+        <article className="module-detail-snapshot-card module-detail-snapshot-card--soft">
+          <p className="eyebrow">Implementation Fit</p>
+          <p>
+            This module is ideal when you need measurable improvements without replacing your full stack at once.
+          </p>
+        </article>
+      </section>
+
       <section className="module-detail-body">
-        <article className="module-detail-panel reveal" style={{ "--delay": "80ms" }}>
+        <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "80ms" }}>
           <p className="eyebrow">What It Solves</p>
           <h2>From bottlenecks to clarity</h2>
           <div className="module-detail-problem-grid">
@@ -71,7 +84,7 @@ export default function ModuleDetail() {
           </div>
         </article>
 
-        <article className="module-detail-panel reveal" style={{ "--delay": "120ms" }}>
+        <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "120ms" }}>
           <p className="eyebrow">Capabilities</p>
           <h2>What your team can do</h2>
           <div className="module-detail-feature-grid">
@@ -84,7 +97,7 @@ export default function ModuleDetail() {
           </div>
         </article>
 
-        <article className="module-detail-panel reveal" style={{ "--delay": "160ms" }}>
+        <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "160ms" }}>
           <p className="eyebrow">Workflow</p>
           <h2>How it runs day to day</h2>
           <ol className="module-detail-workflow">
@@ -97,7 +110,7 @@ export default function ModuleDetail() {
           </ol>
         </article>
 
-        <article className="module-detail-panel reveal" style={{ "--delay": "200ms" }}>
+        <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "200ms" }}>
           <p className="eyebrow">Scope</p>
           <h2>What is included</h2>
           <div className="module-detail-tag-list">
@@ -120,8 +133,8 @@ export default function ModuleDetail() {
         </article>
       </section>
 
-      <section className="module-detail-related reveal" style={{ "--delay": "240ms" }}>
-        <div className="section-header">
+      <section className="module-detail-related reveal" data-scroll style={{ "--delay": "240ms" }}>
+        <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Related Modules</p>
           <h2>Add connected tools as you grow.</h2>
         </div>

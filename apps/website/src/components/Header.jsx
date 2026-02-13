@@ -143,8 +143,8 @@ const resourcesColumns = [
       },
       {
         id: "resource-cases",
-        title: "Case Studies",
-        description: "See real projects and outcomes from client rollouts.",
+        title: "Use-Case Scenarios",
+        description: "Review sample rollout blueprints and likely outcomes.",
         to: "/case-studies",
         icon: faChartLine,
       },

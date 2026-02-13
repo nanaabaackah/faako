@@ -673,7 +673,7 @@ export default function Home() {
               <FontAwesomeIcon icon={faShield} />
             </span>
             <h3>Clean setup</h3>
-            <p>Organize your Excel files. Launch with zero downtime.</p>
+            <p>Organize your Excel files. Launch with a staged handover plan.</p>
           </article>
           
           <article className="trust-card">
@@ -813,7 +813,7 @@ export default function Home() {
           <div className="pricing-card reveal" data-scroll>
             <h3>Website + Leads</h3>
             <div className="price-tag">
-              <span className="price">GH₵ 3,500</span>
+              <span className="price">GH₵ 2,500</span>
               <span className="period">starting</span>
             </div>
             <ul className="pricing-features">
@@ -830,7 +830,7 @@ export default function Home() {
             <span className="badge">Most Popular</span>
             <h3>Website + Dashboard</h3>
             <div className="price-tag">
-              <span className="price">GH₵ 12,000</span>
+              <span className="price">GH₵ 8,500</span>
               <span className="period">starting</span>
             </div>
             <ul className="pricing-features">
@@ -848,7 +848,7 @@ export default function Home() {
             <h3>Complete System</h3>
             <div className="price-tag">
               <span className="price">Custom</span>
-              <span className="period">GH₵ 25k+</span>
+              <span className="period">GH₵ 18k+</span>
             </div>
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
@@ -868,8 +868,8 @@ export default function Home() {
           ======================================== */}
       <section className="page case-studies">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">See It Working</p>
-          <h2>Real systems. Real results.</h2>
+          <p className="eyebrow">Sample Scenarios</p>
+          <h2>Preview how your setup could look.</h2>
         </div>
 
         <div className="case-grid reveal" data-scroll>
@@ -882,9 +882,9 @@ export default function Home() {
               />
             </div>
             <div className="case-info">
-              <span className="case-tag">ERP System</span>
-              <h3>From WhatsApp chaos to one dashboard</h3>
-              <p>Multi-location events company. Everything tracked.</p>
+              <span className="case-tag">Sample ERP Setup</span>
+              <h3>One workspace for sales, stock, and ops</h3>
+              <p>Illustrative layout for teams moving off WhatsApp and spreadsheets.</p>
             </div>
           </article>
 
@@ -897,9 +897,9 @@ export default function Home() {
               />
             </div>
             <div className="case-info">
-              <span className="case-tag">Dashboard</span>
-              <h3>Leadership sees live numbers</h3>
-              <p>Real-time visibility. No more guessing.</p>
+              <span className="case-tag">Sample Dashboard</span>
+              <h3>Leadership gets a single source of truth</h3>
+              <p>Example reporting flow for weekly performance and decisions.</p>
             </div>
           </article>
         </div>
@@ -911,20 +911,20 @@ export default function Home() {
       <Testimonials
         className="page testimonials"
         headerScroll
-        eyebrow="What Clients Say"
-        title="Built for teams who need it to just work"
+        eyebrow="What Teams Tell Us Early"
+        title="Common requests we hear in discovery calls"
         items={[
           {
             quote:
-              "Before Faako, everything was WhatsApp groups and spreadsheets. Now everyone sees the same numbers.",
-            name: "Kwame A.",
-            company: "Distribution, Accra",
+              "We need fewer tools and one clean place to track sales and stock.",
+            name: "Typical retail request",
+            company: "Discovery call theme",
           },
           {
             quote:
-              "They came onsite, watched how we work, built exactly what we needed. No generic template.",
-            name: "Ama D.",
-            company: "Retail Chain",
+              "Don't give us generic software. Build around how our team already works.",
+            name: "Typical operations request",
+            company: "Discovery call theme",
           },
         ]}
       />

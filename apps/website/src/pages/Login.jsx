@@ -7,6 +7,9 @@ import {
   faLock,
   faEye,
   faEyeSlash,
+  faShieldHalved,
+  faCircleCheck,
+  faLayerGroup,
 } from "@fortawesome/free-solid-svg-icons";
 import {
   faGoogle,
@@ -22,89 +25,122 @@ export default function Login() {
   };
 
   return (
-    <section className="page auth login-page">
-      <form
-        className="form card auth-card login-card reveal"
-        style={{ "--delay": "0ms" }}
-        onSubmit={handleSubmit}
-      >
-        <div className="login-card-badge" aria-hidden="true">
-          <FontAwesomeIcon icon={faRightToBracket} />
-        </div>
-
-        <div className="login-copy">
-          <h1>Sign in with email</h1>
+    <section className="page auth login-page auth-suite">
+      <div className="auth-suite-shell">
+        <aside className="auth-suite-panel reveal" data-scroll style={{ "--delay": "0ms" }}>
+          <span className="auth-suite-kicker">
+            <FontAwesomeIcon icon={faLayerGroup} />
+            Workspace Access
+          </span>
+          <h1>Sign in to your Faako command center.</h1>
           <p className="lead">
-            Access dashboards, deployment updates, and implementation milestones
-            in one place.
+            Track rollout progress, module activation, and team onboarding from one secure workspace.
           </p>
-        </div>
+          <ul className="auth-suite-points">
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Shared implementation timeline
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Role-based module access
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Project notes and approvals in one feed
+            </li>
+          </ul>
+          <div className="auth-suite-note">
+            <FontAwesomeIcon icon={faShieldHalved} />
+            <span>Protected with secure sign-in and encrypted sessions.</span>
+          </div>
+        </aside>
 
-        <label className="login-field">
-          <span className="login-field-icon">
-            <FontAwesomeIcon icon={faEnvelope} />
-          </span>
-          <input
-            name="email"
-            type="email"
-            placeholder="you@company.com"
-            required
-          />
-        </label>
+        <form
+          className="form card auth-card login-card auth-suite-form reveal"
+          data-scroll
+          style={{ "--delay": "120ms" }}
+          onSubmit={handleSubmit}
+        >
+          <div className="login-card-badge" aria-hidden="true">
+            <FontAwesomeIcon icon={faRightToBracket} />
+          </div>
 
-        <label className="login-field login-field--password">
-          <span className="login-field-icon">
-            <FontAwesomeIcon icon={faLock} />
-          </span>
-          <input
-            name="password"
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            required
-          />
-          <button
-            type="button"
-            className="login-field-toggle"
-            onClick={() => setShowPassword((current) => !current)}
-            aria-label={showPassword ? "Hide password" : "Show password"}
-          >
-            <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+          <div className="login-copy">
+            <h2>Sign in with email</h2>
+            <p className="muted">
+              Use the account linked to your current workspace.
+            </p>
+          </div>
+
+          <label className="login-field">
+            <span className="login-field-icon">
+              <FontAwesomeIcon icon={faEnvelope} />
+            </span>
+            <input
+              name="email"
+              type="email"
+              placeholder="you@company.com"
+              autoComplete="email"
+              required
+            />
+          </label>
+
+          <label className="login-field login-field--password">
+            <span className="login-field-icon">
+              <FontAwesomeIcon icon={faLock} />
+            </span>
+            <input
+              name="password"
+              type={showPassword ? "text" : "password"}
+              placeholder="Enter your password"
+              autoComplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              className="login-field-toggle"
+              onClick={() => setShowPassword((current) => !current)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+            >
+              <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+            </button>
+          </label>
+
+          <div className="auth-actions login-actions-row">
+            <Link to="/forgot-password" className="text-link">
+              Forgot password?
+            </Link>
+          </div>
+
+          <button className="button button-primary login-submit" type="submit">
+            Continue to dashboard
           </button>
-        </label>
 
-        <div className="auth-actions login-actions-row">
-          <Link to="/forgot-password" className="text-link">
-            Forgot password?
-          </Link>
-        </div>
+          <div className="login-divider">
+            <span>Or sign in with</span>
+          </div>
 
-        <button className="button button-primary login-submit" type="submit">
-          Get Started
-        </button>
+          <div className="login-social-grid">
+            <button className="login-social-button" type="button" aria-label="Sign in with Google">
+              <FontAwesomeIcon icon={faGoogle} />
+            </button>
+            <button className="login-social-button" type="button" aria-label="Sign in with Facebook">
+              <FontAwesomeIcon icon={faFacebookF} />
+            </button>
+            <button className="login-social-button" type="button" aria-label="Sign in with Apple">
+              <FontAwesomeIcon icon={faApple} />
+            </button>
+          </div>
 
-        <div className="login-divider">
-          <span>Or sign in with</span>
-        </div>
-
-        <div className="login-social-grid">
-          <button className="login-social-button" type="button" aria-label="Sign in with Google">
-            <FontAwesomeIcon icon={faGoogle} />
-          </button>
-          <button className="login-social-button" type="button" aria-label="Sign in with Facebook">
-            <FontAwesomeIcon icon={faFacebookF} />
-          </button>
-          <button className="login-social-button" type="button" aria-label="Sign in with Apple">
-            <FontAwesomeIcon icon={faApple} />
-          </button>
-        </div>
-
-        <div className="auth-meta login-meta">
-          <span>Need an account?</span>
-          <Link to="/signup" className="text-link">
-            Signup Today
-          </Link>
-        </div>
-      </form>
+          <div className="auth-meta login-meta">
+            <span>Need an account?</span>
+            <Link to="/signup" className="text-link">
+              Signup Today
+            </Link>
+          </div>
+        </form>
+      </div>
     </section>
   );
 }

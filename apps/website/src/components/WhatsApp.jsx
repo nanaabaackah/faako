@@ -11,7 +11,7 @@ export default function WhatsApp() {
         rel="noopener noreferrer"
         aria-label="Chat with us on WhatsApp"
       >
-        <FaWhatsapp className="whatsapp-icon" aria-hidden="true" />
+        <FaWhatsapp className="whatsapp-icon" size={24} aria-hidden="true" />
       </a>
     </div>
   );

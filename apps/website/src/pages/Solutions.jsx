@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -46,8 +45,8 @@ export default function Solutions() {
         </p>
         <div className="hero-actions">
           <PrimaryButton to="/contact">Start Your Transformation</PrimaryButton>
-          <Link className="button button-ghost" to="/case-studies">
-            See Case Studies
+          <Link className="button button-ghost" to="/configure">
+            Build Your Blueprint
           </Link>
         </div>
       </div>
@@ -449,30 +448,30 @@ export default function Solutions() {
           ======================================== */}
       <section className="page proof-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Real Results</p>
-          <h2>Systems that actually work.</h2>
+          <p className="eyebrow">Expected Impact</p>
+          <h2>What this setup is designed to improve.</h2>
         </div>
 
         <div className="proof-stats reveal" style={{ "--delay": "100ms" }}>
           <div className="stat-card">
-            <div className="stat-value">75%</div>
-            <div className="stat-label">Less time on admin</div>
+            <div className="stat-value">Fewer</div>
+            <div className="stat-label">Manual admin tasks</div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-value">Zero</div>
-            <div className="stat-label">Lost orders</div>
+            <div className="stat-value">Clearer</div>
+            <div className="stat-label">Order handoffs</div>
           </div>
 
           <div className="stat-card">
-            <div className="stat-value">Real-time</div>
-            <div className="stat-label">Inventory updates</div>
+            <div className="stat-value">Live</div>
+            <div className="stat-label">Inventory visibility</div>
           </div>
         </div>
 
         <div className="text-center" style={{ marginTop: '2rem' }}>
           <Link to="/case-studies" className="button button-ghost">
-            See Case Studies <FontAwesomeIcon icon={faArrowRight} />
+            View sample scenarios <FontAwesomeIcon icon={faArrowRight} />
           </Link>
         </div>
       </section>
@@ -490,7 +489,7 @@ export default function Solutions() {
           <div className="pricing-card">
             <h3>Website</h3>
             <div className="price-tag">
-              <span className="price">GH₵ 3,500</span>
+              <span className="price">GH₵ 2,500</span>
             </div>
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Mobile website</li>
@@ -504,7 +503,7 @@ export default function Solutions() {
             <span className="badge">Popular</span>
             <h3>Website + Dashboard</h3>
             <div className="price-tag">
-              <span className="price">GH₵ 12,000</span>
+              <span className="price">GH₵ 8,500</span>
             </div>
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
@@ -519,6 +518,7 @@ export default function Solutions() {
             <h3>Complete System</h3>
             <div className="price-tag">
               <span className="price">Custom</span>
+              <span className="period">GH₵ 18k+</span>
             </div>
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
@@ -549,8 +549,8 @@ export default function Solutions() {
         </div>
         <div className="cta-actions">
           <PrimaryButton to="/contact">Book Free Call</PrimaryButton>
-          <Link className="button button-ghost" to="/case-studies">
-            View Case Studies
+          <Link className="button button-ghost" to="/configure">
+            Build Your Blueprint
           </Link>
         </div>
       </section>

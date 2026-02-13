@@ -2,7 +2,6 @@ import {
   faBoxesStacked,
   faRoute,
   faChartLine,
-  faShield,
   faUserTie,
   faCheckCircle,
   faLightbulb,

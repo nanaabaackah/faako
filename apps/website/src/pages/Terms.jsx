@@ -82,10 +82,10 @@ const termsSections = [
 
 export default function Terms() {
   return (
-    <section className="page terms-page">
-      <div className="terms-shell reveal" style={{ "--delay": "0ms" }}>
+    <section className="page terms-page legal-page">
+      <div className="terms-shell">
         <header className="terms-hero">
-          <div className="terms-hero-copy">
+          <div className="terms-hero-copy reveal" data-scroll style={{ "--delay": "0ms" }}>
             <p className="eyebrow">Terms of Service</p>
             <h1>Clear standards for using Faako products and services.</h1>
             <p className="lead">
@@ -99,7 +99,7 @@ export default function Terms() {
             </div>
           </div>
 
-          <aside className="terms-hero-panel">
+          <aside className="terms-hero-panel reveal" data-scroll style={{ "--delay": "120ms" }}>
             <h2>At a glance</h2>
             <ul className="terms-glance-list">
               <li>
@@ -119,7 +119,7 @@ export default function Terms() {
         </header>
 
         <div className="terms-layout">
-          <aside className="terms-nav card">
+          <aside className="terms-nav card reveal" data-scroll style={{ "--delay": "80ms" }}>
             <h3>Sections</h3>
             {termsSections.map((section) => (
               <a key={section.id} href={`#${section.id}`}>
@@ -130,8 +130,14 @@ export default function Terms() {
           </aside>
 
           <article className="terms-content">
-            {termsSections.map((section) => (
-              <section key={section.id} id={section.id} className="terms-section card">
+            {termsSections.map((section, index) => (
+              <section
+                key={section.id}
+                id={section.id}
+                className="terms-section card reveal"
+                data-scroll
+                style={{ "--delay": `${120 + index * 50}ms` }}
+              >
                 <h2>{section.title}</h2>
                 <p>{section.body}</p>
                 {section.items ? (
@@ -144,7 +150,12 @@ export default function Terms() {
               </section>
             ))}
 
-            <section id="terms-contact" className="terms-section card">
+            <section
+              id="terms-contact"
+              className="terms-section card reveal"
+              data-scroll
+              style={{ "--delay": "620ms" }}
+            >
               <h2>10. Contact</h2>
               <p>
                 Questions about these terms can be sent to{" "}
@@ -164,7 +175,7 @@ export default function Terms() {
           </article>
         </div>
 
-        <footer className="terms-footer-note card">
+        <footer className="terms-footer-note card reveal" data-scroll style={{ "--delay": "680ms" }}>
           <span>
             These terms are designed to be clear and practical for real project
             delivery.

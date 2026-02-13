@@ -1,5 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faRocket,
+  faCircleCheck,
+  faBuilding,
+  faUsers,
+  faBolt,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Signup() {
   const [status, setStatus] = useState({ state: "idle", message: "" });
@@ -48,136 +56,145 @@ export default function Signup() {
   };
 
   return (
-    <section className="page signup signup-page">
-      <div className="signup-shell reveal" style={{ "--delay": "0ms" }}>
-        <div className="signup-form-side">
-          <div className="signup-icon-badge">
-            <img
-              className="signup-icon-logo"
-              src="/assets/logos/logo-white.png"
-              alt="Faako logo"
-              loading="lazy"
-            />
-          </div>
-          <h1>Get Started</h1>
+    <section className="page signup signup-page auth-suite auth-suite--signup">
+      <div className="auth-suite-shell">
+        <aside className="auth-suite-panel reveal" data-scroll style={{ "--delay": "0ms" }}>
+          <span className="auth-suite-kicker">
+            <FontAwesomeIcon icon={faRocket} />
+            New Workspace
+          </span>
+          <h1>Create your Faako workspace.</h1>
           <p className="lead">
-            Welcome to Faako. Create your account to configure your project and
-            launch with confidence.
+            Set up your team profile once, then configure modules and rollout plans from one dashboard.
           </p>
+          <ul className="auth-suite-points">
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Guided setup in under 10 minutes
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Built-in blueprint and pricing estimator
+            </li>
+            <li>
+              <FontAwesomeIcon icon={faCircleCheck} />
+              Launch support from discovery to go-live
+            </li>
+          </ul>
+          <div className="auth-suite-tags">
+            <span>
+              <FontAwesomeIcon icon={faBuilding} />
+              Business profile
+            </span>
+            <span>
+              <FontAwesomeIcon icon={faUsers} />
+              Team access
+            </span>
+            <span>
+              <FontAwesomeIcon icon={faBolt} />
+              Fast setup
+            </span>
+          </div>
+        </aside>
 
-          <form
-            className="form signup-form"
-            style={{ "--delay": "140ms" }}
-            onSubmit={handleSubmit}
-          >
-            <label>
-              Business name
-              <input name="companyName" placeholder="Faako Foods" required />
-            </label>
-
-            <label>
-              Work email
-              <input
-                name="email"
-                type="email"
-                placeholder="you@company.com"
-                required
+        <div className="signup-shell auth-suite-form reveal" data-scroll style={{ "--delay": "120ms" }}>
+          <div className="signup-form-side">
+            <div className="signup-icon-badge">
+              <img
+                className="signup-icon-logo"
+                src="/assets/logos/logo-white.png"
+                alt="Faako logo"
+                loading="lazy"
               />
-            </label>
+            </div>
+            <h2>Get Started</h2>
+            <p className="muted">
+              Fill in your details and we will prepare your workspace.
+            </p>
 
-            <div className="signup-password-row">
+            <form
+              className="form signup-form"
+              style={{ "--delay": "140ms" }}
+              onSubmit={handleSubmit}
+            >
               <label>
-                Password
+                Business name
+                <input name="companyName" placeholder="Faako Foods" required />
+              </label>
+
+              <label>
+                Work email
                 <input
-                  name="password"
-                  type="password"
-                  placeholder="Create a password"
+                  name="email"
+                  type="email"
+                  placeholder="you@company.com"
+                  autoComplete="email"
                   required
                 />
               </label>
-              <Link to="/forgot-password" className="text-link">
-                Forgot?
-              </Link>
-            </div>
 
-            <label>
-              Team size
-              <select name="teamSize" defaultValue="1-10">
-                <option value="1-10">1-10</option>
-                <option value="11-50">11-50</option>
-                <option value="51-200">51-200</option>
-                <option value="201+">201+</option>
-              </select>
-            </label>
+              <div className="signup-password-row">
+                <label>
+                  Password
+                  <input
+                    name="password"
+                    type="password"
+                    placeholder="Create a password"
+                    autoComplete="new-password"
+                    required
+                  />
+                </label>
+                <Link to="/forgot-password" className="text-link">
+                  Forgot?
+                </Link>
+              </div>
 
-            <label>
-              Primary currency
-              <select name="currency" defaultValue="USD">
-                <option value="USD">USD</option>
-                <option value="GHS">GHS</option>
-                <option value="NGN">NGN</option>
-              </select>
-            </label>
+              <label>
+                Team size
+                <select name="teamSize" defaultValue="1-10">
+                  <option value="1-10">1-10</option>
+                  <option value="11-50">11-50</option>
+                  <option value="51-200">51-200</option>
+                  <option value="201+">201+</option>
+                </select>
+              </label>
 
-            <button
-              className="button button-primary signup-submit"
-              type="submit"
-              disabled={status.state === "loading"}
-            >
-              {status.state === "loading" ? "Sending..." : "Sign up"}
-            </button>
+              <label>
+                Primary currency
+                <select name="currency" defaultValue="GHS">
+                  <option value="GHS">GHS</option>
+                  <option value="USD">USD</option>
+                  <option value="NGN">NGN</option>
+                </select>
+              </label>
 
-            <p className="signup-login-note">
-              Already have an account?{" "}
-              <Link to="/login" className="text-link">
-                Log in
-              </Link>
-            </p>
+              <button
+                className="button button-primary signup-submit"
+                type="submit"
+                disabled={status.state === "loading"}
+              >
+                {status.state === "loading" ? "Sending..." : "Sign up"}
+              </button>
 
-            {status.message ? (
-              <p className={`form-note ${status.state}`} role="status">
-                {status.message}
+              <p className="signup-login-note">
+                Already have an account?{" "}
+                <Link to="/login" className="text-link">
+                  Log in
+                </Link>
               </p>
-            ) : (
-              <p className="form-note">
-                We will respond within one business day with next steps.
-              </p>
-            )}
-          </form>
+
+              {status.message ? (
+                <p className={`form-note ${status.state}`} role="status">
+                  {status.message}
+                </p>
+              ) : (
+                <p className="form-note">
+                  We respond within one business day with next steps.
+                </p>
+              )}
+            </form>
+          </div>
         </div>
-
-        <aside className="signup-showcase-side">
-          <div className="signup-showcase-copy">
-            <h2>
-              Enter the <em>Future</em>
-              <br />
-              of digital operations.
-            </h2>
-          </div>
-
-          <div className="signup-showcase-ui">
-            <div className="signup-mini-stack">
-              <div className="signup-mini-card" />
-              <div className="signup-mini-rail">
-                <span />
-                <span />
-                <span />
-              </div>
-            </div>
-            <article className="signup-balance-card">
-              <h4>$12,347.23</h4>
-              <p>Combined project value</p>
-              <div className="signup-balance-row">
-                <span>Primary Module</span>
-                <strong>$2,546.64</strong>
-              </div>
-              <div className="signup-balance-row">
-                <span>Rollout Status</span>
-                <strong>Active</strong>
-              </div>
-            </article>
-          </div>
-        </aside>
       </div>
     </section>
   );

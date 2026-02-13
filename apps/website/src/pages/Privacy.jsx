@@ -78,10 +78,10 @@ const userRights = [
 
 export default function Privacy() {
   return (
-    <section className="page privacy-page">
-      <div className="privacy-shell reveal" style={{ "--delay": "0ms" }}>
+    <section className="page privacy-page legal-page">
+      <div className="privacy-shell">
         <header className="privacy-hero">
-          <div className="privacy-hero-copy">
+          <div className="privacy-hero-copy reveal" data-scroll style={{ "--delay": "0ms" }}>
             <p className="eyebrow">Privacy Policy</p>
             <h1>Your data, handled with clarity and control.</h1>
             <p className="lead">
@@ -101,7 +101,7 @@ export default function Privacy() {
             </div>
           </div>
 
-          <aside className="privacy-hero-panel">
+          <aside className="privacy-hero-panel reveal" data-scroll style={{ "--delay": "120ms" }}>
             <h2>Data controller</h2>
             <p>
               Faako Systems &amp; Consulting is the entity responsible for
@@ -129,7 +129,7 @@ export default function Privacy() {
         </header>
 
         <div className="privacy-layout">
-          <aside className="privacy-nav card">
+          <aside className="privacy-nav card reveal" data-scroll style={{ "--delay": "80ms" }}>
             <h3>Sections</h3>
             <a href="#privacy-summary">1. Summary</a>
             <a href="#privacy-collect">2. Data we collect</a>
@@ -144,7 +144,12 @@ export default function Privacy() {
           </aside>
 
           <article className="privacy-content">
-            <section id="privacy-summary" className="privacy-section card">
+            <section
+              id="privacy-summary"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "120ms" }}
+            >
               <h2>1. In short</h2>
               <p>
                 We collect only data that is relevant to service delivery,
@@ -158,7 +163,12 @@ export default function Privacy() {
               </ul>
             </section>
 
-            <section id="privacy-collect" className="privacy-section card">
+            <section
+              id="privacy-collect"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "170ms" }}
+            >
               <h2>2. Categories of personal data</h2>
               <p>
                 The exact data processed depends on the services you use and
@@ -178,7 +188,12 @@ export default function Privacy() {
               </div>
             </section>
 
-            <section id="privacy-purpose" className="privacy-section card">
+            <section
+              id="privacy-purpose"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "220ms" }}
+            >
               <h2>3. Purpose and legal basis</h2>
               <p>
                 We process personal data only when there is a defined purpose
@@ -206,7 +221,12 @@ export default function Privacy() {
               </div>
             </section>
 
-            <section id="privacy-sharing" className="privacy-section card">
+            <section
+              id="privacy-sharing"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "270ms" }}
+            >
               <h2>4. Sharing and international transfers</h2>
               <p>
                 We share data only with service providers that help us operate
@@ -222,7 +242,12 @@ export default function Privacy() {
               </ul>
             </section>
 
-            <section id="privacy-cookies" className="privacy-section card">
+            <section
+              id="privacy-cookies"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "320ms" }}
+            >
               <h2>5. Cookies and tracking technologies</h2>
               <p>
                 We use essential cookies for security and session continuity,
@@ -243,7 +268,12 @@ export default function Privacy() {
               </ul>
             </section>
 
-            <section id="privacy-retention" className="privacy-section card">
+            <section
+              id="privacy-retention"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "370ms" }}
+            >
               <h2>6. Data retention</h2>
               <p>
                 We retain data only for the period necessary to fulfill the
@@ -256,7 +286,12 @@ export default function Privacy() {
               </p>
             </section>
 
-            <section id="privacy-rights" className="privacy-section card">
+            <section
+              id="privacy-rights"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "420ms" }}
+            >
               <h2>7. Your rights</h2>
               <p>
                 Depending on your location, you may exercise the following
@@ -272,7 +307,12 @@ export default function Privacy() {
               </div>
             </section>
 
-            <section id="privacy-security" className="privacy-section card">
+            <section
+              id="privacy-security"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "470ms" }}
+            >
               <h2>8. Security controls</h2>
               <p>
                 We maintain administrative, technical, and operational controls
@@ -286,7 +326,12 @@ export default function Privacy() {
               </ul>
             </section>
 
-            <section id="privacy-updates" className="privacy-section card">
+            <section
+              id="privacy-updates"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "520ms" }}
+            >
               <h2>9. Policy updates</h2>
               <p>
                 We may update this policy to reflect service, regulatory, or
@@ -295,7 +340,12 @@ export default function Privacy() {
               </p>
             </section>
 
-            <section id="privacy-contact" className="privacy-section card">
+            <section
+              id="privacy-contact"
+              className="privacy-section card reveal"
+              data-scroll
+              style={{ "--delay": "570ms" }}
+            >
               <h2>10. Contact and requests</h2>
               <p>
                 To submit a privacy request, email{" "}

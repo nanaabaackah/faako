@@ -168,6 +168,7 @@
     var(--card),
     color-mix(in srgb, var(--surface-alt) 80%, var(--card))
   );
+  backdrop-filter: blur(25px);
   box-shadow: var(--loose-shadow);
   opacity: 0;
   pointer-events: none;
@@ -503,6 +504,14 @@
 
   .nav-group.is-open .nav-dropdown {
     display: block;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+
+  .nav-group:hover .nav-dropdown,
+  .nav-group:focus-within .nav-dropdown {
+    transform: none;
   }
 
   .mega-grid,
@@ -527,9 +536,9 @@
   }
 
   .nav-actions {
-    justify-content: flex-start;
+    justify-content: center;
     flex-wrap: wrap;
     order: 2;
-    justify-self: start;
+    justify-self: center;
   }
 }

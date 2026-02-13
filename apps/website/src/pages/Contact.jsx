@@ -140,7 +140,7 @@ export default function Contact() {
               Email the team
             </a>
             <Link className="button button-ghost" to="/case-studies">
-              View case studies
+              View sample scenarios
             </Link>
           </div>
         </div>
