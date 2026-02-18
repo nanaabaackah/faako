@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { animate, createTimeline, stagger } from "animejs";
@@ -8,47 +8,47 @@ import {
   faArrowRight,
   faHandshake,
   faHeadset,
+  faPhone,
   faShield,
   faCheck,
   faBoxesStacked,
   faChartLine,
   faReceipt,
+  faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
-import Testimonials from "../components/Testimonials.jsx";
-import FaqSection from "../components/FaqSection.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
 
 const processSteps = [
   {
     id: "01",
     title: "Free Call",
-    description: "Talk about your headaches. No sales pitch.",
+    description: "Tell us your goals and bottlenecks. No pressure.",
   },
   {
     id: "02",
     title: "We Visit",
-    description: "Watch how work happens. Take notes.",
+    description: "We visit your business and map your daily workflow.",
   },
   {
     id: "03",
     title: "Blueprint",
-    description: "Show what we'll build and what it costs.",
+    description: "You get a practical plan with clear scope and pricing.",
   },
   {
     id: "04",
     title: "Build",
-    description: "Create and test. You see demos.",
+    description: "We build, test, and share demos before launch.",
   },
   {
     id: "05",
     title: "Train",
-    description: "Hands-on until everyone's comfortable.",
+    description: "Your team gets hands-on training until confident.",
   },
   {
     id: "06",
     title: "Launch",
-    description: "Go live. We stay for support.",
+    description: "Go live with local support from our Ghana team.",
   },
 ];
 
@@ -57,25 +57,21 @@ const toolsTabContent = [
     id: "portals",
     tabLabel: "Get Found & Get Paid",
     stepId: "01",
+    icon: faGlobe,   // already imported — represents online presence / discoverability
     title: "Get Found & Get Paid",
-    bullets: [
-      "Website that brings customers",
-      "Mobile Money + bank transfers",
-      "Contact forms \u2192 WhatsApp",
-    ],
-    image: "/imgs/case-studies/booking-case.png",
+    paragraph:
+      "Launch a clean website that brings in leads, takes payments, and sends enquiries straight to WhatsApp.",
+    image: "/imgs/elements/woman_smiling.png",
     alt: "Business website and booking flow",
   },
   {
     id: "systems",
     tabLabel: "Track Everything",
     stepId: "02",
+    icon: faBoxesStacked,  // already imported — represents stock, inventory, operational items
     title: "Track Everything",
-    bullets: [
-      "Real-time stock levels",
-      "Money in and out",
-      "Orders start to finish",
-    ],
+    paragraph:
+      "See stock, cashflow, and order status in real time without juggling spreadsheets.",
     image: "/imgs/case-studies/dashboard-case.png",
     alt: "Inventory tracking dashboard",
   },
@@ -83,12 +79,10 @@ const toolsTabContent = [
     id: "data",
     tabLabel: "See The Numbers",
     stepId: "03",
+    icon: faChartLine,  // already imported — represents analytics, reports, performance
     title: "See The Numbers",
-    bullets: [
-      "Daily, weekly, monthly totals",
-      "Who's performing, what's selling",
-      "Reports to your phone",
-    ],
+    paragraph:
+      "Get simple daily, weekly, and monthly reports so you can act faster with confidence.",
     image: "/imgs/case-studies/erp-case.png",
     alt: "Business reports dashboard",
   },
@@ -106,15 +100,7 @@ const renderHeroChars = (text, extraClass = "") =>
   ));
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState("portals");
-  const [activeProcessIndex, setActiveProcessIndex] = useState(0);
   const heroContentRef = useRef(null);
-  const processVisualRef = useRef(null);
-  const processIntroTimelineRef = useRef(null);
-  const processLoopTimelineRef = useRef(null);
-  const processInViewRef = useRef(false);
-  const processIntroCompleteRef = useRef(false);
-  const processHoveringRef = useRef(false);
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -426,184 +412,7 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    const prefersReducedMotion =
-      window.matchMedia &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const processRoot = processVisualRef.current;
-
-    if (!processRoot) {
-      return undefined;
-    }
-
-    const line = processRoot.querySelector(".process-line-fill");
-    const dots = Array.from(processRoot.querySelectorAll(".process-dot"));
-    const labels = Array.from(processRoot.querySelectorAll(".process-label"));
-    const stepCount = Math.min(processSteps.length, dots.length, labels.length);
-
-    if (!line || !stepCount) {
-      return undefined;
-    }
-
-    setActiveProcessIndex(0);
-
-    if (prefersReducedMotion) {
-      return undefined;
-    }
-
-    processRoot.classList.add("is-animating");
-
-    let isMounted = true;
-    processInViewRef.current = false;
-    processIntroCompleteRef.current = false;
-    processHoveringRef.current = false;
-
-    const setStep = (index, force = false) => {
-      if (isMounted && (force || !processHoveringRef.current)) {
-        setActiveProcessIndex(index);
-      }
-    };
-
-    const introTimeline = createTimeline({ autoplay: false });
-    const loopTimeline = createTimeline({ autoplay: false, loop: true });
-    processIntroTimelineRef.current = introTimeline;
-    processLoopTimelineRef.current = loopTimeline;
-
-    introTimeline
-      .add(line, {
-        scaleX: [0, 1],
-        duration: 900,
-        ease: "inOutQuart",
-      })
-      .add(
-        dots,
-        {
-          scale: [0.6, 1],
-          opacity: [0.4, 0.8],
-          duration: 360,
-          delay: stagger(80),
-          ease: "outBack(1.3)",
-        },
-        "<<+=120",
-      )
-      .add(
-        labels,
-        {
-          translateY: [8, 0],
-          opacity: [0.45, 0.75],
-          duration: 300,
-          delay: stagger(80),
-          ease: "outQuad",
-        },
-        "<<",
-      )
-      .call(() => {
-        processIntroCompleteRef.current = true;
-        setStep(0, true);
-        if (!processHoveringRef.current && processInViewRef.current) {
-          loopTimeline.play();
-        }
-      });
-
-    for (let index = 0; index < stepCount; index += 1) {
-      loopTimeline
-        .call(() => {
-          setStep(index);
-        })
-        .add(
-          dots[index],
-          {
-            scale: [1, 1.18, 1],
-            duration: 620,
-            ease: "outBack(1.5)",
-          },
-          "<",
-        )
-        .add(
-          labels[index],
-          {
-            translateY: [0, -3, 0],
-            opacity: [0.8, 1, 0.8],
-            duration: 620,
-            ease: "outQuad",
-          },
-          "<<",
-        )
-        .add({ duration: 1200 });
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const isVisible = entries.some((entry) => entry.isIntersecting);
-        processInViewRef.current = isVisible;
-
-        if (processHoveringRef.current) {
-          return;
-        }
-
-        if (isVisible) {
-          if (!processIntroCompleteRef.current) {
-            if (introTimeline.began) {
-              introTimeline.resume();
-            } else {
-              introTimeline.play();
-            }
-          } else {
-            loopTimeline.resume();
-          }
-        } else {
-          introTimeline.pause();
-          loopTimeline.pause();
-        }
-      },
-      { threshold: 0.5 },
-    );
-
-    observer.observe(processRoot);
-
-    return () => {
-      isMounted = false;
-      observer.disconnect();
-      introTimeline.revert();
-      loopTimeline.revert();
-      processIntroTimelineRef.current = null;
-      processLoopTimelineRef.current = null;
-      processInViewRef.current = false;
-      processIntroCompleteRef.current = false;
-      processHoveringRef.current = false;
-      processRoot.classList.remove("is-animating");
-    };
-  }, []);
-
-  const handleProcessStepHover = (index) => {
-    processHoveringRef.current = true;
-    setActiveProcessIndex(index);
-    processIntroTimelineRef.current?.pause();
-    processLoopTimelineRef.current?.pause();
-  };
-
-  const handleProcessStepsMouseLeave = () => {
-    processHoveringRef.current = false;
-
-    if (!processInViewRef.current) {
-      return;
-    }
-
-    if (!processIntroCompleteRef.current) {
-      if (processIntroTimelineRef.current?.began) {
-        processIntroTimelineRef.current.resume();
-      } else {
-        processIntroTimelineRef.current?.play();
-      }
-      return;
-    }
-
-    processLoopTimelineRef.current?.resume();
-  };
-
-  const activeProcessStep = processSteps[activeProcessIndex] || processSteps[0];
-  const activeToolTab =
-    toolsTabContent.find((tab) => tab.id === activeTab) || toolsTabContent[0];
+  const featurePreview = toolsTabContent[0];
 
   return (
     <>
@@ -617,7 +426,7 @@ export default function Home() {
         <div className="hero-content" data-scroll ref={heroContentRef}>
           <p className="eyebrow hero-animate">For Ghanaian Small Businesses</p>
           <h1 aria-label="From chaos to clarity. One system changes everything.">
-            <span className="hero-heading-segment">
+            <span className="hero-heading-segment title">
               {renderHeroChars("From chaos to clarity.")}
               <br />
             </span>{" "}
@@ -625,11 +434,8 @@ export default function Home() {
               {renderHeroChars("One system changes everything.", "hero-char-accent")}
             </span>
           </h1>
-          <p className="lead hero-animate">
-            Websites and business systems that connect your sales, inventory, money, and customers.
-          </p>
           <div className="hero-actions">
-            <PrimaryButton to="/contact">See How It Works</PrimaryButton>
+            <PrimaryButton to="/contact">See How It Works <FontAwesomeIcon icon={faArrowRight} /></PrimaryButton>
             <Link className="button button-ghost" to="/contact">
               Talk to Us
             </Link>
@@ -685,108 +491,19 @@ export default function Home() {
           </article>
         </div>
       </section>
- {/* ========================================
-          HOW IT WORKS - MINIMAL STEPS
-          ======================================== */}
-      <section className="page how-it-works">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Our Process</p>
-          <h2>Simple. Clear. No surprises.</h2>
-        </div>
-
-        {/* TIMELINE: Animated process overview */}
-        <div
-          className="process-visual reveal"
-          data-scroll
-          style={{ "--delay": "60ms" }}
-          ref={processVisualRef}
-          aria-label="Our 6-step process"
-        >
-          <div className="process-timeline-track" aria-hidden="true">
-            <div className="process-line-fill" />
-          </div>
-
-          <ol className="process-points" onMouseLeave={handleProcessStepsMouseLeave}>
-            {processSteps.map((step, index) => (
-              <li
-                key={step.id}
-                className={`process-point ${index === activeProcessIndex ? "is-active" : ""}`}
-              >
-                <span
-                  className="process-dot"
-                  onMouseEnter={() => handleProcessStepHover(index)}
-                >
-                  {step.id}
-                </span>
-                <span className="process-label">{step.title}</span>
-              </li>
-            ))}
-          </ol>
-          <div className="process-step-loop">
-            <p className="process-step-meta">
-              Step {activeProcessIndex + 1} of {processSteps.length}
-            </p>
-            <div key={activeProcessStep.id} className="process-step-loop-content">
-              <h3>
-                {activeProcessStep.title}
-              </h3>
-              <p>{activeProcessStep.description}</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
+      
       {/* ========================================
           WHAT WE BUILD - VISUAL TABS
           ======================================== */}
       <section id="features" className="page features-section">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">What We Build</p>
-          <h2>Three things every business needs.</h2>
-        </div>
-        
         <div className="tools-tabs reveal" data-scroll>
           <div className="tools-tab-panels">
             <div className="tools-tab-panel-card tools-tab-panel-card--stacked is-visible">
-              <div className="tools-tab-menu">
-                <div className="tools-tab-buttons" role="tablist" aria-label="Tools tabs">
-                  {toolsTabContent.map((tab) => (
-                    <button
-                      key={tab.id}
-                      id={`tools-tab-${tab.id}`}
-                      type="button"
-                      role="tab"
-                      aria-selected={activeTab === tab.id}
-                      aria-controls="tools-tab-panel"
-                      className={`tools-tab-button ${activeTab === tab.id ? "is-active" : ""}`}
-                      onClick={() => setActiveTab(tab.id)}
-                    >
-                      {tab.tabLabel}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              <div
-                className="tab-content-split"
-                role="tabpanel"
-                id="tools-tab-panel"
-                aria-labelledby={`tools-tab-${activeToolTab.id}`}
-              >
-                <div className="tab-text">
-                  <h3>{activeToolTab.title}</h3>
-                  <ul className="solution-list">
-                    {activeToolTab.bullets.map((bullet) => (
-                      <li key={bullet}>
-                        <strong>{bullet}</strong>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="tab-content-split">
                 <div className="tab-image">
                   <img
-                    src={activeToolTab.image}
-                    alt={activeToolTab.alt}
+                    src={featurePreview.image}
+                    alt={featurePreview.alt}
                     style={{
                       width: "100%",
                       borderRadius: "var(--radius)",
@@ -794,11 +511,175 @@ export default function Home() {
                     }}
                   />
                 </div>
+                <div className="tab-text">
+                  <div className="section-header">
+                    <p className="eyebrow">What We Build</p>
+                    <h2>Three things every business needs.</h2>
+                  </div>
+                  <p className="muted tab-lead">
+                    Built to help you sell better, stay organized, and make smarter decisions.
+                  </p>
+                  <div className="tab-content-cards">
+                    {toolsTabContent.map((tab) => (
+                      <article key={`${tab.id}-detail`} className="tab-content-details">
+                        <div className="tab-content-title">
+                          <span className="tab-content-icon" aria-hidden="true">
+                            <FontAwesomeIcon icon={tab.icon} />
+                          </span>
+                          <h3>{tab.title}</h3>
+                        </div>
+                        <p className="muted">{tab.paragraph}</p>
+                      </article>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      
+      {/* ========================================
+          HOW IT WORKS - MINIMAL STEPS
+          ======================================== */}
+      <section className="page how-it-works">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Our Process</p>
+          <h2>Simple. Clear. No surprises.</h2>
+          <p className="muted">From first call to launch, every step is planned and practical.</p>
+        </div>
+
+        <div className="process-grid reveal" data-scroll style={{ "--delay": "60ms" }}>
+          {processSteps.slice(0, 4).map((step, index) => (
+            <article key={step.id} className={`process-card process-card--${index + 1}`}>
+              {index === 0 ? (
+                <div className="process-card-banner" aria-hidden="true">
+                  
+                  <span className="process-card-banner-icon ">
+                    <FontAwesomeIcon icon={faPhone} />
+                  </span>
+                  <div className="process-card-banner-copy">
+                    <strong>{step.title} Request</strong>
+                    <span>Quick response from our Ghana team</span>
+                  </div>
+                </div>
+              ) : null}
+              {index === 1 ? (
+                <div className="process-card-insights">
+                  <h3>Real-Time Insights</h3>
+                  <p>Track sales, stock levels, and cashflow in one live dashboard.</p>
+                  <div className="process-card-insights-visual" aria-hidden="true">
+                    <div className="process-insight-chip">
+                      <span className="process-insight-chip-dot process-icon-flash">
+                        <FontAwesomeIcon icon={faChartLine} />
+                      </span>
+                      <div className="process-insight-chip-copy">
+                        <strong>MoMo Payment Received</strong>
+                        <span>Customer payment posted</span>
+                      </div>
+                      <span className="process-insight-chip-amount">+GH₵ 420</span>
+                    </div>
+                    <div className="process-insight-phone">
+                      <div className="process-insight-phone-top">
+                        <span>Insights</span>
+                        <span>Today</span>
+                      </div>
+                      <div className="process-insight-phone-chart">
+                        <div className="process-insight-phone-amount">GH₵ 32,706</div>
+                        <div className="process-insight-bars">
+                          <span />
+                          <span />
+                          <span />
+                          <span />
+                          <span />
+                        </div>
+                      </div>
+                    </div>
+                    <div className="process-insight-stack">
+                      <div className="process-insight-card process-insight-card--a">
+                        <span className="process-insight-card-label">
+                          <FontAwesomeIcon icon={faReceipt} />
+                          <span>Cash at Hand</span>
+                        </span>
+                        <strong>GH₵ 18.4k</strong>
+                      </div>
+                      <div className="process-insight-card process-insight-card--b">
+                        <span className="process-insight-card-label">
+                          <FontAwesomeIcon icon={faChartLine} />
+                          <span>Sales Today</span>
+                        </span>
+                        <strong>GH₵ 13.1k</strong>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : index === 2 ? (
+                <div className="process-card-rewards">
+                  <div className="process-rewards-strip" aria-hidden="true">
+                    <div className="process-rewards-metric">
+                      <span className="process-rewards-icon process-rewards-icon--dark process-icon-bounce">
+                        <FontAwesomeIcon icon={faChartLine} />
+                      </span>
+                      <div className="process-rewards-copy">
+                        <span>Sales this month</span>
+                        <strong>GH₵ 52,250</strong>
+                      </div>
+                    </div>
+                    <div className="process-rewards-metric">
+                      <span className="process-rewards-icon process-rewards-icon--light process-icon-bounce process-icon-bounce--delay">
+                        <FontAwesomeIcon icon={faReceipt} />
+                      </span>
+                      <div className="process-rewards-copy">
+                        <span>Pending invoices</span>
+                        <strong>GH₵ 5,040</strong>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="process-rewards-pill" aria-hidden="true">
+                    <span className="process-rewards-pill-dot process-icon-flash" />
+                    <span>Collected today: GH₵ 1,154</span>
+                  </div>
+                  <h3>Cashflow Snapshot</h3>
+                  <p>See money in, money owed, and available cash before you decide.</p>
+                </div>
+              ) : index === 3 ? (
+                <div className="process-card-bills">
+                  <div className="process-bills-copy">
+                    <span className="process-bills-logo process-icon-bounce process-icon-bounce--delay" aria-hidden="true">
+                      <FontAwesomeIcon icon={faReceipt} />
+                    </span>
+                    <h3>Bill Reminders</h3>
+                    <p>Never miss supplier or utility payments with timely alerts.</p>
+                  </div>
+                  <div className="process-bills-invoice" aria-hidden="true">
+                    <span className="process-bills-status">Upcoming bill</span>
+                    <div className="process-bills-company">
+                      <span>Electricity Company of Ghana</span>
+                      <span className="process-bills-company-dot process-icon-flash">
+                        <FontAwesomeIcon icon={faBolt} />
+                      </span>
+                    </div>
+                    <p className="process-bills-subtext">Monthly electricity service</p>
+                    <div className="process-bills-amount">GH₵ 84.50</div>
+                    <div className="process-bills-meta">
+                      <span className="process-bills-button">View Details</span>
+                      <span>Due in 3 days</span>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <p>{step.description}</p>
+              )}
+              {index === 0 ? (
+                <Link className="process-card-action" to="/contact">
+                  Get in Touch
+                </Link>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
+
 
       {/* ========================================
           PRICING - CLEAN & SIMPLE
@@ -870,92 +751,183 @@ export default function Home() {
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Sample Scenarios</p>
           <h2>Preview how your setup could look.</h2>
+          <p className="muted">Two practical views of how teams can plan work and monitor activity in real time.</p>
         </div>
 
-        <div className="case-grid reveal" data-scroll>
-          <article className="case-card">
-            <div className="case-image">
-              <img 
-                src="/imgs/case-studies/erp-case.png" 
-                alt="ERP dashboard" 
-                loading="lazy"
-              />
+        <div className="scenario-grid reveal" data-scroll>
+          <article className="scenario-card scenario-card--schedule">
+            <div className="scenario-visual">
+              <div className="scenario-mock scenario-mock--schedule" aria-hidden="true">
+                <div className="scenario-schedule-board">
+                  <h4>My schedule</h4>
+                  <div className="scenario-schedule-grid">
+                    <span className="scenario-bar scenario-bar--purple scenario-bar--sm" />
+                    <span className="scenario-bar scenario-bar--green scenario-bar--md" />
+                    <span className="scenario-bar scenario-bar--purple scenario-bar--xs" />
+                    <span className="scenario-bar scenario-bar--green scenario-bar--sm" />
+                    <span className="scenario-bar scenario-bar--green scenario-bar--xs" />
+                    <span className="scenario-bar scenario-bar--purple scenario-bar--xxs" />
+                    <span className="scenario-bar scenario-bar--orange scenario-bar--lg" />
+                    <span className="scenario-bar scenario-bar--purple scenario-bar--xs" />
+                    <span className="scenario-bar scenario-bar--green scenario-bar--md" />
+                  </div>
+                </div>
+              </div>
+              <div className="scenario-hover-overlay" aria-hidden="true">
+                <span>See use case</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </div>
             </div>
-            <div className="case-info">
-              <span className="case-tag">Sample ERP Setup</span>
-              <h3>One workspace for sales, stock, and ops</h3>
-              <p>Illustrative layout for teams moving off WhatsApp and spreadsheets.</p>
+            <div className="scenario-copy">
+              <span className="scenario-tag">Feature for</span>
+              <h3>Project Schedule Overview</h3>
+              <p>Plan projects by day, assign work clearly, and keep teams aligned.</p>
             </div>
           </article>
 
-          <article className="case-card" style={{ "--delay": "120ms" }}>
-            <div className="case-image">
-              <img 
-                src="/imgs/case-studies/dashboard-case.png" 
-                alt="Operations dashboard" 
-                loading="lazy"
-              />
+          <article className="scenario-card scenario-card--activity" style={{ "--delay": "120ms" }}>
+            <div className="scenario-visual">
+              <div className="scenario-mock scenario-mock--activity" aria-hidden="true">
+                <div className="scenario-activity-card">
+                  <div className="scenario-activity-head">
+                    <h4>Activity</h4>
+                    <span className="scenario-activity-pill">Week</span>
+                  </div>
+                  <div className="scenario-activity-bars">
+                    <span className="scenario-activity-bar scenario-activity-bar--a" />
+                    <span className="scenario-activity-bar scenario-activity-bar--b" />
+                    <span className="scenario-activity-bar scenario-activity-bar--c" />
+                    <span className="scenario-activity-bar scenario-activity-bar--d" />
+                    <span className="scenario-activity-bar scenario-activity-bar--e" />
+                  </div>
+                  <div className="scenario-activity-labels">
+                    <span>Day 1</span>
+                    <span>Day 11</span>
+                  </div>
+                </div>
+              </div>
+              <div className="scenario-hover-overlay" aria-hidden="true">
+                <span>See use case</span>
+                <FontAwesomeIcon icon={faArrowRight} />
+              </div>
             </div>
-            <div className="case-info">
-              <span className="case-tag">Sample Dashboard</span>
-              <h3>Leadership gets a single source of truth</h3>
-              <p>Example reporting flow for weekly performance and decisions.</p>
+            <div className="scenario-copy">
+              <span className="scenario-tag">Feature for</span>
+              <h3>Activity Overview in the Project Management System</h3>
+              <p>Monitor progress, compare activity by period, and spot trends instantly.</p>
             </div>
           </article>
         </div>
       </section>
 
       {/* ========================================
-          TESTIMONIALS - KEEP SHORT
+          DISCOVERY SIGNALS
           ======================================== */}
-      <Testimonials
-        className="page testimonials"
-        headerScroll
-        eyebrow="What Teams Tell Us Early"
-        title="Common requests we hear in discovery calls"
-        items={[
-          {
-            quote:
-              "We need fewer tools and one clean place to track sales and stock.",
-            name: "Typical retail request",
-            company: "Discovery call theme",
-          },
-          {
-            quote:
-              "Don't give us generic software. Build around how our team already works.",
-            name: "Typical operations request",
-            company: "Discovery call theme",
-          },
-        ]}
-      />
+      <section className="page home-discovery">
+        <div className="section-header reveal" data-scroll>
+          <p className="eyebrow">Discovery Signals</p>
+          <h2>Patterns we keep seeing in growing Ghanaian teams.</h2>
+          <p className="muted">No testimonials yet. These are the recurring requests we hear on calls.</p>
+        </div>
+
+        <div className="home-discovery-layout reveal" data-scroll style={{ "--delay": "80ms" }}>
+          <article className="home-discovery-card home-discovery-card--feature">
+            <span className="home-discovery-pill">Most Frequent Signal</span>
+            <h3>Teams want one place to track sales, stock, and payments.</h3>
+            <p>
+              Discovery calls usually start with scattered WhatsApp updates, spreadsheets, and paper records.
+            </p>
+            <div className="home-discovery-metrics">
+              <span><strong>Top request</strong> Daily reporting by close of business</span>
+              <span><strong>Top blocker</strong> Manual reconciliation and follow-ups</span>
+            </div>
+          </article>
+
+          <div className="home-discovery-side">
+            <article className="home-discovery-card home-discovery-card--compact">
+              <p className="home-discovery-quote">
+                Need: clearer handover so staff can follow one process without constant owner escalation.
+              </p>
+              <div className="home-discovery-meta">
+                <strong>Common in retail and distribution</strong>
+                <span>Operations signal</span>
+              </div>
+            </article>
+
+            <article className="home-discovery-card home-discovery-card--compact">
+              <p className="home-discovery-quote">
+                Need: reliable cashflow visibility before making stock, payroll, and supplier decisions.
+              </p>
+              <div className="home-discovery-meta">
+                <strong>Common in service businesses</strong>
+                <span>Finance signal</span>
+              </div>
+            </article>
+          </div>
+
+          <article className="home-discovery-card home-discovery-card--proof">
+            <p className="home-discovery-proof-title">Most requested priorities before build starts</p>
+            <div className="home-discovery-tags" aria-label="Common discovery priorities">
+              <span>Clean dashboard visibility</span>
+              <span>Simpler day-end workflow</span>
+              <span>Less manual reconciliation</span>
+              <span>Local support after launch</span>
+            </div>
+          </article>
+        </div>
+      </section>
 
       {/* ========================================
-          FAQ - MINIMAL
+          FAQ
           ======================================== */}
-      <FaqSection
-        className="page faq-section"
-        headerScroll
-        eyebrow="Questions"
-        title="What people ask"
-        items={[
-          {
-            question: "How long does it take?",
-            answer:
-              "Websites: 2-4 weeks. Dashboards: 4-6 weeks. Full systems: 6-10 weeks.",
-            open: true,
-          },
-          {
-            question: "Can we start small?",
-            answer:
-              "Yes. Start with website, add dashboard later.",
-          },
-          {
-            question: "What about our Excel files?",
-            answer:
-              "We clean and migrate everything. No data lost.",
-          },
-        ]}
-      />
+      <section className="page home-faq">
+        <div className="home-faq-shell reveal" data-scroll>
+          <div className="home-faq-intro">
+            <p className="eyebrow">FAQ</p>
+            <h2>Questions people ask before we start.</h2>
+            <p className="muted">Clear answers on timing, scope, migration, and support.</p>
+            <div className="home-faq-highlights" aria-label="What to expect">
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                Onsite discovery in Ghana
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                Phased rollout you can grow into
+              </span>
+              <span>
+                <FontAwesomeIcon icon={faCheck} />
+                Local post-launch support
+              </span>
+            </div>
+            <Link className="button button-ghost home-faq-cta" to="/contact">
+              Talk to our team <FontAwesomeIcon icon={faArrowRight} />
+            </Link>
+          </div>
+
+          <div className="home-faq-list">
+            <details className="home-faq-item" open>
+              <summary>How long does a typical project take?</summary>
+              <p>Websites are usually 2-4 weeks. Dashboards are 4-6 weeks. Full systems can run 6-10 weeks.</p>
+            </details>
+
+            <details className="home-faq-item">
+              <summary>Can we start with one part and expand later?</summary>
+              <p>Yes. Most teams start with website and lead flow, then add operations and reporting modules.</p>
+            </details>
+
+            <details className="home-faq-item">
+              <summary>Do you work with our current Excel and records?</summary>
+              <p>Yes. We clean, map, and migrate your existing data so your team keeps history and context.</p>
+            </details>
+
+            <details className="home-faq-item">
+              <summary>What support do we get after launch?</summary>
+              <p>You get local support for fixes, staff guidance, and ongoing improvements based on real usage.</p>
+            </details>
+          </div>
+        </div>
+      </section>
 
       {/* ========================================
           FINAL CTA - SHORT & DIRECT

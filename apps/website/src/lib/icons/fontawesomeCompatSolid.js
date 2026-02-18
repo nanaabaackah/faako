@@ -22,6 +22,7 @@ import {
   TickCircle,
   MessageQuestion,
   Clock,
+  Call,
   Message,
   Sms,
   Eye,
@@ -89,6 +90,7 @@ export const faCheckCircle = TickCircle;
 export const faCircleCheck = TickCircle;
 export const faCircleQuestion = MessageQuestion;
 export const faClock = Clock;
+export const faPhone = Call;
 export const faCommentDots = Message;
 export const faEnvelope = Sms;
 export const faEye = Eye;

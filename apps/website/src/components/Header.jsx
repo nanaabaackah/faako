@@ -424,6 +424,13 @@ export default function Header({
           <FontAwesomeIcon icon={isMobileNavOpen ? faXmark : faBars} />
         </button>
 
+        <Link to="/login" className="nav-signin" onClick={handleNavLinkClick}>
+          Sign in
+        </Link>
+        <Link to="/contact" className="button button-primary nav-cta" onClick={handleNavLinkClick}>
+          Get started free
+        </Link>
+
         <button
           className="theme-toggle icon-only"
           type="button"
@@ -432,13 +439,6 @@ export default function Header({
         >
           <FontAwesomeIcon icon={currentTheme === "dark" ? faSun : faMoon} />
         </button>
-
-        <Link to="/login" className="nav-signin" onClick={handleNavLinkClick}>
-          Sign in
-        </Link>
-        <Link to="/contact" className="button button-primary nav-cta" onClick={handleNavLinkClick}>
-          Get started free
-        </Link>
       </div>
     </header>
   );
