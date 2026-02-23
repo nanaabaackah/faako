@@ -23,9 +23,6 @@ import Login from "./pages/Login.jsx";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import { getModuleById } from "./data/modules.js";
 import "./styles/components/button.css";
-import "./styles/global.css";
-import "./styles/components/header.css";
-import "./styles/components/footer.css";
 
 const themeStorageKey = "faako-theme";
 const appTitle = "Faako";
