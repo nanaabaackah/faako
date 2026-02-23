@@ -5,6 +5,7 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 import { animate } from "animejs";
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
+import Particles from "./components/Particles.jsx";
 import Home from "./pages/Home.jsx";
 import Pricing from "./pages/Pricing.jsx";
 import ModuleConfig from "./pages/ModuleConfig.jsx";
@@ -137,6 +138,10 @@ export default function App() {
     currentTheme === "dark"
       ? "/assets/logos/logo-white-long.png"
       : "/assets/logos/logo-colour-long.png";
+  const particlePalette =
+    currentTheme === "dark"
+      ? ["#21212d", "#2a2a38", "#333344", "#3d3d50"]
+      : ["#151419", "#262626", "#878787", "#f56e0f", "#fbfbfb"];
   const location = useLocation();
 
   useEffect(() => {
@@ -341,6 +346,21 @@ export default function App() {
 
   return (
     <div className="app-shell">
+      <Particles
+        className="app-particles-layer"
+        particleCount={220}
+        particleSpread={10}
+        speed={0.1}
+        particleColors={particlePalette}
+        moveParticlesOnHover={false}
+        particleHoverFactor={0.45}
+        alphaParticles
+        particleBaseSize={100}
+        sizeRandomness={0.85}
+        cameraDistance={22}
+        disableRotation={false}
+        pixelRatio={1}
+      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>

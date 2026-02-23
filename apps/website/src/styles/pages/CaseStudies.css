@@ -17,7 +17,7 @@
   text-align: center;
   margin: 0 auto;
   align-items: center;
-  max-width: 760px;
+  max-width: 100%;
 }
 
 .scenario-grid {
@@ -91,19 +91,12 @@
   transform: translateX(4px);
 }
 
-.scenario-card--schedule .scenario-visual {
-  background: linear-gradient(
-    155deg,
-    color-mix(in srgb, var(--surface-alt) 84%, #ffffff),
-    color-mix(in srgb, var(--accent-soft) 24%, var(--card))
-  );
-}
-
+.scenario-card--schedule .scenario-visual,
 .scenario-card--activity .scenario-visual {
+  
   background: linear-gradient(
-    155deg,
-    color-mix(in srgb, var(--accent-strong) 88%, #1b120d),
-    color-mix(in srgb, var(--ink) 86%, #100a07)
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
   );
 }
 
@@ -285,14 +278,14 @@
   font-size: clamp(1.9rem, 3.2vw, 3rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
-  color: var(--ink);
+  color: var(--bg);
 }
 
 .scenario-copy p {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.65;
-  color: var(--muted);
+  color: var(--ink);
   max-width: 44ch;
 }
 

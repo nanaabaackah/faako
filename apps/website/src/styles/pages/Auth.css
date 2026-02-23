@@ -298,13 +298,11 @@
 }
 
 .auth-suite .auth-suite-panel {
-  background:
-    linear-gradient(145deg, color-mix(in srgb, var(--accent) 15%, var(--card-bg)), color-mix(in srgb, var(--card-bg) 96%, white)),
-    var(--card-bg);
   padding: clamp(1.6rem, 3.4vw, 2.6rem);
   display: grid;
   gap: 1rem;
   align-content: start;
+  color: var(--bg);
 }
 
 .auth-suite .auth-suite-panel h1 {
@@ -325,7 +323,10 @@
   letter-spacing: 0.08em;
   font-weight: 700;
   color: color-mix(in srgb, var(--accent-strong) 82%, var(--ink));
-  background: color-mix(in srgb, var(--accent) 16%, white 84%);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
 }
 
 .auth-suite .auth-suite-points {
@@ -342,7 +343,6 @@
   gap: 0.52rem;
   align-items: flex-start;
   font-size: 0.92rem;
-  color: color-mix(in srgb, var(--ink) 88%, var(--muted));
 }
 
 .auth-suite .auth-suite-points li svg {
@@ -374,13 +374,19 @@
   border-radius: 999px;
   border: 1px solid color-mix(in srgb, var(--ink) 14%, transparent);
   font-size: 0.75rem;
-  background: color-mix(in srgb, var(--card-bg) 86%, white);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
 }
 
 .auth-suite .auth-suite-form {
-  background:
-    linear-gradient(155deg, color-mix(in srgb, var(--card-bg) 97%, white 3%), color-mix(in srgb, var(--card-bg) 94%, var(--accent) 6%));
-  padding: clamp(1.15rem, 2.2vw, 1.65rem);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--border) 84%, transparent);
 }
 
 .auth-suite .login-card,
@@ -405,12 +411,10 @@
   padding: clamp(1.5rem, 2vw, 2rem);
   border-radius: calc(var(--radius) + 8px);
   border: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in srgb, var(--surface-alt) 86%, rgba(255, 255, 255, 0.55)),
-      color-mix(in srgb, var(--card) 92%, rgba(255, 255, 255, 0.38))
-    );
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
   backdrop-filter: blur(14px);
   box-shadow: 0 28px 55px rgba(12, 20, 34, 0.12);
 }
@@ -439,7 +443,7 @@
   grid-template-columns: 1fr minmax(320px, 0.88fr);
 }
 .signup-shell {
-  padding: 10rem clamp(9rem, 1.6vw, 1.2rem);
+  padding: 2rem clamp(5rem, 1.6vw, 1.2rem);
   display: grid;
   gap: clamp(1rem, 1.8vw, 1.3rem);
 }
@@ -490,7 +494,10 @@
   padding: 0.9rem;
   border-radius: 14px;
   border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
-  background: color-mix(in srgb, var(--surface-alt) 84%, rgba(255, 255, 255, 0.45));
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
 }
 .signup-section h3 {
   margin: 0;
@@ -528,7 +535,7 @@
   border-radius: 12px;
   border: 1px solid var(--border);
   background: transparent;
-  color: var(--ink);
+  color: var(--bg);
   font: inherit;
   resize: vertical;
   min-height: 108px;
@@ -542,14 +549,15 @@
 }
 .signup-choice-group legend {
   padding: 0;
-  color: var(--ink);
-  font-weight: 700;
+  color: var(--bg);
+  font-weight: 900;
   font-size: 0.95rem;
 }
 .signup-help-text {
   margin: 0;
   font-size: 0.82rem;
-  color: var(--muted);
+  font-weight: 700;
+  color: var(--accent);
 }
 .signup-help-text--strong {
   color: color-mix(in srgb, var(--ink) 78%, var(--muted));
@@ -570,6 +578,7 @@
   color: color-mix(in srgb, var(--ink) 84%, var(--muted));
   font-size: 0.82rem;
   cursor: pointer;
+  font-weight: 700;
   transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
 .signup-chip input {
@@ -580,7 +589,7 @@
 .signup-chip.is-selected {
   border-color: color-mix(in srgb, var(--accent) 52%, transparent);
   background: color-mix(in srgb, var(--accent) 18%, rgba(255, 255, 255, 0.3));
-  color: color-mix(in srgb, var(--accent-strong) 82%, var(--ink));
+  color: color-mix(in srgb, var(--bg) 82%, var(--ink));
 }
 .signup-package-grid {
   display: grid;

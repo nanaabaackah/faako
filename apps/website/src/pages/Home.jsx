@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { animate, createTimeline, stagger } from "animejs";
@@ -20,6 +20,9 @@ import PrimaryButton from "../components/PrimaryButton.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
 import "../styles/pages/Home.css";
 import "../styles/pages/CaseStudies.css";
+
+const HERO_LINE_ONE = "From chaos to clarity.";
+const HERO_LINE_TWO = "One system changes everything.";
 
 const processSteps = [
   {
@@ -63,7 +66,7 @@ const toolsTabContent = [
     title: "Get Found & Get Paid",
     paragraph:
       "Launch a clean website that brings in leads, takes payments, and sends enquiries straight to WhatsApp.",
-    image: "/imgs/elements/woman_smiling.png",
+    image: "/imgs/elements/woman.png",
     alt: "Business website and booking flow",
   },
   {
@@ -74,7 +77,6 @@ const toolsTabContent = [
     title: "Track Everything",
     paragraph:
       "See stock, cashflow, and order status in real time without juggling spreadsheets.",
-    image: "/imgs/case-studies/dashboard-case.png",
     alt: "Inventory tracking dashboard",
   },
   {
@@ -85,24 +87,14 @@ const toolsTabContent = [
     title: "See The Numbers",
     paragraph:
       "Get simple daily, weekly, and monthly reports so you can act faster with confidence.",
-    image: "/imgs/case-studies/erp-case.png",
     alt: "Business reports dashboard",
   },
 ];
 
-const renderHeroChars = (text, extraClass = "") =>
-  Array.from(text).map((char, index) => (
-    <span
-      key={`${extraClass || "hero-char"}-${index}`}
-      className={`hero-char${extraClass ? ` ${extraClass}` : ""}`}
-      aria-hidden="true"
-    >
-      {char === " " ? "\u00A0" : char}
-    </span>
-  ));
-
 export default function Home() {
-  const heroContentRef = useRef(null);
+  const [typedLineOne, setTypedLineOne] = useState("");
+  const [typedLineTwo, setTypedLineTwo] = useState("");
+  const [isTypingComplete, setIsTypingComplete] = useState(false);
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -303,137 +295,97 @@ export default function Home() {
     const prefersReducedMotion =
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const heroRoot = heroContentRef.current;
-
-    if (!heroRoot) {
-      return undefined;
-    }
-
-    const textNodes = Array.from(heroRoot.querySelectorAll(".hero-animate"));
-    const headingChars = Array.from(heroRoot.querySelectorAll(".hero-char"));
-
-    if (!textNodes.length && !headingChars.length) {
-      return undefined;
-    }
 
     if (prefersReducedMotion) {
+      setTypedLineOne(HERO_LINE_ONE);
+      setTypedLineTwo(HERO_LINE_TWO);
+      setIsTypingComplete(true);
       return undefined;
     }
 
-    headingChars.forEach((char) => {
-      char.style.opacity = "0";
-      char.style.transform = "translateY(22px)";
-      char.style.willChange = "transform, opacity";
+    setTypedLineOne("");
+    setTypedLineTwo("");
+    setIsTypingComplete(false);
+    let isCancelled = false;
+    const timers = [];
+
+    const queueTimeout = (callback, delay) => {
+      const id = window.setTimeout(() => {
+        if (!isCancelled) {
+          callback();
+        }
+      }, delay);
+      timers.push(id);
+    };
+
+    const typeLine = (text, setter, speed, done) => {
+      let cursor = 0;
+      const tick = () => {
+        setter(text.slice(0, cursor + 1));
+        cursor += 1;
+
+        if (cursor < text.length) {
+          queueTimeout(tick, speed);
+        } else if (done) {
+          done();
+        }
+      };
+
+      queueTimeout(tick, 130);
+    };
+
+    typeLine(HERO_LINE_ONE, setTypedLineOne, 42, () => {
+      queueTimeout(() => {
+        typeLine(HERO_LINE_TWO, setTypedLineTwo, 34, () => {
+          queueTimeout(() => {
+            setIsTypingComplete(true);
+          }, 120);
+        });
+      }, 180);
     });
 
-    const heroTimeline = createTimeline({ autoplay: false });
-    const cleanupHandlers = [];
-
-    if (textNodes.length) {
-      heroTimeline.add(textNodes, {
-        opacity: [0, 1],
-        translateY: [18, 0],
-        filter: ["blur(8px)", "blur(0px)"],
-        duration: 680,
-        delay: stagger(120),
-        ease: "outCubic",
-        composition: "replace",
-      });
-    }
-
-    if (headingChars.length) {
-      heroTimeline.add(
-        headingChars,
-        {
-          opacity: [0, 1],
-          translateY: [22, 0],
-          rotate: [-8, 0],
-          duration: 760,
-          delay: stagger(18),
-          ease: "outBack(1.1)",
-          composition: "replace",
-        },
-        textNodes.length ? "<<+=120" : 0,
-      );
-
-      headingChars.forEach((char, index) => {
-        const lift = char.classList.contains("hero-char-accent") ? -10 : -7;
-        const tilt = index % 2 === 0 ? -6 : 6;
-
-        const onEnter = () => {
-          animate(char, {
-            translateY: lift,
-            rotate: tilt,
-            duration: 220,
-            ease: "outQuad",
-            composition: "replace",
-          });
-        };
-
-        const onLeave = () => {
-          animate(char, {
-            translateY: 0,
-            rotate: 0,
-            duration: 260,
-            ease: "outCubic",
-            composition: "replace",
-          });
-        };
-
-        char.addEventListener("mouseenter", onEnter);
-        char.addEventListener("mouseleave", onLeave);
-        cleanupHandlers.push(() => {
-          char.removeEventListener("mouseenter", onEnter);
-          char.removeEventListener("mouseleave", onLeave);
-        });
-      });
-    }
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const isVisible = entries.some((entry) => entry.isIntersecting);
-        if (isVisible) {
-          heroTimeline.play();
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.35 },
-    );
-
-    observer.observe(heroRoot);
-
     return () => {
-      observer.disconnect();
-      cleanupHandlers.forEach((handler) => handler());
-      heroTimeline.revert();
-      headingChars.forEach((char) => {
-        char.style.willChange = "auto";
-        char.style.opacity = "";
-        char.style.transform = "";
-      });
+      isCancelled = true;
+      timers.forEach((id) => window.clearTimeout(id));
     };
   }, []);
 
   const featurePreview = toolsTabContent[0];
+  const fixedFirstLineFontClass = "hero-type-line--font-colmeak";
 
   return (
     <>
       {/* ========================================
           HERO SECTION - MINIMAL
           ======================================== */}
-      <section
-        className="page hero hero-v2 hero-centered hero-parallax"
-        style={{ "--hero-bg": "url('/imgs/backgrounds/9.png')" }}
-      >
-        <div className="hero-content" data-scroll ref={heroContentRef}>
-          <p className="eyebrow hero-animate">For Ghanaian Small Businesses</p>
+      <section className="page hero hero-v2 hero-centered hero-parallax">
+        <div className="hero-content" data-scroll>
+          <p className="eyebrow">For Ghanaian Small Businesses</p>
           <h1 aria-label="From chaos to clarity. One system changes everything.">
-            <span className="hero-heading-segment title">
-              {renderHeroChars("From chaos to clarity.")}
+            <span
+              className={`hero-type-line hero-type-line--base ${
+                fixedFirstLineFontClass
+              } ${
+                isTypingComplete ? "is-gradient" : ""
+              }`}
+            >
+              {typedLineOne}
+              {typedLineOne.length < HERO_LINE_ONE.length ? (
+                <span className="hero-type-cursor" aria-hidden="true">
+                  |
+                </span>
+              ) : null}
               <br />
-            </span>{" "}
-            <span className="text-accent hero-heading-segment hero-heading-accent">
-              {renderHeroChars("One system changes everything.", "hero-char-accent")}
+            </span>
+            <span
+              className="text-accent hero-type-line hero-type-line--accent hero-type-line--font-kaftan"
+            >
+              {typedLineTwo}
+              {typedLineOne.length === HERO_LINE_ONE.length && !isTypingComplete ? (
+                <span className="hero-type-cursor" aria-hidden="true">
+                  |
+                </span>
+              ) : null}
             </span>
           </h1>
           <div className="hero-actions">

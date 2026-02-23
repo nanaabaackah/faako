@@ -5,56 +5,51 @@
   gap: 0.35rem;
   padding: 0.85rem 1.6rem;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 1px solid color-mix(in srgb, var(--accent-strong) 72%, #262626);
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.02em;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  color: var(--ink);
-  border-color: var(--glass-border);
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, #ffffff 18%, transparent) 0%,
-      transparent 48%
-    ),
-    linear-gradient(
-      165deg,
-      var(--glass-bg-strong) 0%,
-      var(--glass-bg) 64%,
-      var(--glass-bg-soft) 100%
-    );
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  box-shadow: 0 6px 16px rgba(20, 12, 6, 0.1), var(--glass-inset-highlight);
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease,
+  color: var(--bg);
+  background: var(--accent);
+  box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 34%, transparent),
+    inset 0 1px 0 rgba(251, 251, 251, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease,
     border-color 0.2s ease, color 0.2s ease;
 }
 
+.button:hover {
+  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--accent) 88%, var(--ink));
+  border-color: color-mix(in srgb, var(--accent-strong) 84%, var(--ink));
+  box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 42%, transparent),
+    inset 0 1px 0 rgba(251, 251, 251, 0.24);
+}
+
+/* Main content hover style: layered paper-stack effect */
+.site-main .button:hover {
+  transform: translate(-2px, -2px);
+  background: color-mix(in srgb, #fbfbfb 78%, var(--accent) 22%);
+  border-color: color-mix(in srgb, #262626 26%, #fbfbfb);
+  color: #5c483a;
+  box-shadow:
+    3px 3px 0 color-mix(in srgb, #fbfbfb 72%, #262626 28%),
+    6px 6px 0 color-mix(in srgb, #fbfbfb 58%, #262626 42%),
+    9px 9px 0 color-mix(in srgb, #fbfbfb 44%, #262626 56%);
+}
+
+.site-main .button-primary:hover::after {
+  opacity: 0;
+}
+
 .button-primary {
-  border-color: color-mix(in srgb, var(--accent) 34%, var(--glass-border));
-  color: #fffaf3;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, #ffffff 12%, transparent) 0%,
-      transparent 52%
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--accent-strong) 68%, rgba(4, 4, 4, 0.513))
-    );
-  box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 24%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.24);
+  color: var(--bg);
 }
 
 .button-primary:hover {
-  transform: translateY(-1px);
-  border-color: color-mix(in srgb, var(--accent) 46%, var(--glass-border-strong));
-  box-shadow: 0 14px 28px color-mix(in srgb, var(--accent) 30%, transparent),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  color: var(--ink);
 }
 
 .button-primary::after {
@@ -63,9 +58,9 @@
   inset: 0;
   background: linear-gradient(
     120deg,
-    rgba(255, 255, 255, 0.28),
+    rgba(251, 251, 251, 0.26),
     transparent 45%,
-    rgba(255, 255, 255, 0.08)
+    rgba(251, 251, 251, 0.04)
   );
   transform: translateX(-120%);
   transition: transform 0.6s ease;
@@ -77,77 +72,16 @@
   transform: translateX(0);
 }
 
-:root[data-theme="dark"] .button-primary {
-  border-color: color-mix(in srgb, var(--accent-soft) 26%, var(--glass-border));
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, rgba(255, 255, 255, 0.1) 64%, transparent),
-      transparent 52%
-    ),
-    linear-gradient(
-      135deg,
-      color-mix(in srgb, #00000000 46%, rgba(15, 10, 8, 0.72)),
-      color-mix(in srgb, var(--ink) 42%, rgba(7, 5, 4, 0.82))
-    );
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.46),
-    inset 0 1px 0 rgba(255, 255, 255, 0.12);
-}
-
-:root[data-theme="dark"] .button-primary:hover {
-  border-color: color-mix(in srgb, var(--accent-soft) 36%, var(--glass-border-strong));
-  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.54),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme]) .button-primary {
-    border-color: color-mix(in srgb, var(--accent-soft) 26%, var(--glass-border));
-    background:
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, rgba(255, 255, 255, 0.1) 64%, transparent),
-        transparent 52%
-      ),
-      linear-gradient(
-        135deg,
-        color-mix(in srgb, var(--accent) 46%, rgba(15, 10, 8, 0.72)),
-        color-mix(in srgb, var(--accent-strong) 42%, rgba(7, 5, 4, 0.82))
-      );
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.46),
-      inset 0 1px 0 rgba(255, 255, 255, 0.12);
-  }
-
-  :root:not([data-theme]) .button-primary:hover {
-    border-color: color-mix(in srgb, var(--accent-soft) 36%, var(--glass-border-strong));
-    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.54),
-      inset 0 1px 0 rgba(255, 255, 255, 0.18);
-  }
-}
-
 .button-ghost {
-  border-color: var(--glass-border);
-  color: var(--ink);
-  background:
-    linear-gradient(
-      145deg,
-      color-mix(in srgb, #ffffff 20%, transparent) 0%,
-      transparent 50%
-    ),
-    linear-gradient(
-      165deg,
-      var(--glass-bg-strong) 0%,
-      var(--glass-bg) 64%,
-      var(--glass-bg-soft) 100%
-    );
-  box-shadow: 0 6px 16px rgba(20, 12, 6, 0.1), var(--glass-inset-highlight);
+  color: var(--bg);
+  background: linear-gradient(
+    145deg,
+    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
+  );
 }
 
 .button-ghost:hover {
-  border-color: color-mix(in srgb, var(--accent) 30%, var(--glass-border-strong));
-  color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: 0 10px 20px rgba(20, 12, 6, 0.14), var(--glass-inset-highlight);
+  color: var(--ink);
 }
 
 .button:focus-visible {
@@ -160,7 +94,7 @@
   cursor: not-allowed;
   opacity: 0.7;
   transform: none;
-  box-shadow: 0 8px 16px rgba(20, 12, 6, 0.1), var(--glass-inset-highlight);
+  box-shadow: 0 8px 16px color-mix(in srgb, var(--accent) 24%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {

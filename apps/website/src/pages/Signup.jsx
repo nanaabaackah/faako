@@ -129,7 +129,7 @@ const COMMUNICATION_OPTIONS = [
   { id: "email", label: "Email" },
   { id: "instagram", label: "Instagram" },
   { id: "facebook", label: "Facebook" },
-  { id: "walk-in", label: "Walk-in" },
+  { id: "walk-in", label: "In Person" },
   { id: "website-chat", label: "Website Chat" },
   { id: "sms", label: "SMS" },
   { id: "other", label: "Other" }
@@ -453,12 +453,12 @@ export default function Signup() {
                 <div className="signup-grid signup-grid--two">
                   <label>
                     Business name
-                    <input name="companyName" placeholder="Faako Foods" required />
+                    <input name="companyName" placeholder="My Business Ltd" required />
                   </label>
 
                   <label>
                     Contact name
-                    <input name="contactName" placeholder="Nana Aba" required />
+                    <input name="contactName" placeholder="Jane Doe" required />
                   </label>
                 </div>
 
