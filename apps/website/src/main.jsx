@@ -7,7 +7,7 @@ import { CartProvider } from "./contexts/CartContext.jsx";
 import { CurrencyProvider } from "./contexts/CurrencyContext.jsx";
 import "./styles/global.css";
 import "./styles/header.css";
-import "./styles/components/footer.css";
+import "./styles/footer.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
