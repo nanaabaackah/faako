@@ -16,6 +16,7 @@ import {
   faFacebookF,
   faApple,
 } from "@fortawesome/free-brands-svg-icons";
+import "../styles/pages/Auth.css";
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);

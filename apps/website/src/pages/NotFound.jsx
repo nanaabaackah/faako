@@ -6,6 +6,7 @@ import {
   faStore,
   faHeadset,
 } from "@fortawesome/free-solid-svg-icons";
+import "../styles/pages/NotFound.css";
 
 const quickLinks = [
   { to: "/", label: "Home" },

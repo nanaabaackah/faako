@@ -29,6 +29,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
+import "../styles/pages/ModuleConfig.css";
 
 // Core modules (always included)
 const coreModules = [

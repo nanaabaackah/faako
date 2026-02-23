@@ -4,6 +4,7 @@ import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import NotFound from "./NotFound.jsx";
 import { caseStudies } from "../data/caseStudies.js";
+import "../styles/pages/CaseStudyDetail.css";
 
 export default function CaseStudyDetail() {
   const { slug } = useParams();

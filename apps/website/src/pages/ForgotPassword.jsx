@@ -6,6 +6,7 @@ import {
   faShieldHalved,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import "../styles/pages/Auth.css";
 
 export default function ForgotPassword() {
   const handleSubmit = (event) => {

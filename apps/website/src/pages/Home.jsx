@@ -18,6 +18,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
+import "../styles/pages/Home.css";
+import "../styles/pages/CaseStudies.css";
 
 const processSteps = [
   {

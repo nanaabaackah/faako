@@ -16,6 +16,7 @@ import TrustedBy from "../components/TrustedBy.jsx";
 import React from "react";
 import WhatsApp from "../components/WhatsApp.jsx";
 import AnimatedLogoSVG from "../components/AnimatedLogoSVG.jsx";
+import "../styles/pages/About.css";
 
 export default function About() {
   return (

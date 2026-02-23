@@ -15,6 +15,7 @@ import {
   faUserShield,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import "../styles/pages/Dashboard.css";
 
 const coreModules = [
   {

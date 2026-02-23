@@ -22,6 +22,7 @@ import {
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
 import { moduleShowcaseItems } from "../data/modules.js";
+import "../styles/pages/Solutions.css";
 
 // Import the device merge effect
 import { DeviceMergeLabeled } from "../components/DeviceMergeEffect.jsx";

@@ -427,7 +427,7 @@ export default function Header({
         <Link to="/login" className="nav-signin" onClick={handleNavLinkClick}>
           Sign in
         </Link>
-        <Link to="/contact" className="button button-primary nav-cta" onClick={handleNavLinkClick}>
+        <Link to="/signup" className="button button-primary nav-cta" onClick={handleNavLinkClick}>
           Get started free
         </Link>
 

@@ -44,7 +44,7 @@ const getDocumentTitle = (pathname) => {
     "/case-studies": `Use-Case Scenarios | ${appTitle}`,
     "/dashboard": `Dashboard | ${appTitle}`,
     "/contact": `Contact | ${appTitle}`,
-    "/signup": `Sign Up | ${appTitle}`,
+    "/signup": `Client Intake | ${appTitle}`,
     "/login": `Log In | ${appTitle}`,
     "/forgot-password": `Reset Password | ${appTitle}`,
     "/privacy": `Privacy Policy | ${appTitle}`,

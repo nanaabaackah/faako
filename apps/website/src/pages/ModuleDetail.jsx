@@ -9,6 +9,7 @@ import {
 import PrimaryButton from "../components/PrimaryButton.jsx";
 import NotFound from "./NotFound.jsx";
 import { getModuleById, moduleShowcaseItems } from "../data/modules.js";
+import "../styles/pages/ModuleDetail.css";
 
 export default function ModuleDetail() {
   const { moduleId } = useParams();
