@@ -183,10 +183,7 @@ export default function Signup() {
   const [brandSecondaryColorInput, setBrandSecondaryColorInput] = useState(DEFAULT_SECONDARY_COLOR);
 
   const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
-  // Separate endpoint specifically for the signup form — points to Formspree.
-  // This keeps VITE_API_BASE_URL free for all other backend API calls.
-  const formspreeUrl = "https://formspree.io/f/xojnpypr";
-  
+
   const activePackage = useMemo(
     () =>
       PACKAGE_OPTIONS.find((pkg) => pkg.id === selectedPackage) ||
@@ -308,6 +305,15 @@ export default function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const form = event.currentTarget; // captured before any await — React nullifies currentTarget after the first await
+
+    if (!apiBase) {
+      setStatus({
+        state: "error",
+        message: "Missing API URL. Please try again shortly."
+      });
+      return;
+    }
 
     if (selectedModules.length === 0) {
       setStatus({
@@ -325,58 +331,40 @@ export default function Signup() {
       return;
     }
 
-    // Dev fallback: if no Formspree URL is set, log payload to console instead of crashing
-    if (!formspreeUrl) {
-      const formData = new FormData(event.currentTarget);
-      const payload = Object.fromEntries(formData.entries());
-      payload.packageTier = selectedPackage;
-      payload.requestedModules = selectedModules.join(", ");
-      payload.communicationChannels = communicationChannels.join(", ");
-      payload.brandPrimaryColor = brandPrimaryColor;
-      payload.brandSecondaryColor = brandSecondaryColor;
-      console.info("[Faako Dev] VITE_FORMSPREE_URL not set. Payload:", payload);
-      setStatus({
-        state: "success",
-        message: "[Dev] Payload logged to console. Set VITE_FORMSPREE_URL in .env.local to activate Formspree."
-      });
-      return;
-    }
-
-    const formData = new FormData(event.currentTarget);
+    const formData = new FormData(form);
     const payload = Object.fromEntries(formData.entries());
 
     payload.packageTier = selectedPackage;
-    // Arrays are joined to strings so Formspree displays them readably in email
-    payload.requestedModules = selectedModules.join(", ");
-    payload.communicationChannels = communicationChannels.join(", ");
+    payload.requestedModules = selectedModules;
+    payload.communicationChannels = communicationChannels;
     payload.brandPrimaryColor = brandPrimaryColor;
     payload.brandSecondaryColor = brandSecondaryColor;
 
     setStatus({ state: "loading", message: "Sending request..." });
 
     try {
-      // Post directly to the Formspree endpoint — no /signup suffix needed
-      // "accept: application/json" tells Formspree to return JSON instead of redirecting
-      const response = await fetch(formspreeUrl, {
+      const response = await fetch(`${apiBase}/signup`, {
         method: "POST",
         headers: {
-          "content-type": "application/json",
-          "accept": "application/json"
+          "content-type": "application/json"
         },
         body: JSON.stringify(payload)
       });
 
-      // Formspree returns { ok: true } on success, { errors: [...] } on failure
-      const result = await response.json();
-
-      if (!response.ok || result?.errors) {
-        const message =
-          result?.errors?.[0]?.message ||
-          "Something went wrong. Please try again.";
+      if (!response.ok) {
+        let message = "Something went wrong. Please try again.";
+        try {
+          const result = await response.json();
+          if (result?.error) {
+            message = result.error;
+          }
+        } catch (error) {
+          message = "Something went wrong. Please try again.";
+        }
         throw new Error(message);
       }
 
-      event.currentTarget.reset();
+      form.reset();
       setSelectedPackage(DEFAULT_PACKAGE);
       setSelectedModules(getDefaultModules(DEFAULT_PACKAGE));
       setCommunicationChannels(["whatsapp", "phone-calls"]);
