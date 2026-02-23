@@ -5,9 +5,6 @@ import App from "./App.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
 import { CartProvider } from "./contexts/CartContext.jsx";
 import { CurrencyProvider } from "./contexts/CurrencyContext.jsx";
-import "../styles/global.css";
-import "../styles/components/header.css";
-import "../styles/components/footer.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
