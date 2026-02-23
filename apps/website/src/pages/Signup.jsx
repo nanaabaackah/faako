@@ -446,6 +446,8 @@ export default function Signup() {
               className="form signup-form"
               style={{ "--delay": "140ms" }}
               onSubmit={handleSubmit}
+              action="https://formspree.io/f/xojnpypr"
+              method="POST"
             >
               <section className="signup-section">
                 <h3>Company details</h3>
