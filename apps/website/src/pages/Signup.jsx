@@ -139,6 +139,7 @@ const DEFAULT_PACKAGE = "professional";
 const DEFAULT_PRIMARY_COLOR = "#2f855a";
 const DEFAULT_SECONDARY_COLOR = "#f59e0b";
 const HEX_COLOR_PATTERN = /^#(?:[0-9a-fA-F]{3}){1,2}$/;
+const FORMSPREE_ENDPOINT = "https://formspree.io/f/xojnpypr";
 
 const normalizeHexColorValue = (value) => {
   const raw = String(value || "").trim();
@@ -193,9 +194,6 @@ export default function Signup() {
   const [brandSecondaryColor, setBrandSecondaryColor] = useState(DEFAULT_SECONDARY_COLOR);
   const [brandPrimaryColorInput, setBrandPrimaryColorInput] = useState(DEFAULT_PRIMARY_COLOR);
   const [brandSecondaryColorInput, setBrandSecondaryColorInput] = useState(DEFAULT_SECONDARY_COLOR);
-
-  const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
-  const signupEndpoint = `${apiBase || "/api"}/signup`;
 
   const activePackage = useMemo(
     () =>
@@ -337,38 +335,31 @@ export default function Signup() {
     }
 
     const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
-
-    payload.packageTier = selectedPackage;
-    payload.requestedModules = selectedModules;
-    payload.communicationChannels = communicationChannels;
-    payload.brandPrimaryColor = brandPrimaryColor;
-    payload.brandSecondaryColor = brandSecondaryColor;
+    formData.set("packageTier", selectedPackage);
+    formData.set("requestedModules", selectedModules.join(", "));
+    formData.set("communicationChannels", communicationChannels.join(", "));
+    formData.set("brandPrimaryColor", brandPrimaryColor);
+    formData.set("brandSecondaryColor", brandSecondaryColor);
 
     setStatus({ state: "loading", message: "Sending request..." });
 
     try {
-      const response = await fetch(signupEndpoint, {
+      const response = await fetch(FORMSPREE_ENDPOINT, {
         method: "POST",
         headers: {
-          "content-type": "application/json",
           "accept": "application/json"
         },
-        body: JSON.stringify(payload)
+        body: formData
       });
 
       const responseText = await response.text();
       const result = parseJsonObject(responseText);
-      const fallbackMessage =
-        response.status === 404
-          ? "Signup service is unavailable. Run `npm run server` in apps/api or set VITE_API_BASE_URL."
-          : "Could not submit form. Check API setup and try again.";
 
       if (!response.ok || result?.ok === false || result?.errors) {
         const message =
           result?.error ||
           result?.errors?.[0]?.message ||
-          fallbackMessage;
+          "Could not submit form. Please try again.";
         throw new Error(message);
       }
 
@@ -389,7 +380,7 @@ export default function Signup() {
         state: "error",
         message:
           error instanceof TypeError
-            ? "Could not reach the signup service. Run `npm run server` in apps/api or set VITE_API_BASE_URL."
+            ? "Could not reach Formspree. Please try again shortly."
             : error.message || "Could not submit form. Please try again."
       });
     }
@@ -458,6 +449,8 @@ export default function Signup() {
               className="form signup-form"
               style={{ "--delay": "140ms" }}
               onSubmit={handleSubmit}
+              action={FORMSPREE_ENDPOINT}
+              method="POST"
             >
               <section className="signup-section">
                 <h3>Company details</h3>
