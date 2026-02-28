@@ -140,7 +140,7 @@ export default function App() {
       : "/assets/logos/logo-colour-long.png";
   const particlePalette =
     currentTheme === "dark"
-      ? ["#21212d", "#2a2a38", "#333344", "#3d3d50"]
+      ? ["#47475e", "#55556d", "#64647c", "#77778f"]
       : ["#151419", "#262626", "#878787", "#f56e0f", "#fbfbfb"];
   const location = useLocation();
 
@@ -346,21 +346,6 @@ export default function App() {
 
   return (
     <div className="app-shell">
-      <Particles
-        className="app-particles-layer"
-        particleCount={220}
-        particleSpread={10}
-        speed={0.1}
-        particleColors={particlePalette}
-        moveParticlesOnHover={false}
-        particleHoverFactor={0.45}
-        alphaParticles
-        particleBaseSize={100}
-        sizeRandomness={0.85}
-        cameraDistance={22}
-        disableRotation={false}
-        pixelRatio={1}
-      />
       <a className="skip-link" href="#main-content">
         Skip to content
       </a>
@@ -371,6 +356,21 @@ export default function App() {
         onToggleTheme={handleThemeToggle}
       />
       <main className="site-main" id="main-content">
+        <Particles
+          className="app-particles-layer"
+          particleCount={260}
+          particleSpread={10}
+          speed={0.1}
+          particleColors={particlePalette}
+          moveParticlesOnHover={false}
+          particleHoverFactor={0.45}
+          alphaParticles={false}
+          particleBaseSize={110}
+          sizeRandomness={0.85}
+          cameraDistance={22}
+          disableRotation={false}
+          pixelRatio={1}
+        />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/solutions" element={<Solutions />} />

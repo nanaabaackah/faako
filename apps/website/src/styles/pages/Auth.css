@@ -492,12 +492,6 @@
   display: grid;
   gap: 0.72rem;
   padding: 0.9rem;
-  border-radius: 14px;
-  border: 1px solid color-mix(in srgb, var(--border) 65%, transparent);
-  background: linear-gradient(
-    145deg,
-    color-mix(in srgb, #fbfbfb05 94%, #ffffff)
-  );
 }
 .signup-section h3 {
   margin: 0;

@@ -1,4 +1,5 @@
 const { Pool } = require("pg");
+const nodemailer = require("nodemailer");
 
 const headers = {
   "content-type": "application/json",
@@ -171,6 +172,170 @@ const buildUniqueSlug = async (dbClient, companyName) => {
   }
 
   return `${base}-${Date.now().toString(36)}`;
+};
+
+const escapeHtml = (value) =>
+  String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+
+const formatPreviewValue = (value) => {
+  if (Array.isArray(value)) {
+    return value.length ? value.join(", ") : "N/A";
+  }
+  if (value === null || value === undefined || value === "") {
+    return "N/A";
+  }
+  return String(value);
+};
+
+const buildPreviewTableHtml = (entries) =>
+  entries
+    .map(
+      ([label, value]) => `
+        <tr>
+          <td style="padding:8px 10px;border:1px solid #e3e3e3;background:#fafafa;font-weight:600;vertical-align:top;white-space:nowrap;">${escapeHtml(
+            label
+          )}</td>
+          <td style="padding:8px 10px;border:1px solid #e3e3e3;vertical-align:top;">${escapeHtml(
+            formatPreviewValue(value)
+          )}</td>
+        </tr>
+      `
+    )
+    .join("");
+
+const buildAdminPreviewHtml = (submission) => {
+  const previewRows = [
+    ["Request ID", submission.signupRequestId],
+    ["Submitted At", submission.submittedAtIso],
+    ["Company Name", submission.companyName],
+    ["Contact Name", submission.contactName],
+    ["Email", submission.normalizedEmail],
+    ["Phone", submission.phone],
+    ["Business Type", submission.businessType],
+    ["Team Size", submission.teamSize],
+    ["Preferred Currency", submission.selectedCurrency],
+    ["Timeline Preference", submission.timelinePreference],
+    ["Package Tier", submission.packageTier],
+    ["Requested Modules", submission.requestedModules],
+    ["Communication Channels", submission.communicationChannels],
+    ["Current Workflow", submission.currentWorkflow],
+    ["Pain Points", submission.painPoints],
+    ["Project Details", submission.projectDetails],
+    ["Additional Notes", submission.additionalNotes],
+    ["Website URL", submission.websiteUrl],
+    ["Logo URL", submission.logoUrl],
+    ["Primary Color", submission.brandPrimaryColor],
+    ["Secondary Color", submission.brandSecondaryColor],
+    ["Organization ID", submission.organizationId]
+  ];
+
+  return `
+    <div style="font-family:Arial,sans-serif;color:#1f1f1f;line-height:1.45;">
+      <h2 style="margin:0 0 12px;">New Faako Client Intake</h2>
+      <p style="margin:0 0 16px;">A new signup form was submitted and saved to the database.</p>
+      <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:900px;">
+        ${buildPreviewTableHtml(previewRows)}
+      </table>
+    </div>
+  `;
+};
+
+const buildClientConfirmationHtml = (submission) => {
+  const summaryRows = [
+    ["Company", submission.companyName],
+    ["Package", submission.packageTier],
+    ["Modules", submission.requestedModules],
+    ["Timeline", submission.timelinePreference]
+  ];
+
+  return `
+    <div style="font-family:Arial,sans-serif;color:#1f1f1f;line-height:1.45;">
+      <h2 style="margin:0 0 12px;">We received your Faako intake</h2>
+      <p style="margin:0 0 16px;">Hi ${escapeHtml(
+        submission.contactName || "there"
+      )}, thanks for sharing your business details with Faako.</p>
+      <p style="margin:0 0 16px;">Our team will review your request and reply with next steps within one business day.</p>
+      <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:680px;">
+        ${buildPreviewTableHtml(summaryRows)}
+      </table>
+      <p style="margin:16px 0 0;">Reference: <strong>${escapeHtml(
+        submission.signupRequestId
+      )}</strong></p>
+    </div>
+  `;
+};
+
+const sendSignupPreviewEmails = async (submission) => {
+  const smtpHost = normalizeOptionalText(process.env.SMTP_HOST, 255);
+  const smtpPortValue = normalizeOptionalText(process.env.SMTP_PORT, 8) || "587";
+  const smtpPort = Number.parseInt(smtpPortValue, 10);
+  const smtpUser = normalizeOptionalText(process.env.SMTP_USER, 255);
+  const smtpPass = normalizeOptionalText(process.env.SMTP_PASS, 255);
+  const smtpFrom =
+    normalizeOptionalText(process.env.SMTP_FROM, 255) ||
+    smtpUser ||
+    "no-reply@faako.app";
+  const adminEmail =
+    normalizeOptionalText(process.env.INTAKE_ADMIN_EMAIL, 255) ||
+    normalizeOptionalText(process.env.ADMIN_EMAIL, 255);
+
+  if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
+    return;
+  }
+
+  const smtpSecureRaw = String(process.env.SMTP_SECURE || "").trim().toLowerCase();
+  const smtpSecure =
+    smtpSecureRaw === "true" || smtpSecureRaw === "1" || smtpPort === 465;
+
+  const transporter = nodemailer.createTransport({
+    host: smtpHost,
+    port: smtpPort,
+    secure: smtpSecure,
+    auth: {
+      user: smtpUser,
+      pass: smtpPass
+    }
+  });
+
+  const sendJobs = [];
+
+  if (adminEmail) {
+    sendJobs.push(
+      transporter.sendMail({
+        from: smtpFrom,
+        to: adminEmail,
+        subject: `[Faako] New Intake - ${submission.companyName}`,
+        html: buildAdminPreviewHtml(submission)
+      })
+    );
+  }
+
+  if (submission.normalizedEmail) {
+    sendJobs.push(
+      transporter.sendMail({
+        from: smtpFrom,
+        to: submission.normalizedEmail,
+        subject: "Faako intake received",
+        html: buildClientConfirmationHtml(submission)
+      })
+    );
+  }
+
+  if (sendJobs.length === 0) {
+    return;
+  }
+
+  const results = await Promise.allSettled(sendJobs);
+  results.forEach((result) => {
+    if (result.status === "rejected") {
+      console.error("Signup email send failed:", result.reason);
+    }
+  });
 };
 
 exports.handler = async (event) => {
@@ -544,6 +709,31 @@ exports.handler = async (event) => {
     );
 
     await dbClient.query("COMMIT");
+
+    await sendSignupPreviewEmails({
+      signupRequestId,
+      submittedAtIso: new Date().toISOString(),
+      organizationId: organization.id,
+      companyName,
+      contactName,
+      normalizedEmail,
+      phone,
+      businessType,
+      teamSize,
+      selectedCurrency,
+      timelinePreference,
+      packageTier,
+      requestedModules,
+      communicationChannels,
+      currentWorkflow,
+      painPoints,
+      projectDetails,
+      additionalNotes,
+      websiteUrl,
+      logoUrl,
+      brandPrimaryColor,
+      brandSecondaryColor
+    });
 
     return {
       statusCode: 202,

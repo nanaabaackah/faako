@@ -12,23 +12,23 @@
 }
 
 .app-particles-layer {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: -1;
-  opacity: var(--particles-opacity, 0.3);
+  z-index: 1;
+  opacity: var(--particles-opacity, 0.48);
   pointer-events: none;
-  mix-blend-mode: soft-light;
-  filter: saturate(1.08);
+  mix-blend-mode: screen;
+  filter: saturate(1.12) contrast(1.08);
 }
 
 :root[data-theme="dark"] .app-particles-layer {
-  opacity: var(--particles-opacity-dark, 0.44);
+  opacity: var(--particles-opacity-dark, 0.56);
   mix-blend-mode: screen;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) .app-particles-layer {
-    opacity: var(--particles-opacity-dark, 0.44);
+    opacity: var(--particles-opacity-dark, 0.56);
     mix-blend-mode: screen;
   }
 }

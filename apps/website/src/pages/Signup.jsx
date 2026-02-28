@@ -150,6 +150,18 @@ const normalizeHexColorValue = (value) => {
   return HEX_COLOR_PATTERN.test(withHash) ? withHash.toLowerCase() : null;
 };
 
+const parseJsonObject = (value) => {
+  if (!value) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(value);
+  } catch {
+    return null;
+  }
+};
+
 const PACKAGE_LABEL_BY_ID = Object.fromEntries(
   PACKAGE_OPTIONS.map((pkg) => [pkg.id, pkg.name])
 );
@@ -183,6 +195,7 @@ export default function Signup() {
   const [brandSecondaryColorInput, setBrandSecondaryColorInput] = useState(DEFAULT_SECONDARY_COLOR);
 
   const apiBase = (import.meta.env.VITE_API_BASE_URL || "").replace(/\/$/, "");
+  const signupEndpoint = `${apiBase || "/api"}/signup`;
 
   const activePackage = useMemo(
     () =>
@@ -305,15 +318,7 @@ export default function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = event.currentTarget; // captured before any await — React nullifies currentTarget after the first await
-
-    if (!apiBase) {
-      setStatus({
-        state: "error",
-        message: "Missing API URL. Please try again shortly."
-      });
-      return;
-    }
+    const form = event.currentTarget;
 
     if (selectedModules.length === 0) {
       setStatus({
@@ -343,24 +348,27 @@ export default function Signup() {
     setStatus({ state: "loading", message: "Sending request..." });
 
     try {
-      const response = await fetch(`${apiBase}/signup`, {
+      const response = await fetch(signupEndpoint, {
         method: "POST",
         headers: {
-          "content-type": "application/json"
+          "content-type": "application/json",
+          "accept": "application/json"
         },
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
-        let message = "Something went wrong. Please try again.";
-        try {
-          const result = await response.json();
-          if (result?.error) {
-            message = result.error;
-          }
-        } catch (error) {
-          message = "Something went wrong. Please try again.";
-        }
+      const responseText = await response.text();
+      const result = parseJsonObject(responseText);
+      const fallbackMessage =
+        response.status === 404
+          ? "Signup service is unavailable. Run `npm run server` in apps/api or set VITE_API_BASE_URL."
+          : "Could not submit form. Check API setup and try again.";
+
+      if (!response.ok || result?.ok === false || result?.errors) {
+        const message =
+          result?.error ||
+          result?.errors?.[0]?.message ||
+          fallbackMessage;
         throw new Error(message);
       }
 
@@ -374,12 +382,15 @@ export default function Signup() {
       setBrandSecondaryColorInput(DEFAULT_SECONDARY_COLOR);
       setStatus({
         state: "success",
-        message: "Thanks. Your discovery form has been received."
+        message: result?.message || "Thanks. Your discovery form has been received."
       });
     } catch (error) {
       setStatus({
         state: "error",
-        message: error.message || "Something went wrong. Please try again."
+        message:
+          error instanceof TypeError
+            ? "Could not reach the signup service. Run `npm run server` in apps/api or set VITE_API_BASE_URL."
+            : error.message || "Could not submit form. Please try again."
       });
     }
   };
@@ -447,8 +458,6 @@ export default function Signup() {
               className="form signup-form"
               style={{ "--delay": "140ms" }}
               onSubmit={handleSubmit}
-              action="https://formspree.io/f/xojnpypr"
-              method="POST"
             >
               <section className="signup-section">
                 <h3>Company details</h3>
