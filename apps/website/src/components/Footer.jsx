@@ -4,64 +4,76 @@ import { moduleShowcaseItems } from "../data/modules.js";
 
 export default function Footer({ footerLogo }) {
   const year = new Date().getFullYear();
+  const featuredModules = moduleShowcaseItems.slice(0, 4);
 
   return (
     <footer className="site-footer">
-      <div className="footer-links footer-brand footer-top">
-        <div className="logo footer-logo">
-          <img src={footerLogo} alt="Faako logo" loading="lazy" />
-        </div>
-        <p>Faako: The Power of One.</p>
-        <small>Accra, Ghana · Global Availability</small>
-      </div>
-      <div className="footer-links">
-        <span className="footer-title">Services</span>
-        <Link to="/solutions">Solutions</Link>
-        <Link to="/configure">Project Blueprint</Link>
-        <Link to="/pricing">Pricing</Link>
-        <Link to="/case-studies">Use-Case Scenarios</Link>
-        <Link to="/dashboard">Dashboard</Link>
-      </div>
-      <div className="footer-links footer-links--modules">
-        <span className="footer-title">Modules</span>
-        {moduleShowcaseItems.map((module) => (
-          <Link key={module.id} to={`/modules/${module.id}`}>
-            {module.title}
+      <div className="site-footer-shell">
+        <div className="footer-cta-row">
+          <div className="footer-brand">
+            <div className="logo footer-logo">
+              <img src={footerLogo} alt="Faako logo" loading="lazy" />
+            </div>
+            <p className="footer-kicker">Ready to simplify operations?</p>
+            <h2>Let's work together.</h2>
+            <small>From onboarding to daily reporting, we help teams run from one system.</small>
+          </div>
+          <Link className="footer-cta-button" to="/contact">
+            Start a Free Conversation
           </Link>
-        ))}
-        <Link className="footer-more-link" to="/solutions#modules">
-          All Modules
-        </Link>
-      </div>
-      <div className="footer-links">
-        <span className="footer-title">Example Flows</span>
-        <Link to="/modules/website">Lead Capture Website</Link>
-        <Link to="/modules/inventory">Inventory + Orders</Link>
-        <Link to="/modules/delivery">Delivery Operations</Link>
-        <Link to="/modules/hr">Team + Payroll</Link>
-        <Link to="/case-studies">All Scenarios</Link>
-      </div>
-      <div className="footer-links">
-        <span className="footer-title">Resources</span>
-        <Link to="/about">About</Link>
-        <Link to="/solutions">Solutions</Link>
-        <Link to="/contact">Contact</Link>
-        <Link to="/login">Sign In</Link>
-        <Link to="/signup">Get Started</Link>
-      </div>
-      <div className="footer-links">
-        <span className="footer-title">Company</span>
-        <Link to="/about">About</Link>
-        <Link to="/contact">Support</Link>
-        <Link to="/privacy">Privacy Policy</Link>
-        <Link to="/terms">Terms of Service</Link>
-      </div>
-      <div className="footer-links footer-language">
-        <span className="footer-title">Language</span>
-        <FooterLanguagePicker />
-      </div>
-      <div className="footer-bottom">
-        <span>&copy; {year} Faako Systems & Consulting. Made to matter. Made by Nana</span>
+        </div>
+
+        <div className="footer-links-grid">
+          <div className="footer-links">
+            <span className="footer-title">Product</span>
+            <Link to="/solutions">Solutions</Link>
+            <Link to="/pricing">Pricing</Link>
+            <Link to="/configure">Project Blueprint</Link>
+            <Link to="/dashboard">Dashboard</Link>
+          </div>
+
+          <div className="footer-links">
+            <span className="footer-title">Modules</span>
+            {featuredModules.map((module) => (
+              <Link key={module.id} to={`/modules/${module.id}`}>
+                {module.title}
+              </Link>
+            ))}
+            <Link className="footer-more-link" to="/solutions#modules">
+              All Modules
+            </Link>
+          </div>
+
+          <div className="footer-links">
+            <span className="footer-title">Company</span>
+            <Link to="/about">About</Link>
+            <Link to="/case-studies">Use Cases</Link>
+            <Link to="/contact">Contact</Link>
+            <Link to="/signup">Get Started</Link>
+          </div>
+
+          <div className="footer-links footer-language">
+            <span className="footer-title">Language</span>
+            <FooterLanguagePicker />
+          </div>
+        </div>
+
+        <div className="footer-trust-row">
+          <div className="footer-trust-badges" aria-label="Faako operating principles">
+            <span className="footer-badge">Built in Ghana</span>
+            <span className="footer-badge">Local Team Support</span>
+            <span className="footer-badge">Privacy-First Workflows</span>
+          </div>
+          <span className="footer-address">Accra, Ghana</span>
+        </div>
+
+        <div className="footer-bottom">
+          <span>&copy; {year} Faako Systems &amp; Consulting</span>
+          <div className="footer-legal-links">
+            <Link to="/privacy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+          </div>
+        </div>
       </div>
     </footer>
   );

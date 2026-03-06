@@ -302,7 +302,7 @@
   display: grid;
   gap: 1rem;
   align-content: start;
-  color: var(--bg);
+  color: var(--ink);
 }
 
 .auth-suite .auth-suite-panel h1 {
@@ -529,7 +529,7 @@
   border-radius: 12px;
   border: 1px solid var(--border);
   background: transparent;
-  color: var(--bg);
+  color: var(--ink);
   font: inherit;
   resize: vertical;
   min-height: 108px;
@@ -543,7 +543,7 @@
 }
 .signup-choice-group legend {
   padding: 0;
-  color: var(--bg);
+  color: var(--ink);
   font-weight: 900;
   font-size: 0.95rem;
 }

@@ -21,17 +21,17 @@ const pricingTiers = [
   {
     id: "starter",
     name: "Starter",
-    tagline: "Get online with the essentials",
+    tagline: "A simple start for your business",
     price: "2,500",
     priceNote: "one-time",
     timeline: "2-3 weeks",
-    bestFor: "New businesses getting started online",
+    bestFor: "New businesses starting with the basics",
     includes: [
       "Business website (5 pages)",
-      "Mobile-responsive design",
-      "Contact forms & WhatsApp integration",
-      "Basic SEO setup",
-      "SSL certificate & hosting (1 year)",
+      "Mobile-friendly design",
+      "Contact forms and WhatsApp connection",
+      "Basic search setup",
+      "SSL certificate and hosting (1 year)",
       "Mobile Money payment page",
     ],
     notIncluded: [
@@ -45,17 +45,17 @@ const pricingTiers = [
   {
     id: "professional",
     name: "Professional",
-    tagline: "Website + live business dashboard",
+    tagline: "Website plus a live business dashboard",
     price: "8,500",
     priceNote: "one-time",
     timeline: "4-6 weeks",
-    bestFor: "Growing businesses that need real-time insights",
+    bestFor: "Growing businesses that need daily visibility",
     includes: [
       "Everything in Starter",
-      "Sales dashboard with live metrics",
+      "Sales dashboard with live updates",
       "Inventory tracking (up to 500 items)",
       "Order management",
-      "Weekly reports to WhatsApp/email",
+      "Weekly reports to WhatsApp and email",
       "Payment tracking (Mobile Money + cash)",
       "3 months premium support",
     ],
@@ -63,7 +63,7 @@ const pricingTiers = [
       "Multi-location support",
       "Advanced reporting",
       "HR/payroll features",
-      "Custom workflows",
+      "Custom business setup",
     ],
     cta: "Most Popular",
     popular: true,
@@ -71,20 +71,20 @@ const pricingTiers = [
   {
     id: "enterprise",
     name: "Enterprise",
-    tagline: "Complete business management system",
+    tagline: "A complete setup for larger teams",
     price: "Custom",
     priceNote: "starts at GH₵ 18,000",
     timeline: "6-10 weeks",
-    bestFor: "Established businesses with complex needs",
+    bestFor: "Established businesses with broader needs",
     includes: [
       "Everything in Professional",
       "Unlimited inventory items",
       "Multi-location management",
-      "CRM with sales pipeline",
+      "Customer follow-up and sales progress",
       "HR & payroll module",
       "Delivery/route tracking",
-      "Custom reports & analytics",
-      "WhatsApp Business API integration",
+      "Custom reports and advanced insights",
+      "WhatsApp Business integration",
       "6 months premium support",
       "Staff training included",
     ],
@@ -102,7 +102,7 @@ const pricingScenarios = [
     iconColor: "#FF6B35",
     businessName: "Retail Growth Scenario",
     location: "Illustrative scope",
-    challenge: "Tracking inventory across 2 locations with manual counts",
+    challenge: "Stock tracking across two locations with manual counting",
     solution: "Professional package + Delivery module",
     modules: ["Website", "Dashboard", "Inventory", "Orders", "Delivery"],
     breakdown: [
@@ -115,8 +115,8 @@ const pricingScenarios = [
     timeline: "4-5 weeks",
     results: [
       "Reduce avoidable stockouts",
-      "Speed up order processing",
-      "Improve daily stock visibility",
+      "Process orders faster",
+      "See daily stock levels clearly",
     ],
   },
   {
@@ -126,13 +126,13 @@ const pricingScenarios = [
     iconColor: "#F7931E",
     businessName: "Distribution Expansion Scenario",
     location: "Illustrative scope",
-    challenge: "Managing 5 warehouses, deliveries, and payment follow-ups",
+    challenge: "Managing five warehouses, deliveries, and payment follow-up",
     solution: "Enterprise package",
     modules: ["Website", "Dashboard", "Inventory", "CRM", "Orders", "Delivery", "Payments"],
     breakdown: [
       { item: "Website + Dashboard", price: 8500 },
       { item: "Multi-location inventory", price: 3500 },
-      { item: "CRM with sales pipeline", price: 1800 },
+      { item: "Customer follow-up system", price: 1800 },
       { item: "Delivery route tracking", price: 1800 },
       { item: "Payment integration", price: 1800 },
       { item: "Staff training", price: 1200 },
@@ -140,7 +140,7 @@ const pricingScenarios = [
     totalPrice: 18600,
     timeline: "7-9 weeks",
     results: [
-      "Lower delivery error rates",
+      "Reduce delivery errors",
       "Make payment follow-up easier",
       "Track all locations in one view",
     ],
@@ -152,7 +152,7 @@ const pricingScenarios = [
     iconColor: "#9B59B6",
     businessName: "Events Scheduling Scenario",
     location: "Illustrative scope",
-    challenge: "Double-booked equipment and manual calendar tracking",
+    challenge: "Double bookings and manual calendar tracking",
     solution: "Professional + Bookings + Scheduler",
     modules: ["Website", "Dashboard", "Inventory", "Bookings", "Scheduler", "Payments"],
     breakdown: [
@@ -164,8 +164,8 @@ const pricingScenarios = [
     timeline: "5-6 weeks",
     results: [
       "Prevent booking conflicts",
-      "Keep equipment availability visible",
-      "Standardize staff scheduling",
+      "Keep equipment availability clear",
+      "Make staff scheduling consistent",
     ],
   },
 ];
@@ -192,10 +192,10 @@ export default function Pricing() {
             <span className="text-accent">No surprises.</span>
           </h1>
           <p className="lead">
-            Launch pricing for early-stage teams (through June 30, 2026). One-time payment, then optional support.
+            Launch pricing for early-stage teams (through June 30, 2026). One-time setup fee, then optional support.
           </p>
           <p className="muted">
-            Benchmarked against current Ghana web and custom-build ranges, then reduced for startup-stage portfolio growth.
+            We keep pricing clear and fair so you can plan with confidence.
           </p>
         </div>
 
@@ -208,19 +208,19 @@ export default function Pricing() {
           <div className="philosophy-card reveal" data-scroll style={{ "--delay": "140ms" }}>
             <FontAwesomeIcon icon={faLightbulb} />
             <h4>Pay once, own forever</h4>
-            <p>No recurring subscriptions. Your system, your business.</p>
+            <p>No forced monthly software subscription. The system is yours.</p>
           </div>
 
           <div className="philosophy-card reveal" data-scroll style={{ "--delay": "200ms" }}>
             <FontAwesomeIcon icon={faShieldHalved} />
             <h4>Transparent breakdown</h4>
-            <p>See exactly what you're paying for. No hidden costs.</p>
+            <p>See exactly what you are paying for. No hidden charges.</p>
           </div>
 
           <div className="philosophy-card reveal" data-scroll style={{ "--delay": "260ms" }}>
             <FontAwesomeIcon icon={faHeadset} />
             <h4>Support included</h4>
-            <p>3-6 months of updates and fixes. Then optional support.</p>
+            <p>3-6 months of updates and fixes, then optional support.</p>
           </div>
         </div>
       </section>
@@ -233,7 +233,7 @@ export default function Pricing() {
           <p className="eyebrow">Three Packages</p>
           <h2>Choose what fits your business stage.</h2>
           <p className="lead">
-            Start small. Upgrade anytime. We build to grow with you.
+            Start with what you need now and grow from there.
           </p>
         </div>
 
@@ -301,7 +301,7 @@ export default function Pricing() {
         </div>
 
         <p className="pricing-note">
-          All prices are one-time payments. Hosting, domain, and maintenance are separate (see below).
+          All prices are one-time setup fees. Hosting, domain, and maintenance are separate (see below).
         </p>
       </section>
 
@@ -313,7 +313,7 @@ export default function Pricing() {
           <p className="eyebrow">Sample Scenarios</p>
           <h2>See example scopes and price ranges.</h2>
           <p className="lead">
-            These are illustrative builds to help you budget before discovery.
+            These examples help you estimate cost before we meet.
           </p>
         </div>
 
@@ -383,8 +383,8 @@ export default function Pricing() {
                   </div>
 
                   <div className="case-results">
-                    <h4>Potential outcomes:</h4>
-                    <ul>
+                  <h4>Potential outcomes:</h4>
+                  <ul>
                       {study.results.map((result, i) => (
                         <li key={i}>
                           <FontAwesomeIcon icon={faCheck} />
@@ -403,13 +403,13 @@ export default function Pricing() {
                 aria-expanded={selectedCase === study.id}
                 aria-controls={`case-breakdown-${study.id}`}
               >
-                {selectedCase === study.id ? "Hide details" : "View full breakdown"}
+                {selectedCase === study.id ? "Hide details" : "View price breakdown"}
               </button>
             </article>
           ))}
         </div>
         <p className="pricing-note">
-          Final pricing and delivery timelines are confirmed after discovery and workflow review.
+          Final pricing and delivery timelines are confirmed after we review your business needs.
         </p>
       </section>
 
@@ -421,7 +421,7 @@ export default function Pricing() {
           <p className="eyebrow">Add-On Modules</p>
           <h2>Build your custom system.</h2>
           <p className="lead">
-            Start with a package, add modules as you need them.
+            Start with a package, then add features as your business grows.
           </p>
         </div>
 
@@ -437,57 +437,57 @@ export default function Pricing() {
             <tbody>
               <tr>
                 <td><strong>Inventory</strong></td>
-                <td>Track stock across locations with serial numbers</td>
+                <td>Track stock across locations</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>CRM</strong></td>
-                <td>Manage leads, customers, and sales pipeline</td>
+                <td>Track leads, customers, and follow-ups</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>Orders</strong></td>
-                <td>From quote to delivery confirmation</td>
+                <td>Handle orders from quote to delivery</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>Bookings</strong></td>
-                <td>Reservations, event planning, resource scheduling</td>
+                <td>Manage reservations and schedules</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>Scheduler</strong></td>
-                <td>Staff shifts, job assignments, availability</td>
+                <td>Plan shifts, assignments, and availability</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>Delivery</strong></td>
-                <td>Routes, driver tracking, delivery confirmation</td>
+                <td>Manage routes and delivery confirmation</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>Payments</strong></td>
-                <td>Mobile Money, invoicing, payment tracking</td>
+                <td>Track Mobile Money, invoices, and payments</td>
                 <td>GH₵ 1,800</td>
               </tr>
               <tr>
                 <td><strong>HR & Payroll</strong></td>
-                <td>Employee records, payroll, attendance</td>
+                <td>Manage staff records, payroll, and attendance</td>
                 <td>GH₵ 2,500</td>
               </tr>
               <tr>
                 <td><strong>Integrations</strong></td>
-                <td>Connect QuickBooks, Xero, WhatsApp Business API</td>
+                <td>Connect tools like QuickBooks, Xero, and WhatsApp</td>
                 <td>GH₵ 2,200</td>
               </tr>
               <tr>
                 <td><strong>Analytics</strong></td>
-                <td>Advanced reporting, forecasting, BI exports</td>
+                <td>Advanced reporting and planning insights</td>
                 <td>GH₵ 2,200</td>
               </tr>
               <tr className="custom-row">
                 <td><strong>Custom Module</strong></td>
-                <td>Built specifically for your unique workflow</td>
+                <td>Built for your unique business process</td>
                 <td>GH₵ 2,500 - 5,500</td>
               </tr>
             </tbody>
@@ -507,7 +507,7 @@ export default function Pricing() {
           <p className="eyebrow">What Comes After</p>
           <h2>Ongoing costs explained.</h2>
           <p className="lead">
-            No surprises. Here's what you'll pay annually.
+            No surprises. Here is what you may pay each year.
           </p>
         </div>
 
@@ -526,7 +526,7 @@ export default function Pricing() {
           <div className="cost-card reveal" data-scroll style={{ "--delay": "180ms" }}>
             <h4>Maintenance & Updates</h4>
             <div className="cost-price">GH₵ 1,500 - 3,000/year</div>
-            <p>Optional support plan for bug fixes, security updates, and minor changes.</p>
+            <p>Optional support plan for fixes, updates, and small changes.</p>
             <ul>
               <li>Basic plan: GH₵ 1,500/year</li>
               <li>Premium plan: GH₵ 3,000/year</li>
@@ -537,7 +537,7 @@ export default function Pricing() {
           <div className="cost-card reveal" data-scroll style={{ "--delay": "240ms" }}>
             <h4>Mobile Money Fees</h4>
             <div className="cost-price">2.5% per transaction</div>
-            <p>Only if you accept online payments. Standard industry rate.</p>
+            <p>Only applies when you accept online payments.</p>
             <ul>
               <li>MTN Mobile Money: 2.5%</li>
               <li>Vodafone Cash: 2.5%</li>
@@ -564,7 +564,7 @@ export default function Pricing() {
             </div>
           </div>
           <p className="example-note">
-            That's <strong>GH₵ 200/month</strong> — less than a staff member's lunch allowance.
+            That is about <strong>GH₵ 200/month</strong> in this example.
           </p>
         </div>
       </section>
@@ -575,14 +575,14 @@ export default function Pricing() {
       <section className="page payment-options-section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Payment Plans</p>
-          <h2>Pay in stages or all at once.</h2>
+          <h2>Pay in stages or pay all at once.</h2>
         </div>
 
         <div className="payment-grid">
           <div className="payment-card reveal" data-scroll style={{ "--delay": "120ms" }}>
             <h4>Pay in Full</h4>
             <p className="payment-discount">Save 5%</p>
-            <p>Pay 100% upfront and get 5% discount on total project cost.</p>
+            <p>Pay 100% upfront and get a 5% discount on your project cost.</p>
             <div className="payment-example">
               <strong>Example:</strong><br />
               GH₵ 8,500 project → Pay GH₵ 8,075
@@ -593,7 +593,7 @@ export default function Pricing() {
             <div className="recommended-badge">Recommended</div>
             <h4>Pay in Stages</h4>
             <p className="payment-discount">Most common</p>
-            <p>Split payment into 3 installments tied to milestones.</p>
+            <p>Split payment into 3 parts linked to clear project milestones.</p>
             <div className="payment-stages">
               <div className="stage">
                 <span className="stage-percent">40%</span>
@@ -613,7 +613,7 @@ export default function Pricing() {
           <div className="payment-card reveal" data-scroll style={{ "--delay": "240ms" }}>
             <h4>Monthly Plan</h4>
             <p className="payment-discount">Coming soon</p>
-            <p>Spread cost over 12 months. Available for projects above GH₵ 12,000.</p>
+            <p>Spread cost over 12 months for projects above GH₵ 12,000.</p>
             <div className="payment-example">
               <strong>Example:</strong><br />
               GH₵ 18,000 project → GH₵ 1,500/month for 12 months
@@ -628,7 +628,7 @@ export default function Pricing() {
       <section className="page comparison-section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Illustrative Comparison</p>
-          <h2>DIY tools vs a structured system.</h2>
+          <h2>Separate tools vs one connected system.</h2>
         </div>
 
         <div className="comparison-table-wrapper reveal" data-scroll style={{ "--delay": "120ms" }}>
@@ -648,13 +648,13 @@ export default function Pricing() {
               </tr>
               <tr>
                 <td><strong>Time to set up</strong></td>
-                <td>Ongoing (never done)</td>
-                <td>2-12 weeks (then done)</td>
+                <td>Ongoing and often unfinished</td>
+                <td>2-12 weeks then ready</td>
               </tr>
               <tr>
                 <td><strong>Data accuracy</strong></td>
-                <td>Manual entry errors</td>
-                <td>Automated, validated</td>
+                <td>More manual entry errors</td>
+                <td>Clear checks and cleaner records</td>
               </tr>
               <tr>
                 <td><strong>Real-time updates</strong></td>
@@ -674,17 +674,17 @@ export default function Pricing() {
               <tr>
                 <td><strong>Reports</strong></td>
                 <td>Manual creation</td>
-                <td>Auto-generated</td>
+                <td>Generated automatically</td>
               </tr>
               <tr>
                 <td><strong>Support</strong></td>
-                <td>YouTube tutorials</td>
+                <td>Self-service only</td>
                 <td>Dedicated support team</td>
               </tr>
               <tr>
                 <td><strong>Scalability</strong></td>
-                <td>Breaks at 50+ items</td>
-                <td>Scales to thousands</td>
+                <td>Gets harder as operations grow</td>
+                <td>Built to scale with your business</td>
               </tr>
               <tr className="total-row">
                 <td><strong>Illustrative 3-year spend</strong></td>
@@ -706,7 +706,7 @@ export default function Pricing() {
         </div>
 
         <p className="comparison-note reveal" data-scroll style={{ "--delay": "170ms" }}>
-          <strong>Planning takeaway:</strong> A structured system may cost more upfront but can reduce manual work and error risk over time.
+          <strong>Planning takeaway:</strong> A connected system may cost more upfront, but it can save time and reduce errors over the long term.
         </p>
       </section>
 
@@ -722,42 +722,42 @@ export default function Pricing() {
         <div className="faq-grid-two-col">
           <div className="faq-card reveal" data-scroll style={{ "--delay": "120ms" }}>
             <h4>Why one-time payment instead of monthly?</h4>
-            <p>You own the system. No monthly fees eating into profits. Pay once, use forever. We make money on support, not rent.</p>
+            <p>You pay once for setup and own your system. Optional support can be added later if you want it.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "170ms" }}>
             <h4>Can I start with Starter and upgrade later?</h4>
-            <p>Yes! Pay the difference between packages. We design everything to grow with you.</p>
+            <p>Yes. You can pay the difference between packages when you are ready to expand.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "220ms" }}>
             <h4>What if I only need one specific module?</h4>
-            <p>You still need the core (Website + Dashboard) first. Then add any module for GH₵ 1,800 each.</p>
+            <p>Most projects start with the core setup first, then extra modules can be added as needed.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "270ms" }}>
             <h4>Do you offer refunds?</h4>
-            <p>40% deposit is non-refundable once work starts. Remaining 60% is refundable before launch if you're not satisfied.</p>
+            <p>Once work begins, the initial deposit is non-refundable. Any remaining payment terms are agreed before launch.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "320ms" }}>
             <h4>What's included in "support"?</h4>
-            <p>Bug fixes, security updates, minor tweaks. Major new features or redesigns are billed separately.</p>
+            <p>Support includes fixes, updates, and small changes. Bigger new features are scoped separately.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "370ms" }}>
             <h4>Can I host it myself?</h4>
-            <p>Yes, if you have technical expertise. We provide the code and setup instructions. Saves hosting costs but you handle updates.</p>
+            <p>Yes, if your team can manage hosting. We can provide guidance, but your team handles ongoing upkeep.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "420ms" }}>
             <h4>Why is Enterprise pricing "custom"?</h4>
-            <p>Every enterprise has unique needs. We assess your requirements, data migration, integrations, and provide exact quote.</p>
+            <p>Large teams need different features and timelines, so we review your needs and give a clear custom quote.</p>
           </div>
 
           <div className="faq-card reveal" data-scroll style={{ "--delay": "470ms" }}>
             <h4>Do you offer discounts for NGOs or schools?</h4>
-            <p>Yes, 15% discount for registered non-profits and educational institutions. Contact us for details.</p>
+            <p>Yes. Registered non-profits and schools can request discounted pricing.</p>
           </div>
         </div>
       </section>
@@ -767,13 +767,13 @@ export default function Pricing() {
           ======================================== */}
       <section className="page cta reveal" data-scroll>
         <div className="cta-content">
-          <h2>Ready to invest in your business?</h2>
+          <h2>Ready to plan your system?</h2>
           <p className="lead">
-            Book a free consultation. We'll show you exactly what you need and what it costs.
+            Book a free consultation and we will show you what you need and what it will cost.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Get Your Custom Quote</PrimaryButton>
+          <PrimaryButton to="/contact">Get your custom quote</PrimaryButton>
           <Link className="button button-ghost" to="/configure">
             Build Your System
           </Link>

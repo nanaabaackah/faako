@@ -20,7 +20,7 @@ import "../styles/pages/CaseStudies.css";
 const scenarioBlueprints = [
   {
     id: "retail-baseline",
-    title: "Retail Inventory Control Baseline",
+    title: "Retail Stock Control Plan",
     industry: "Retail",
     icon: faStore,
     iconColor: "#FF6B35",
@@ -34,14 +34,14 @@ const scenarioBlueprints = [
       { label: "Data rhythm", value: "Daily", subtext: "opening and closing sync" },
       { label: "Rollout style", value: "Phased", subtext: "one branch at a time" },
     ],
-    timeline: "Typical: 4-6 weeks",
+    timeline: "Typical setup: 4-6 weeks",
     investment: "Estimate: GH₵ 9,600",
     thumbnail: "/imgs/case-studies/dashboard-case.png",
     featured: true,
   },
   {
     id: "distribution-blueprint",
-    title: "Distribution Visibility Blueprint",
+    title: "Distribution Visibility Plan",
     industry: "Distribution",
     icon: faTruckFast,
     iconColor: "#F7931E",
@@ -53,16 +53,16 @@ const scenarioBlueprints = [
     metrics: [
       { label: "Primary goal", value: "Clear handoffs", subtext: "warehouse to dispatch" },
       { label: "Data rhythm", value: "Live", subtext: "order and delivery status" },
-      { label: "Rollout style", value: "Pilot first", subtext: "largest warehouse first" },
+      { label: "How we start", value: "Pilot first", subtext: "largest warehouse first" },
     ],
-    timeline: "Typical: 6-9 weeks",
+    timeline: "Typical setup: 6-9 weeks",
     investment: "Estimate: GH₵ 18,600",
     thumbnail: "/imgs/case-studies/erp-case.png",
     featured: true,
   },
   {
     id: "events-planning",
-    title: "Events Scheduling Blueprint",
+    title: "Events Scheduling Plan",
     industry: "Events",
     icon: faGlassCheers,
     iconColor: "#9B59B6",
@@ -74,16 +74,16 @@ const scenarioBlueprints = [
     metrics: [
       { label: "Primary goal", value: "Conflict control", subtext: "avoid overlap" },
       { label: "Data rhythm", value: "Per booking", subtext: "inventory reservation checks" },
-      { label: "Rollout style", value: "Ops-led", subtext: "calendar process first" },
+      { label: "How we start", value: "Ops-led", subtext: "calendar process first" },
     ],
-    timeline: "Typical: 5-7 weeks",
+    timeline: "Typical setup: 5-7 weeks",
     investment: "Estimate: GH₵ 12,100",
     thumbnail: "/imgs/case-studies/booking-case.png",
     featured: false,
   },
   {
     id: "manufacturing-flow",
-    title: "Manufacturing Order Flow Blueprint",
+    title: "Manufacturing Order Flow Plan",
     industry: "Manufacturing",
     icon: faIndustry,
     iconColor: "#E74C3C",
@@ -95,16 +95,16 @@ const scenarioBlueprints = [
     metrics: [
       { label: "Primary goal", value: "Stage visibility", subtext: "raw to finished" },
       { label: "Data rhythm", value: "Shift-based", subtext: "floor updates" },
-      { label: "Rollout style", value: "Supervisor-led", subtext: "line-by-line adoption" },
+      { label: "How we start", value: "Supervisor-led", subtext: "line-by-line adoption" },
     ],
-    timeline: "Typical: 6-8 weeks",
+    timeline: "Typical setup: 6-8 weeks",
     investment: "Estimate: GH₵ 13,900",
     thumbnail: "/imgs/case-studies/dashboard-case.png",
     featured: false,
   },
   {
     id: "food-service-flow",
-    title: "Food Service Multi-Branch Blueprint",
+    title: "Food Service Multi-Branch Plan",
     industry: "Food & Beverage",
     icon: faUtensils,
     iconColor: "#27AE60",
@@ -116,16 +116,16 @@ const scenarioBlueprints = [
     metrics: [
       { label: "Primary goal", value: "Branch consistency", subtext: "menus + stock" },
       { label: "Data rhythm", value: "Daily", subtext: "prep and close cycles" },
-      { label: "Rollout style", value: "Branch waves", subtext: "one location each sprint" },
+      { label: "How we start", value: "Branch waves", subtext: "one location each sprint" },
     ],
-    timeline: "Typical: 5-7 weeks",
+    timeline: "Typical setup: 5-7 weeks",
     investment: "Estimate: GH₵ 13,900",
     thumbnail: "/imgs/case-studies/dashboard-case.png",
     featured: false,
   },
   {
     id: "services-ops",
-    title: "Professional Services Ops Blueprint",
+    title: "Professional Services Plan",
     industry: "Services",
     icon: faBriefcase,
     iconColor: "#3498DB",
@@ -135,11 +135,11 @@ const scenarioBlueprints = [
     challenge: "Client updates, follow-ups, and billing sit across disconnected apps.",
     solution: "Website + Dashboard + CRM + Scheduler + Payments",
     metrics: [
-      { label: "Primary goal", value: "Client follow-up", subtext: "pipeline + reminders" },
+      { label: "Primary goal", value: "Client follow-up", subtext: "reminders + next steps" },
       { label: "Data rhythm", value: "Weekly", subtext: "client health reports" },
-      { label: "Rollout style", value: "Team pod", subtext: "roll out by client pod" },
+      { label: "How we start", value: "Team pod", subtext: "roll out by client pod" },
     ],
-    timeline: "Typical: 4-6 weeks",
+    timeline: "Typical setup: 4-6 weeks",
     investment: "Estimate: GH₵ 15,700",
     thumbnail: "/imgs/case-studies/erp-case.png",
     featured: false,
@@ -175,29 +175,29 @@ export default function CaseStudies() {
     <section className="page case-studies-page page-stack">
       <section className="case-hero-v2">
         <div className="case-hero-content reveal" data-scroll>
-          <p className="eyebrow">Use-Case Scenarios</p>
+          <p className="eyebrow">Planning Scenarios</p>
           <h1>
-            Planning references for<br />
-            <span className="text-accent">startup-stage teams.</span>
+            Real planning examples for<br />
+            <span className="text-accent">growing teams.</span>
           </h1>
           <p className="lead">
-            Faako is still building its public track record, so this page shows
-            representative blueprints, not completed client case studies.
+            These are sample project plans based on common needs. They help you
+            estimate scope and budget before we start.
           </p>
         </div>
 
         <div className="case-hero-stats reveal" data-scroll style={{ "--delay": "120ms" }}>
           <div className="hero-stat reveal" data-scroll style={{ "--delay": "160ms" }}>
             <div className="stat-value">{scenarioBlueprints.length}</div>
-            <div className="stat-label">Scenario templates</div>
+            <div className="stat-label">Sample plans</div>
           </div>
           <div className="hero-stat reveal" data-scroll style={{ "--delay": "210ms" }}>
             <div className="stat-value">{industries.length}</div>
-            <div className="stat-label">Industries represented</div>
+            <div className="stat-label">Industries covered</div>
           </div>
           <div className="hero-stat reveal" data-scroll style={{ "--delay": "260ms" }}>
             <div className="stat-value">{featuredTemplates}</div>
-            <div className="stat-label">Starter templates</div>
+            <div className="stat-label">Featured plans</div>
           </div>
         </div>
       </section>
@@ -214,7 +214,7 @@ export default function CaseStudies() {
               onChange={(event) => setSelectedIndustry(event.target.value)}
               className="filter-select"
             >
-              <option value="all">All Industries</option>
+              <option value="all">All industries</option>
               {industries.map((industry) => (
                 <option key={industry} value={industry}>
                   {industry}
@@ -233,7 +233,7 @@ export default function CaseStudies() {
               onChange={(event) => setSelectedLocation(event.target.value)}
               className="filter-select"
             >
-              <option value="all">All Team Profiles</option>
+              <option value="all">All team profiles</option>
               {locations.map((location) => (
                 <option key={location} value={location}>
                   {location}
@@ -311,7 +311,7 @@ export default function CaseStudies() {
                     <span className="investment">{study.investment}</span>
                   </div>
                   <Link to="/configure" className="case-study-link">
-                    Configure this setup
+                    Plan this setup
                     <FontAwesomeIcon icon={faArrowRight} />
                   </Link>
                 </div>
@@ -337,32 +337,32 @@ export default function CaseStudies() {
       <section className="page impact-summary-section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Expected Impact Areas</p>
-          <h2>What these blueprints are designed to improve.</h2>
+          <h2>What these plans are designed to improve.</h2>
         </div>
 
         <div className="impact-grid">
           <div className="impact-card reveal" data-scroll style={{ "--delay": "120ms" }}>
             <div className="impact-number">Cleaner</div>
-            <div className="impact-label">Data handoffs</div>
+            <div className="impact-label">Team handovers</div>
             <p>Sales, stock, and delivery updates stay aligned.</p>
           </div>
 
           <div className="impact-card reveal" data-scroll style={{ "--delay": "180ms" }}>
             <div className="impact-number">Faster</div>
             <div className="impact-label">Weekly reporting</div>
-            <p>Reduce manual spreadsheet consolidation time.</p>
+            <p>Spend less time combining spreadsheets every week.</p>
           </div>
 
           <div className="impact-card reveal" data-scroll style={{ "--delay": "240ms" }}>
             <div className="impact-number">Live</div>
-            <div className="impact-label">Operational visibility</div>
+            <div className="impact-label">Daily visibility</div>
             <p>Managers see updates as teams complete work.</p>
           </div>
 
           <div className="impact-card reveal" data-scroll style={{ "--delay": "300ms" }}>
             <div className="impact-number">Phased</div>
-            <div className="impact-label">Rollout approach</div>
-            <p>Adopt module-by-module instead of a big-bang launch.</p>
+            <div className="impact-label">Launch approach</div>
+            <p>Adopt in steps instead of changing everything at once.</p>
           </div>
         </div>
       </section>
@@ -370,7 +370,7 @@ export default function CaseStudies() {
       <section className="page industries-served-section">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Who We Build For</p>
-          <h2>Common operating models we design for.</h2>
+          <h2>Common business types we support.</h2>
         </div>
 
         <div className="industries-served-grid">
@@ -395,7 +395,7 @@ export default function CaseStudies() {
           <div className="industry-served-card reveal" data-scroll style={{ "--delay": "270ms" }}>
             <FontAwesomeIcon icon={faIndustry} />
             <h4>Manufacturing</h4>
-            <p>Light production and assembly workflows</p>
+            <p>Light production and assembly teams</p>
           </div>
 
           <div className="industry-served-card reveal" data-scroll style={{ "--delay": "320ms" }}>
@@ -414,32 +414,32 @@ export default function CaseStudies() {
 
       <section className="page testimonials-quick-section">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Discovery Signals</p>
-          <h2>Common priorities teams bring to us.</h2>
+          <p className="eyebrow">Common Requests</p>
+          <h2>What teams usually ask us to fix first.</h2>
         </div>
 
         <div className="testimonials-quick-grid">
           <div className="testimonial-quick reveal" data-scroll style={{ "--delay": "120ms" }}>
-            <p>"We need one dashboard so our branches stop reporting different numbers."</p>
+            <p>"We need one dashboard so all branches report the same numbers."</p>
             <div className="testimonial-author">
-              <strong>Typical retail request</strong>
-              <span>Discovery calls</span>
+              <strong>Common retail request</strong>
+              <span>Planning calls</span>
             </div>
           </div>
 
           <div className="testimonial-quick reveal" data-scroll style={{ "--delay": "180ms" }}>
-            <p>"Delivery status and payments should be visible in the same workflow."</p>
+            <p>"Delivery updates and payments should be visible in one place."</p>
             <div className="testimonial-author">
-              <strong>Typical distribution request</strong>
-              <span>Discovery calls</span>
+              <strong>Common distribution request</strong>
+              <span>Planning calls</span>
             </div>
           </div>
 
           <div className="testimonial-quick reveal" data-scroll style={{ "--delay": "240ms" }}>
             <p>"We want bookings, stock, and team schedules connected before peak season."</p>
             <div className="testimonial-author">
-              <strong>Typical events request</strong>
-              <span>Discovery calls</span>
+              <strong>Common events request</strong>
+              <span>Planning calls</span>
             </div>
           </div>
         </div>
@@ -447,10 +447,10 @@ export default function CaseStudies() {
 
       <section className="page cta reveal" data-scroll>
         <div className="cta-content">
-          <h2>Need a plan tailored to your workflow?</h2>
+          <h2>Need a plan tailored to your business?</h2>
           <p className="lead">
-            We can map your actual process and turn one of these templates into
-            a delivery plan for your team.
+            We can map how your team works today and turn one of these sample
+            plans into a rollout plan for you.
           </p>
         </div>
         <div className="cta-actions">

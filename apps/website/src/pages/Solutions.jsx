@@ -36,18 +36,18 @@ export default function Solutions() {
           ======================================== */}
       <section className="solutions-hero-v2 before-after">
         <div className="hero-content reveal">
-          <p className="eyebrow">The Transformation</p>
+          <p className="eyebrow">How We Help</p>
           <h1>
-            Stop juggling five systems. {' '}<br />
-            <span className="text-accent">Run everything from one place.</span>
+            Stop jumping between tools.{" "} <br />
+            <span className="text-accent">Run your business from one place.</span>
           </h1>
           <p className="lead">
-          Stop losing time. Stop losing money. Stop losing your mind.
+          Less stress, fewer delays, and clearer daily work.
         </p>
         <div className="hero-actions">
-          <PrimaryButton to="/contact">Start Your Transformation</PrimaryButton>
+          <PrimaryButton to="/contact">Talk to our team</PrimaryButton>
           <Link className="button button-ghost" to="/configure">
-            Build Your Blueprint
+            Plan your setup
           </Link>
         </div>
       </div>
@@ -56,9 +56,9 @@ export default function Solutions() {
         {/* Before State */}
         <div className="before-state">
           <div className="state-label state-label--before">Before</div>
-          <h3 className="state-title">Disconnected tools</h3>
+          <h3 className="state-title">Too many disconnected tools</h3>
           <p className="state-subtitle">
-            Work is spread across chats, sheets, and memory.
+            Work is split across chats, spreadsheets, and memory.
           </p>
           <div className="chaos-items">
             <div className="chaos-item" style={{ '--delay': '0s' }}>
@@ -94,7 +94,7 @@ export default function Solutions() {
           </div>
           <div className="state-meta">
             <span>Slow updates</span>
-            <span>Missing records</span>
+            <span>Frequent errors</span>
           </div>
         </div>
 
@@ -108,7 +108,7 @@ export default function Solutions() {
           <div className="state-label state-label--after">After</div>
           <h3 className="state-title">One clear system</h3>
           <p className="state-subtitle">
-            Every team member sees the same live information in one place.
+            Everyone sees the same up-to-date information in one place.
           </p>
           <div className="unified-system">
             <div className="system-icon">
@@ -121,20 +121,20 @@ export default function Solutions() {
             <div className="system-benefits">
               <span>
                 <FontAwesomeIcon icon={faCheck} />
-                All data
+                One source of truth
               </span>
               <span>
                 <FontAwesomeIcon icon={faCheck} />
-                One place
+                Easier teamwork
               </span>
               <span>
                 <FontAwesomeIcon icon={faCheck} />
-                Real-time
+                Live updates
               </span>
             </div>
           </div>
           <div className="state-meta state-meta--after">
-            <span>Live dashboard</span>
+            <span>Shared dashboard</span>
             <span>Faster decisions</span>
           </div>
         </div>
@@ -146,10 +146,10 @@ export default function Solutions() {
           ======================================== */}
       <section className="page solutions-section" id="core-pillars">
         <div className="section-header reveal">
-          <p className="eyebrow">Three Things You Need</p>
-          <h2>Website. Operations. Reports.</h2>
+          <p className="eyebrow">Three Essentials</p>
+          <h2>Website. Daily operations. Clear reporting.</h2>
           <p className="lead">
-            When these three talk to each other, work gets easier.
+            When these three work together, your team moves with confidence.
           </p>
         </div>
         
@@ -158,20 +158,20 @@ export default function Solutions() {
           <article className="solution-pillar reveal" id="digital">
             <div className="pillar-head">
               <div className="pillar-icon">01</div>
-              <h3>Get Found & Get Paid</h3>
+              <h3>Help people find you and pay easily</h3>
             </div>
             <ul className="solution-list">
               <li>
                 <strong>Business website</strong>
-                Customers find you. Forms capture leads.
+                Customers can find you quickly and contact your team.
               </li>
               <li>
                 <strong>Payment options</strong>
-                Mobile Money. Bank transfers. Cash tracking.
+                Mobile Money, transfers, and cash records in one flow.
               </li>
               <li>
                 <strong>Lead capture</strong>
-                Every inquiry goes to WhatsApp or your CRM.
+                Every customer request is captured and followed up.
               </li>
             </ul>
           </article>
@@ -184,7 +184,7 @@ export default function Solutions() {
           >
             <div className="pillar-head">
               <div className="pillar-icon">02</div>
-              <h3>Track Everything</h3>
+              <h3>Stay on top of daily work</h3>
             </div>
             <ul className="solution-list">
               <li>
@@ -193,11 +193,11 @@ export default function Solutions() {
               </li>
               <li>
                 <strong>Orders & deliveries</strong>
-                Track from sale to delivery confirmation.
+                Follow each order from sale to delivery.
               </li>
               <li>
                 <strong>Money flow</strong>
-                Every sale, expense, payment — organized.
+                Keep sales, expenses, and payments organized.
               </li>
             </ul>
           </article>
@@ -210,7 +210,7 @@ export default function Solutions() {
           >
             <div className="pillar-head">
               <div className="pillar-icon">03</div>
-              <h3>See The Numbers</h3>
+              <h3>Understand your numbers</h3>
             </div>
             <ul className="solution-list">
               <li>
@@ -219,11 +219,11 @@ export default function Solutions() {
               </li>
               <li>
                 <strong>Performance tracking</strong>
-                Who's performing. What's selling.
+                See what is working and where to improve.
               </li>
               <li>
                 <strong>Weekly reports</strong>
-                Sent to WhatsApp every Monday morning.
+                Delivered to your team automatically every week.
               </li>
             </ul>
           </article>
@@ -244,8 +244,8 @@ export default function Solutions() {
             <p className="eyebrow">Works Everywhere</p>
             <h2>Built for desktop and mobile.</h2>
             <p className="lead">
-              Your team uses phones. Your manager uses a laptop.
-              Same system. Same data. Zero friction.
+              Your team can work from phones or laptops and still stay aligned.
+              One system, one set of numbers.
             </p>
           </div>
         </DeviceMergeLabeled>
@@ -254,17 +254,17 @@ export default function Solutions() {
         <div className="device-features reveal" style={{ "--delay": "200ms" }}>
           <article className="device-feature">
             <h4>Desktop Power</h4>
-            <p>Full dashboard. All reports. Complete control.</p>
+            <p>Full dashboard and reports for planning and oversight.</p>
           </article>
           
           <article className="device-feature">
             <h4>Mobile Freedom</h4>
-            <p>Update stock. Check orders. Approve payments. On the go.</p>
+            <p>Update stock, check orders, and handle approvals on the move.</p>
           </article>
           
           <article className="device-feature">
             <h4>Always Synced</h4>
-            <p>Change on phone? Desktop updates instantly. No delays.</p>
+            <p>Changes made on one device appear on all devices quickly.</p>
           </article>
         </div>
       </section>
@@ -282,25 +282,25 @@ export default function Solutions() {
           <article className="feature-card">
             <FontAwesomeIcon icon={faMoneyBillWave} />
             <h3>Mobile Money Built In</h3>
-            <p>MTN, Vodafone, AirtelTigo. Track every transaction.</p>
+            <p>Track incoming payments clearly across major providers.</p>
           </article>
 
           <article className="feature-card" style={{ "--delay": "120ms" }}>
             <FontAwesomeIcon icon={faHandshake} />
             <h3>WhatsApp Integration</h3>
-            <p>Alerts, reports, customer inquiries — all through WhatsApp.</p>
+            <p>Send updates and reports to your team on WhatsApp.</p>
           </article>
 
           <article className="feature-card" style={{ "--delay": "240ms" }}>
             <FontAwesomeIcon icon={faShield} />
-            <h3>Works Offline</h3>
-            <p>Internet down? Keep working. Syncs when you're back online.</p>
+            <h3>Keeps working in tough moments</h3>
+            <p>Even with unstable internet, your team can keep moving.</p>
           </article>
 
           <article className="feature-card" style={{ "--delay": "360ms" }}>
             <FontAwesomeIcon icon={faRoute} />
             <h3>Multi-Location Ready</h3>
-            <p>Accra, Kumasi, Takoradi — all locations in one view.</p>
+            <p>View all your branches in one dashboard.</p>
           </article>
         </div>
       </section>
@@ -310,32 +310,32 @@ export default function Solutions() {
           ======================================== */}
       <section className="page process-section">
         <div className="section-header reveal">
-          <p className="eyebrow">Our Process</p>
-          <h2>Fast setup. Clear steps.</h2>
+          <p className="eyebrow">How We Work</p>
+          <h2>Simple setup. Clear support.</h2>
         </div>
 
         <div className="process-steps reveal" style={{ "--delay": "100ms" }}>
           <div className="process-step">
             <div className="step-number">01</div>
             <div className="step-content">
-              <h4>We Visit</h4>
-              <p>Watch your workflow. Take notes.</p>
+              <h4>We visit</h4>
+              <p>We observe how your team works today.</p>
             </div>
           </div>
 
           <div className="process-step">
             <div className="step-number">02</div>
             <div className="step-content">
-              <h4>Design</h4>
-              <p>Build system that fits your process.</p>
+              <h4>We set up</h4>
+              <p>We configure the system to fit your business.</p>
             </div>
           </div>
 
           <div className="process-step">
             <div className="step-number">03</div>
             <div className="step-content">
-              <h4>Launch</h4>
-              <p>Train team. Go live. Stay for support.</p>
+              <h4>We launch and support</h4>
+              <p>We train your team, go live, and stay available.</p>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@ export default function Solutions() {
       <section className="page modules-showcase" id="modules">
         <div className="section-header reveal">
           <p className="eyebrow">Pick Your Modules</p>
-          <h2>Start with essentials. Add more as you grow.</h2>
+          <h2>Start with what you need now. Add more later.</h2>
         </div>
 
         <div className="module-grid reveal" style={{ "--delay": "100ms" }}>
@@ -450,23 +450,23 @@ export default function Solutions() {
       <section className="page proof-section">
         <div className="section-header reveal">
           <p className="eyebrow">Expected Impact</p>
-          <h2>What this setup is designed to improve.</h2>
+          <h2>What this setup helps you improve.</h2>
         </div>
 
         <div className="proof-stats reveal" style={{ "--delay": "100ms" }}>
           <div className="stat-card">
             <div className="stat-value">Fewer</div>
-            <div className="stat-label">Manual admin tasks</div>
+            <div className="stat-label">Time-consuming admin tasks</div>
           </div>
 
           <div className="stat-card">
             <div className="stat-value">Clearer</div>
-            <div className="stat-label">Order handoffs</div>
+            <div className="stat-label">Order handovers</div>
           </div>
 
           <div className="stat-card">
             <div className="stat-value">Live</div>
-            <div className="stat-label">Inventory visibility</div>
+            <div className="stat-label">Stock visibility</div>
           </div>
         </div>
 
@@ -483,7 +483,7 @@ export default function Solutions() {
       <section className="page pricing-preview">
         <div className="section-header reveal">
           <p className="eyebrow">Pricing</p>
-          <h2>Clear costs. No surprises.</h2>
+          <h2>Clear costs with no surprises.</h2>
         </div>
 
         <div className="pricing-cards reveal" style={{ "--delay": "120ms" }}>
@@ -524,7 +524,7 @@ export default function Solutions() {
             <ul className="pricing-features">
               <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
               <li><FontAwesomeIcon icon={faCheck} /> Multi-location</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Custom workflows</li>
+              <li><FontAwesomeIcon icon={faCheck} /> Custom setup</li>
               <li><FontAwesomeIcon icon={faCheck} /> Full support</li>
             </ul>
             <PrimaryButton to="/contact">Request Quote</PrimaryButton>
@@ -545,13 +545,13 @@ export default function Solutions() {
         <div className="cta-content">
           <h2>Ready to connect everything?</h2>
           <p className="lead">
-            Let's talk about what you need. No pressure. Just solutions.
+            Tell us what you need and we will guide you through the best next step.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Book Free Call</PrimaryButton>
+          <PrimaryButton to="/contact">Book a free call</PrimaryButton>
           <Link className="button button-ghost" to="/configure">
-            Build Your Blueprint
+            Plan your setup
           </Link>
         </div>
       </section>

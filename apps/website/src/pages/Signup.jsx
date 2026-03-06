@@ -13,19 +13,19 @@ const PACKAGE_OPTIONS = [
   {
     id: "starter",
     name: "Starter",
-    summary: "Best for simple launch needs.",
+    summary: "Good for a simple launch.",
     moduleLimit: 4
   },
   {
     id: "professional",
     name: "Professional",
-    summary: "Most popular for growing teams.",
+    summary: "Best for growing teams.",
     moduleLimit: 8
   },
   {
     id: "enterprise",
     name: "Enterprise",
-    summary: "Full custom scope and roll-out support.",
+    summary: "For larger custom projects and rollout support.",
     moduleLimit: null
   }
 ];
@@ -64,7 +64,7 @@ const MODULE_OPTIONS = [
   {
     id: "orders",
     name: "Orders",
-    description: "Quote-to-order process",
+    description: "Track orders from quote to delivery",
     minPackage: "professional"
   },
   {
@@ -76,7 +76,7 @@ const MODULE_OPTIONS = [
   {
     id: "dashboard",
     name: "Dashboard",
-    description: "Real-time operational overview",
+    description: "Live overview of daily operations",
     minPackage: "professional"
   },
   {
@@ -106,19 +106,19 @@ const MODULE_OPTIONS = [
   {
     id: "integrations",
     name: "Integrations",
-    description: "External systems and APIs",
+    description: "Connect with other business tools",
     minPackage: "enterprise"
   },
   {
     id: "analytics",
     name: "Advanced Analytics",
-    description: "Forecasting and deeper insight tools",
+    description: "Deeper reports and planning insights",
     minPackage: "enterprise"
   },
   {
     id: "support",
     name: "Support Desk",
-    description: "Customer issue and SLA tracking",
+    description: "Track customer issues and support requests",
     minPackage: "enterprise"
   }
 ];
@@ -250,7 +250,7 @@ export default function Signup() {
       if (moduleLimit !== null && current.length >= moduleLimit) {
         setStatus({
           state: "error",
-          message: `${activePackage.name} allows up to ${moduleLimit} modules.`
+          message: `${activePackage.name} allows up to ${moduleLimit} features.`
         });
         return current;
       }
@@ -321,7 +321,7 @@ export default function Signup() {
     if (selectedModules.length === 0) {
       setStatus({
         state: "error",
-        message: "Select at least one module before submitting."
+        message: "Select at least one feature before submitting."
       });
       return;
     }
@@ -373,7 +373,7 @@ export default function Signup() {
       setBrandSecondaryColorInput(DEFAULT_SECONDARY_COLOR);
       setStatus({
         state: "success",
-        message: result?.message || "Thanks. Your discovery form has been received."
+        message: result?.message || "Thanks. We have received your form."
       });
     } catch (error) {
       setStatus({
@@ -392,25 +392,25 @@ export default function Signup() {
         <section className="auth-suite-panel">
           <span className="auth-suite-kicker">
             <FontAwesomeIcon icon={faRocket} />
-            Client Discovery
+            Client Setup
           </span>
-          <h1>Share your business requirements.</h1>
+          <h1>Tell us what your business needs.</h1>
           <p className="lead">
-            Complete this intake once and Faako will prepare your proposal,
-            rollout plan, and implementation timeline.
+            Complete this form once and we will prepare your proposal,
+            launch plan, and timeline.
           </p>
           <ul className="auth-suite-points">
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
-              Capture your current workflow and communication channels
+              Share how your business runs today and how customers reach you
             </li>
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
-              Select package and module priorities
+              Choose your package and feature priorities
             </li>
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
-              Include logo and brand colors for setup readiness
+              Add your logo and brand colors for setup
             </li>
           </ul>
           <div className="auth-suite-tags">
@@ -420,11 +420,11 @@ export default function Signup() {
             </span>
             <span>
               <FontAwesomeIcon icon={faUsers} />
-              Workflow discovery
+              Daily process review
             </span>
             <span>
               <FontAwesomeIcon icon={faBolt} />
-              Module planning
+              Feature planning
             </span>
           </div>
         </section>
@@ -439,9 +439,9 @@ export default function Signup() {
                 loading="lazy"
               />
             </div>
-            <h2>Client Intake Form</h2>
+            <h2>Client setup form</h2>
             <p className="muted">
-              Tell us how your business currently runs and what you want to
+              Tell us how your business runs today and what you want to
               launch with Faako.
             </p>
 
@@ -604,11 +604,11 @@ export default function Signup() {
                 <h3>Current operations</h3>
 
                 <label>
-                  Describe your current workflow
+                  Describe your current process
                   <textarea
                     name="currentWorkflow"
                     rows={4}
-                    placeholder="How do you currently track sales, inventory, orders, and team tasks?"
+                    placeholder="How do you currently track sales, stock, orders, and team tasks?"
                     required
                   />
                 </label>
@@ -645,7 +645,7 @@ export default function Signup() {
                   <textarea
                     name="painPoints"
                     rows={3}
-                    placeholder="What is currently slowing your team down the most?"
+                    placeholder="What is slowing your team down the most right now?"
                   />
                 </label>
               </section>
@@ -688,8 +688,8 @@ export default function Signup() {
                   <legend>Modules you want</legend>
                   <p className="signup-help-text">
                     {moduleLimit === null
-                      ? `Select the modules you want for ${activePackage.name}.`
-                      : `Select up to ${moduleLimit} modules for ${activePackage.name}.`}
+                      ? `Select the features you want for ${activePackage.name}.`
+                      : `Select up to ${moduleLimit} features for ${activePackage.name}.`}
                   </p>
 
                   <div className="signup-module-grid">
@@ -724,7 +724,7 @@ export default function Signup() {
                           </span>
                           {unavailable ? (
                             <span className="signup-module-requirement">
-                              Requires {requiredPackageLabel}
+                              Available in {requiredPackageLabel}
                             </span>
                           ) : null}
                         </label>
@@ -747,7 +747,7 @@ export default function Signup() {
                   <textarea
                     name="projectDetails"
                     rows={3}
-                    placeholder="Share your top outcomes, constraints, or must-have features."
+                    placeholder="Share your top outcomes, limits, or must-have features."
                   />
                 </label>
 
@@ -756,7 +756,7 @@ export default function Signup() {
                   <textarea
                     name="additionalNotes"
                     rows={3}
-                    placeholder="Anything else we should know before proposal and onboarding?"
+                    placeholder="Anything else we should know before we send your proposal?"
                   />
                 </label>
               </section>
@@ -768,7 +768,7 @@ export default function Signup() {
               >
                 {status.state === "loading"
                   ? "Submitting..."
-                  : "Submit discovery form"}
+                  : "Submit form"}
               </button>
 
               {status.message ? (

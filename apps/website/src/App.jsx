@@ -56,11 +56,7 @@ const getDocumentTitle = (pathname) => {
 };
 
 const getStoredTheme = () => {
-  if (typeof window === "undefined") {
-    return null;
-  }
-  const stored = window.localStorage.getItem(themeStorageKey);
-  return stored === "light" || stored === "dark" ? stored : null;
+  return "light";
 };
 
 export default function App() {
@@ -183,7 +179,8 @@ export default function App() {
       parseDelayMs(node.style.getPropertyValue("--delay")) ||
       parseDelayMs(getComputedStyle(node).getPropertyValue("--delay"));
     const getFeatureVisualImage = (node) =>
-      node.classList.contains("feature-visual")
+      node.classList.contains("feature-visual") ||
+      node.classList.contains("hero-visual")
         ? node.querySelector("img")
         : null;
     const featureVisualEntries = nodes

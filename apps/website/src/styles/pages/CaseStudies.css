@@ -278,7 +278,7 @@
   font-size: clamp(1.9rem, 3.2vw, 3rem);
   line-height: 1.08;
   letter-spacing: -0.02em;
-  color: var(--bg);
+  color: var(--ink);
 }
 
 .scenario-copy p {
@@ -979,6 +979,5 @@
     justify-content: center;
   }
 }
-
 
 

@@ -410,6 +410,15 @@ export default function Header({
         <Link className="nav-link-static" to="/pricing" onClick={handleNavLinkClick}>
           Pricing
         </Link>
+
+        <div className="nav-mobile-links">
+          <Link className="nav-mobile-link" to="/login" onClick={handleNavLinkClick}>
+            Sign in
+          </Link>
+          <Link className="nav-mobile-link nav-mobile-link--cta" to="/signup" onClick={handleNavLinkClick}>
+            Get started free
+          </Link>
+        </div>
       </nav>
 
       <div className="nav-actions">

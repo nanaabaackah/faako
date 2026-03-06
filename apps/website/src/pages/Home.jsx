@@ -1,100 +1,237 @@
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { animate, createTimeline, stagger } from "animejs";
 import {
   faGlobe,
+  faArrowLeft,
   faArrowRight,
-  faHandshake,
   faHeadset,
-  faPhone,
   faShield,
   faCheck,
   faBoxesStacked,
   faChartLine,
-  faReceipt,
-  faBolt,
 } from "@fortawesome/free-solid-svg-icons";
 import PrimaryButton from "../components/PrimaryButton.jsx";
+import Threads from "../components/Threads.jsx";
 import WhatsApp from "../components/WhatsApp.jsx";
 import "../styles/pages/Home.css";
 import "../styles/pages/CaseStudies.css";
 
 const HERO_LINE_ONE = "From chaos to clarity.";
 const HERO_LINE_TWO = "One system changes everything.";
+const HERO_THREADS_COLOR = [35 / 255, 88 / 255, 66 / 255];
+const YEARLY_DISCOUNT_RATE = 0.2;
 
 const processSteps = [
   {
     id: "01",
     title: "Free Call",
-    description: "Tell us your goals and bottlenecks. No pressure.",
+    description: "Tell us what is slowing your business down.",
   },
   {
     id: "02",
     title: "We Visit",
-    description: "We visit your business and map your daily workflow.",
+    description: "We come to your business and see how work is done.",
   },
   {
     id: "03",
-    title: "Blueprint",
-    description: "You get a practical plan with clear scope and pricing.",
+    title: "Plan",
+    description: "You get a clear plan, timeline, and cost.",
   },
   {
     id: "04",
     title: "Build",
-    description: "We build, test, and share demos before launch.",
+    description: "We build your system and share progress as we go.",
   },
   {
     id: "05",
     title: "Train",
-    description: "Your team gets hands-on training until confident.",
+    description: "We train your team until they are comfortable.",
   },
   {
     id: "06",
     title: "Launch",
-    description: "Go live with local support from our Ghana team.",
+    description: "We launch with you and stay close for support.",
   },
 ];
 
+const howBoardPillMetrics = [
+  {
+    id: "stock-accuracy",
+    label: "Stock accuracy",
+    score: 96,
+    positionClass: "how-board-card--pill-a",
+  },
+  {
+    id: "on-time-fulfilment",
+    label: "On-time fulfilment",
+    score: 92,
+    positionClass: "how-board-card--pill-b",
+  },
+];
+const HOW_BOARD_PILL_DOT_COUNT = 12;
+
 const toolsTabContent = [
   {
-    id: "portals",
+    id: "personas",
+    icon: faGlobe,
     tabLabel: "Get Found & Get Paid",
     stepId: "01",
-    icon: faGlobe,   // already imported — represents online presence / discoverability
     title: "Get Found & Get Paid",
-    paragraph:
-      "Launch a clean website that brings in leads, takes payments, and sends enquiries straight to WhatsApp.",
+    description:
+      "Get a simple website that helps people find you, pay you, and contact you on WhatsApp.",
     image: "/imgs/elements/woman.png",
     alt: "Business website and booking flow",
   },
   {
-    id: "systems",
+    id: "scoring",
+    icon: faChartLine,
     tabLabel: "Track Everything",
     stepId: "02",
-    icon: faBoxesStacked,  // already imported — represents stock, inventory, operational items
     title: "Track Everything",
-    paragraph:
-      "See stock, cashflow, and order status in real time without juggling spreadsheets.",
+    description:
+      "Track stock, sales, and orders in one place without stress.",
     alt: "Inventory tracking dashboard",
   },
   {
-    id: "data",
+    id: "overlays",
+    icon: faBoxesStacked,
     tabLabel: "See The Numbers",
     stepId: "03",
-    icon: faChartLine,  // already imported — represents analytics, reports, performance
     title: "See The Numbers",
-    paragraph:
-      "Get simple daily, weekly, and monthly reports so you can act faster with confidence.",
+    description:
+      "See clear daily, weekly, and monthly reports so you can make better decisions.",
     alt: "Business reports dashboard",
   },
 ];
+
+const discoverySignalCards = [
+  {
+    id: "retail-flow",
+    tag: "R",
+    brand: "Retail Flow",
+    quote:
+      "Before Faako, our numbers were scattered. Now we can see what is happening every day.",
+    person: "Ama Mensah",
+    role: "Operations Lead",
+  },
+  {
+    id: "marketbase",
+    tag: "M",
+    brand: "Marketbase",
+    quote:
+      "The setup was simple, and our team started using it quickly.",
+    person: "Kojo Addo",
+    role: "Founder",
+  },
+  {
+    id: "origami-trade",
+    tag: "O",
+    brand: "Origami Trade",
+    quote:
+      "Our team now works from one place, and customers get faster service.",
+    person: "Eric Boateng",
+    role: "Sales Team",
+  },
+  {
+    id: "supply-hub",
+    tag: "S",
+    brand: "Supply Hub",
+    quote:
+      "I no longer chase updates all day. I can check everything in one dashboard.",
+    person: "Nana Asare",
+    role: "Store Manager",
+  },
+];
+
+const pricingPlans = [
+  {
+    id: "starter",
+    variantClass: "pricing-card--starter",
+    delay: "120ms",
+    name: "Website + Leads",
+    copy: "Best for small businesses starting their online setup.",
+    setupFee: 2500,
+    monthlyFee: 450,
+    cta: "Talk to us",
+    includesLabel: "Plan includes:",
+    ariaLabel: "Choose Website plus Leads plan and talk to us",
+    features: [
+      "Mobile website",
+      "Contact forms",
+      "WhatsApp integration",
+      "Instant enquiry alerts",
+      "3-month support",
+    ],
+  },
+  {
+    id: "featured",
+    variantClass: "pricing-card--featured",
+    delay: "180ms",
+    name: "Website + Dashboard",
+    copy: "Best for teams that want clear daily tracking.",
+    setupFee: 8500,
+    monthlyFee: 1200,
+    cta: "Talk to us",
+    includesLabel: "Everything in Website + Leads, plus:",
+    ariaLabel: "Choose Website plus Dashboard plan and talk to us",
+    isPopular: true,
+    features: [
+      "Sales tracking",
+      "Inventory management",
+      "Reports",
+      "Daily close support",
+      "6-month support",
+    ],
+  },
+  {
+    id: "scale",
+    variantClass: "pricing-card--scale",
+    delay: "240ms",
+    name: "Complete System",
+    copy: "Best for growing businesses with bigger needs.",
+    setupFee: 18000,
+    monthlyFee: 2600,
+    cta: "Request quote",
+    includesLabel: "Everything in Website + Dashboard, plus:",
+    ariaLabel: "Choose Complete System plan and request a quote",
+    features: [
+      "Multi-location support",
+      "Custom setup for your business",
+      "Mobile Money integrations",
+      "Priority support and training",
+      "12-month support",
+    ],
+  },
+];
+
+const formatGhs = (amount) => `GH₵ ${new Intl.NumberFormat("en-GH").format(amount)}`;
 
 export default function Home() {
   const [typedLineOne, setTypedLineOne] = useState("");
   const [typedLineTwo, setTypedLineTwo] = useState("");
   const [isTypingComplete, setIsTypingComplete] = useState(false);
+  const [billingCycle, setBillingCycle] = useState("yearly");
+  const discoveryTrackRef = useRef(null);
+
+  const isYearlyBilling = billingCycle === "yearly";
+  const getRecurringMonthlyFee = (monthlyFee) => (
+    isYearlyBilling
+      ? Math.round(monthlyFee * (1 - YEARLY_DISCOUNT_RATE))
+      : monthlyFee
+  );
+
+  const scrollDiscovery = (direction) => {
+    const track = discoveryTrackRef.current;
+    if (!track) return;
+    const firstCard = track.querySelector(".home-discovery-slide");
+    const scrollStep = firstCard
+      ? firstCard.getBoundingClientRect().width + 16
+      : 360;
+    track.scrollBy({ left: direction * scrollStep, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const prefersReducedMotion =
@@ -354,13 +491,20 @@ export default function Home() {
   const fixedFirstLineFontClass = "hero-type-line--font-colmeak";
 
   return (
-    <>
+    <div className="home-page">
       {/* ========================================
           HERO SECTION - MINIMAL
           ======================================== */}
       <section className="page hero hero-v2 hero-centered hero-parallax">
+        <div className="hero-threads-layer" aria-hidden="true">
+          <Threads
+            color={HERO_THREADS_COLOR}
+            amplitude={1}
+            distance={0}
+            enableMouseInteraction
+          />
+        </div>
         <div className="hero-content" data-scroll>
-          <p className="eyebrow">For Ghanaian Small Businesses</p>
           <h1 aria-label="From chaos to clarity. One system changes everything.">
             <span
               className={`hero-type-line hero-type-line--base ${
@@ -377,22 +521,60 @@ export default function Home() {
               ) : null}
               <br />
             </span>
-            <span
-              className="text-accent hero-type-line hero-type-line--accent hero-type-line--font-kaftan"
-            >
-              {typedLineTwo}
-              {typedLineOne.length === HERO_LINE_ONE.length && !isTypingComplete ? (
-                <span className="hero-type-cursor" aria-hidden="true">
-                  |
-                </span>
-              ) : null}
+            <span className="hero-type-line hero-type-line--accent-shell">
+              <span
+                className="text-accent hero-type-line hero-type-line--accent hero-type-line--font-kaftan"
+              >
+                {typedLineTwo}
+                {typedLineOne.length === HERO_LINE_ONE.length && !isTypingComplete ? (
+                  <span className="hero-type-cursor" aria-hidden="true">
+                    |
+                  </span>
+                ) : null}
+              </span>
             </span>
           </h1>
+
+          {/* IMAGE: Screenshot of dashboard showing Mobile Money, WhatsApp integration */}
+          <div className="hero-visual" data-scroll style={{ "--delay": "60ms" }}>
+            <img
+              src="/imgs/case-studies/case-study-mobdesk2.png"
+              alt="Business dashboard with local integrations"
+            />
+          </div>
           <div className="hero-actions">
             <PrimaryButton to="/contact">See How It Works <FontAwesomeIcon icon={faArrowRight} /></PrimaryButton>
             <Link className="button button-ghost" to="/contact">
               Talk to Us
             </Link>
+          </div>
+          <div className="hero-stats-block" data-scroll style={{ "--delay": "120ms" }}>
+            <p className="hero-stats-headline">
+              Real progress so far.
+            </p>
+            <div className="hero-stats">
+              <article className="hero-stat">
+                <span className="hero-stat-marker" aria-hidden="true" />
+                <div className="hero-stat-content">
+                  <p className="hero-stat-value">12+</p>
+                  <p className="hero-stat-label">businesses already using Faako</p>
+                </div>
+              </article>
+              <article className="hero-stat">
+                <span className="hero-stat-marker" aria-hidden="true" />
+                <div className="hero-stat-content">
+                  <p className="hero-stat-value">5+</p>
+                  <p className="hero-stat-label">projects delivered for local teams</p>
+                </div>
+              </article>
+              <article className="hero-stat">
+                <span className="hero-stat-marker" aria-hidden="true" />
+                <div className="hero-stat-content">
+                  <p className="hero-stat-value">100+</p>
+                  <p className="hero-stat-label">people in our growing community</p>
+                </div>
+              </article>
+            </div>
           </div>
         </div>
       </section>
@@ -403,45 +585,32 @@ export default function Home() {
       <section className="page trust-indicators">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Built for Ghana</p>
-          <h2>We know how business runs here.</h2>
+          <h2>We make daily business easier.</h2>
         </div>
 
-        {/* IMAGE: Screenshot of dashboard showing Mobile Money, WhatsApp integration */}
-        <div className="feature-visual reveal" data-scroll style={{ "--delay": "60ms" }}>
-          <img 
-            src="/imgs/case-studies/case-study-mobdesk2.png" 
-            alt="Business dashboard with local integrations"
-            style={{ 
-              width: '100%', 
-              maxWidth: '900px', 
-              margin: '0 auto'
-            }}
-          />
-        </div>
-        
         <div className="trust-grid reveal" data-scroll style={{ "--delay": "100ms" }}>
           <article className="trust-card">
             <span className="trust-icon">
-              <FontAwesomeIcon icon={faHandshake} />
+              <FontAwesomeIcon icon={faGlobe} />
             </span>
-            <h3>We visit first</h3>
-            <p>Watch how work flows, then design the system.</p>
+            <h3>Show us how you work</h3>
+            <p>We learn how your business runs today before we build anything.</p>
           </article>
           
           <article className="trust-card">
             <span className="trust-icon">
               <FontAwesomeIcon icon={faShield} />
             </span>
-            <h3>Clean setup</h3>
-            <p>Organize your Excel files. Launch with a staged handover plan.</p>
+            <h3>Fix what slows you down</h3>
+            <p>We remove weak spots early so your team can work with less stress.</p>
           </article>
           
           <article className="trust-card">
             <span className="trust-icon">
               <FontAwesomeIcon icon={faHeadset} />
             </span>
-            <h3>Local support</h3>
-            <p>WhatsApp support. Onsite visits. Right here in Ghana.</p>
+            <h3>Stay supported</h3>
+            <p>After launch, we stay close and help your team every step of the way.</p>
           </article>
         </div>
       </section>
@@ -471,7 +640,7 @@ export default function Home() {
                     <h2>Three things every business needs.</h2>
                   </div>
                   <p className="muted tab-lead">
-                    Built to help you sell better, stay organized, and make smarter decisions.
+                    Simple tools to help you sell more, stay organized, and stay in control.
                   </p>
                   <div className="tab-content-cards">
                     {toolsTabContent.map((tab) => (
@@ -482,10 +651,11 @@ export default function Home() {
                           </span>
                           <h3>{tab.title}</h3>
                         </div>
-                        <p className="muted">{tab.paragraph}</p>
+                        <p className="muted">{tab.description}</p>
                       </article>
                     ))}
                   </div>
+                  
                 </div>
               </div>
             </div>
@@ -494,143 +664,128 @@ export default function Home() {
       </section>
       
       {/* ========================================
-          HOW IT WORKS - MINIMAL STEPS
+          HOW IT WORKS - PERFORMANCE BOARD
           ======================================== */}
       <section className="page how-it-works">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Our Process</p>
-          <h2>Simple. Clear. No surprises.</h2>
-          <p className="muted">From first call to launch, every step is planned and practical.</p>
-        </div>
-
-        <div className="process-grid reveal" data-scroll style={{ "--delay": "60ms" }}>
-          {processSteps.slice(0, 4).map((step, index) => (
-            <article key={step.id} className={`process-card process-card--${index + 1}`}>
-              {index === 0 ? (
-                <div className="process-card-banner" aria-hidden="true">
-                  
-                  <span className="process-card-banner-icon ">
-                    <FontAwesomeIcon icon={faPhone} />
-                  </span>
-                  <div className="process-card-banner-copy">
-                    <strong>{step.title} Request</strong>
-                    <span>Quick response from our Ghana team</span>
+        <div className="how-it-works-layout reveal" data-scroll>
+          <div className="how-it-works-board">
+            <article className="how-board-card how-board-card--performance" aria-hidden="true">
+              <div className="how-board-performance-top">
+                <div className="how-board-profile">
+                  <span className="how-board-avatar">KL</span>
+                  <div>
+                    <span>User</span>
+                    <strong>Kojo Lartey</strong>
                   </div>
                 </div>
-              ) : null}
-              {index === 1 ? (
-                <div className="process-card-insights">
-                  <h3>Real-Time Insights</h3>
-                  <p>Track sales, stock levels, and cashflow in one live dashboard.</p>
-                  <div className="process-card-insights-visual" aria-hidden="true">
-                    <div className="process-insight-chip">
-                      <span className="process-insight-chip-dot process-icon-flash">
-                        <FontAwesomeIcon icon={faChartLine} />
-                      </span>
-                      <div className="process-insight-chip-copy">
-                        <strong>MoMo Payment Received</strong>
-                        <span>Customer payment posted</span>
-                      </div>
-                      <span className="process-insight-chip-amount">+GH₵ 420</span>
-                    </div>
-                    <div className="process-insight-phone">
-                      <div className="process-insight-phone-top">
-                        <span>Insights</span>
-                        <span>Today</span>
-                      </div>
-                      <div className="process-insight-phone-chart">
-                        <div className="process-insight-phone-amount">GH₵ 32,706</div>
-                        <div className="process-insight-bars">
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                          <span />
-                        </div>
-                      </div>
-                    </div>
-                    <div className="process-insight-stack">
-                      <div className="process-insight-card process-insight-card--a">
-                        <span className="process-insight-card-label">
-                          <FontAwesomeIcon icon={faReceipt} />
-                          <span>Cash at Hand</span>
-                        </span>
-                        <strong>GH₵ 18.4k</strong>
-                      </div>
-                      <div className="process-insight-card process-insight-card--b">
-                        <span className="process-insight-card-label">
-                          <FontAwesomeIcon icon={faChartLine} />
-                          <span>Sales Today</span>
-                        </span>
-                        <strong>GH₵ 13.1k</strong>
-                      </div>
-                    </div>
+                <div className="how-board-score">
+                  <span>Team usage</span>
+                  <strong>89%</strong>
+                </div>
+              </div>
+              <div className="how-board-performance-chart">
+                <p>End-of-day balance</p>
+                <div className="how-board-performance-bars">
+                  <div>
+                    <strong>82%</strong>
+                    <span>30 days</span>
+                  </div>
+                  <div>
+                    <strong>97%</strong>
+                    <span>7 days</span>
                   </div>
                 </div>
-              ) : index === 2 ? (
-                <div className="process-card-rewards">
-                  <div className="process-rewards-strip" aria-hidden="true">
-                    <div className="process-rewards-metric">
-                      <span className="process-rewards-icon process-rewards-icon--dark process-icon-bounce">
-                        <FontAwesomeIcon icon={faChartLine} />
-                      </span>
-                      <div className="process-rewards-copy">
-                        <span>Sales this month</span>
-                        <strong>GH₵ 52,250</strong>
-                      </div>
-                    </div>
-                    <div className="process-rewards-metric">
-                      <span className="process-rewards-icon process-rewards-icon--light process-icon-bounce process-icon-bounce--delay">
-                        <FontAwesomeIcon icon={faReceipt} />
-                      </span>
-                      <div className="process-rewards-copy">
-                        <span>Pending invoices</span>
-                        <strong>GH₵ 5,040</strong>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="process-rewards-pill" aria-hidden="true">
-                    <span className="process-rewards-pill-dot process-icon-flash" />
-                    <span>Collected today: GH₵ 1,154</span>
-                  </div>
-                  <h3>Cashflow Snapshot</h3>
-                  <p>See money in, money owed, and available cash before you decide.</p>
-                </div>
-              ) : index === 3 ? (
-                <div className="process-card-bills">
-                  <div className="process-bills-copy">
-                    <span className="process-bills-logo process-icon-bounce process-icon-bounce--delay" aria-hidden="true">
-                      <FontAwesomeIcon icon={faReceipt} />
-                    </span>
-                    <h3>Bill Reminders</h3>
-                    <p>Never miss supplier or utility payments with timely alerts.</p>
-                  </div>
-                  <div className="process-bills-invoice" aria-hidden="true">
-                    <span className="process-bills-status">Upcoming bill</span>
-                    <div className="process-bills-company">
-                      <span>Electricity Company of Ghana</span>
-                      <span className="process-bills-company-dot process-icon-flash">
-                        <FontAwesomeIcon icon={faBolt} />
-                      </span>
-                    </div>
-                    <p className="process-bills-subtext">Monthly electricity service</p>
-                    <div className="process-bills-amount">GH₵ 84.50</div>
-                    <div className="process-bills-meta">
-                      <span className="process-bills-button">View Details</span>
-                      <span>Due in 3 days</span>
-                    </div>
-                  </div>
-                </div>
-              ) : (
-                <p>{step.description}</p>
-              )}
-              {index === 0 ? (
-                <Link className="process-card-action" to="/contact">
-                  Get in Touch
-                </Link>
-              ) : null}
+              </div>
             </article>
-          ))}
+
+            {howBoardPillMetrics.map((metric) => {
+              const filledDots = Math.max(
+                0,
+                Math.min(
+                  HOW_BOARD_PILL_DOT_COUNT,
+                  Math.round((metric.score / 100) * HOW_BOARD_PILL_DOT_COUNT),
+                ),
+              );
+              return (
+                <article
+                  key={metric.id}
+                  className={`how-board-card how-board-card--pill ${metric.positionClass}`}
+                  aria-hidden="true"
+                >
+                  <span>{metric.label}</span>
+                  <strong>{metric.score}%</strong>
+                  <span className="how-board-pill-dots">
+                    {Array.from({ length: HOW_BOARD_PILL_DOT_COUNT }).map((_, index) => (
+                      <i key={`${metric.id}-dot-${index}`} className={index < filledDots ? "is-filled" : ""} />
+                    ))}
+                  </span>
+                </article>
+              );
+            })}
+
+            <article className="how-board-card how-board-card--metric how-board-card--metric-a" aria-hidden="true">
+              <strong>38,564</strong>
+              <span>Orders logged</span>
+            </article>
+
+            <article className="how-board-card how-board-card--metric how-board-card--metric-b" aria-hidden="true">
+              <strong>406</strong>
+              <span>Leads captured</span>
+            </article>
+
+            <article className="how-board-card how-board-card--interactions" aria-hidden="true">
+              <h3>Response time</h3>
+              <ul>
+                <li>
+                  <span>0 - 10 min</span>
+                  <div className="how-board-line">
+                    <i style={{ width: "55%" }} />
+                  </div>
+                  <strong>55%</strong>
+                </li>
+                <li>
+                  <span>10 - 30 min</span>
+                  <div className="how-board-line">
+                    <i style={{ width: "34%" }} />
+                  </div>
+                  <strong>34%</strong>
+                </li>
+                <li>
+                  <span>30+ min</span>
+                  <div className="how-board-line">
+                    <i style={{ width: "11%" }} />
+                  </div>
+                  <strong>11%</strong>
+                </li>
+              </ul>
+            </article>
+
+            <article className="how-board-card how-board-card--workspace" aria-hidden="true">
+              <div className="how-board-workspace-title">
+                <span className="how-board-workspace-badge">SO</span>
+                <strong>Store team</strong>
+              </div>
+              <div className="how-board-workspace-metrics">
+                <div>
+                  <strong>48</strong>
+                  <span>Team members</span>
+                </div>
+                <div>
+                  <strong>4,238</strong>
+                  <span>Orders processed</span>
+                </div>
+                <div>
+                  <strong>GHS 238k</strong>
+                  <span>Revenue tracked</span>
+                </div>
+              </div>
+              <p>+12 branches live</p>
+            </article>
+
+            <div className="how-board-core">
+              <h3>Track leads, stock, sales, and service in one clear system.</h3>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -639,63 +794,104 @@ export default function Home() {
           PRICING - CLEAN & SIMPLE
           ======================================== */}
       <section className="page pricing-preview">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Pricing</p>
-          <h2>Three packages. Clear costs.</h2>
+        <div className="section-header pricing-heading reveal" data-scroll>
+          <span className="pricing-eyebrow-chip">Pricing</span>
+          <h2>Choose a plan that fits your needs</h2>
+          <p className="pricing-lead">Each plan has a one-time setup fee and a monthly fee.</p>
         </div>
 
-        <div className="pricing-cards reveal" data-scroll style={{ "--delay": "120ms" }}>
-          <div className="pricing-card reveal" data-scroll>
-            <h3>Website + Leads</h3>
-            <div className="price-tag">
-              <span className="price">GH₵ 2,500</span>
-              <span className="period">starting</span>
-            </div>
-            <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Mobile website</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Contact forms</li>
-              <li><FontAwesomeIcon icon={faCheck} /> WhatsApp integration</li>
-              <li><FontAwesomeIcon icon={faCheck} /> 3-month support</li>
-            </ul>
-            <p className="ideal-for"><strong>For:</strong> New businesses</p>
-            <PrimaryButton to="/contact">Get Started</PrimaryButton>
-          </div>
-
-          <div className="pricing-card featured reveal" data-scroll style={{ "--delay": "180ms" }}>
-            <span className="badge">Most Popular</span>
-            <h3>Website + Dashboard</h3>
-            <div className="price-tag">
-              <span className="price">GH₵ 8,500</span>
-              <span className="period">starting</span>
-            </div>
-            <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Sales tracking</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Inventory management</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Reports</li>
-              <li><FontAwesomeIcon icon={faCheck} /> 6-month support</li>
-            </ul>
-            <p className="ideal-for"><strong>For:</strong> Retail & distributors</p>
-            <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
-          </div>
-
-          <div className="pricing-card reveal" data-scroll style={{ "--delay": "240ms" }}>
-            <h3>Complete System</h3>
-            <div className="price-tag">
-              <span className="price">Custom</span>
-              <span className="period">GH₵ 18k+</span>
-            </div>
-            <ul className="pricing-features">
-              <li><FontAwesomeIcon icon={faCheck} /> Everything above</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Multi-location</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Custom workflows</li>
-              <li><FontAwesomeIcon icon={faCheck} /> Mobile Money</li>
-              <li><FontAwesomeIcon icon={faCheck} /> 12-month support</li>
-            </ul>
-            <p className="ideal-for"><strong>For:</strong> Growing teams</p>
-            <PrimaryButton to="/contact">Request Quote</PrimaryButton>
+        <div className="pricing-switch reveal" data-scroll style={{ "--delay": "80ms" }}>
+          <div className="pricing-switch-shell" role="group" aria-label="Pricing mode">
+            <button
+              type="button"
+              className={`pricing-switch-option${billingCycle === "monthly" ? " is-active" : ""}`}
+              onClick={() => setBillingCycle("monthly")}
+              aria-pressed={billingCycle === "monthly"}
+            >
+              Monthly
+            </button>
+            <button
+              type="button"
+              className={`pricing-switch-option${billingCycle === "yearly" ? " is-active" : ""}`}
+              onClick={() => setBillingCycle("yearly")}
+              aria-pressed={billingCycle === "yearly"}
+            >
+              Yearly
+              <span>-20%</span>
+            </button>
           </div>
         </div>
+
+        <div className="pricing-cards pricing-cards--comparison reveal" data-scroll style={{ "--delay": "120ms" }}>
+          {pricingPlans.map((plan) => {
+            const recurringMonthlyFee = getRecurringMonthlyFee(plan.monthlyFee);
+            const yearlyRecurringTotal = recurringMonthlyFee * 12;
+
+            return (
+              <Link
+                key={plan.id}
+                to="/contact"
+                className={`pricing-card ${plan.variantClass} pricing-card-link reveal`}
+                data-scroll
+                style={{ "--delay": plan.delay }}
+                aria-label={plan.ariaLabel}
+              >
+                <div className="pricing-card-top">
+                  {plan.isPopular ? <span className="badge">Most Popular</span> : null}
+                  <h3 className="pricing-card-name">{plan.name}</h3>
+                  <p className="pricing-card-copy">{plan.copy}</p>
+                </div>
+                <div className="pricing-card-body">
+                  <div className="price-tag">
+                    <div className="recurring-fee-row">
+                      <span className="price">{formatGhs(recurringMonthlyFee)}</span>
+                      <span className="period">/ month</span>
+                    </div>
+                    <span className="billing-note">
+                      {isYearlyBilling
+                        ? `Billed yearly at ${formatGhs(yearlyRecurringTotal)}/year`
+                        : "Billed monthly"}
+                    </span>
+                  </div>
+                  <span className="pricing-includes">{plan.includesLabel}</span>
+                  <ul className="pricing-features">
+                    {plan.features.map((feature) => (
+                      <li key={feature}>
+                        <FontAwesomeIcon icon={faCheck} /> {feature}
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="pricing-card-foot">
+                    <p className="pricing-setup-note">One-time setup: {formatGhs(plan.setupFee)}</p>
+                    <span className="pricing-card-cta pricing-card-cta-label">{plan.cta}</span>
+                  </div>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+
+        <Link
+          className="pricing-enterprise pricing-enterprise-link reveal"
+          to="/contact"
+          data-scroll
+          style={{ "--delay": "180ms" }}
+          aria-label="Contact sales for enterprise plan"
+        >
+          <div className="pricing-enterprise-main">
+            <h3>Enterprise</h3>
+            <p>A custom setup and monthly plan based on your business size and needs.</p>
+            <span className="pricing-enterprise-cta pricing-card-cta-label">Contact sales</span>
+          </div>
+          <ul className="pricing-enterprise-points">
+            <li><FontAwesomeIcon icon={faCheck} /> All features your business needs</li>
+            <li><FontAwesomeIcon icon={faCheck} /> Faster support response</li>
+            <li><FontAwesomeIcon icon={faCheck} /> Team training and refresh sessions</li>
+            <li><FontAwesomeIcon icon={faCheck} /> Optional managed hosting</li>
+            <li><FontAwesomeIcon icon={faCheck} /> Flexible billing terms</li>
+            <li><FontAwesomeIcon icon={faCheck} /> Dedicated account lead</li>
+          </ul>
+        </Link>
       </section>
 
       {/* ========================================
@@ -703,9 +899,9 @@ export default function Home() {
           ======================================== */}
       <section className="page case-studies">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Sample Scenarios</p>
-          <h2>Preview how your setup could look.</h2>
-          <p className="muted">Two practical views of how teams can plan work and monitor activity in real time.</p>
+          <p className="eyebrow">Examples</p>
+          <h2>See what your setup can look like.</h2>
+          <p className="muted">Two simple examples of how teams can plan work and track progress.</p>
         </div>
 
         <div className="scenario-grid reveal" data-scroll>
@@ -734,8 +930,8 @@ export default function Home() {
             </div>
             <div className="scenario-copy">
               <span className="scenario-tag">Feature for</span>
-              <h3>Project Schedule Overview</h3>
-              <p>Plan projects by day, assign work clearly, and keep teams aligned.</p>
+              <h3>Project schedule view</h3>
+              <p>Plan each day, assign tasks, and keep everyone aligned.</p>
             </div>
           </article>
 
@@ -767,8 +963,8 @@ export default function Home() {
             </div>
             <div className="scenario-copy">
               <span className="scenario-tag">Feature for</span>
-              <h3>Activity Overview in the Project Management System</h3>
-              <p>Monitor progress, compare activity by period, and spot trends instantly.</p>
+              <h3>Activity view</h3>
+              <p>See progress over time and spot delays early.</p>
             </div>
           </article>
         </div>
@@ -778,56 +974,58 @@ export default function Home() {
           DISCOVERY SIGNALS
           ======================================== */}
       <section className="page home-discovery">
-        <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">Discovery Signals</p>
-          <h2>Patterns we keep seeing in growing Ghanaian teams.</h2>
-          <p className="muted">No testimonials yet. These are the recurring requests we hear on calls.</p>
+        <div className="home-discovery-header reveal" data-scroll>
+          <div className="home-discovery-heading">
+            <p className="eyebrow">Customer Stories</p>
+            <h2>Hear from people using Faako.</h2>
+          </div>
+          <div className="home-discovery-controls" aria-label="Scroll discovery signals">
+            <button
+              type="button"
+              className="home-discovery-nav"
+              onClick={() => scrollDiscovery(-1)}
+              aria-label="Previous signals"
+            >
+              <FontAwesomeIcon icon={faArrowLeft} />
+            </button>
+            <button
+              type="button"
+              className="home-discovery-nav"
+              onClick={() => scrollDiscovery(1)}
+              aria-label="Next signals"
+            >
+              <FontAwesomeIcon icon={faArrowRight} />
+            </button>
+          </div>
         </div>
 
-        <div className="home-discovery-layout reveal" data-scroll style={{ "--delay": "80ms" }}>
-          <article className="home-discovery-card home-discovery-card--feature">
-            <span className="home-discovery-pill">Most Frequent Signal</span>
-            <h3>Teams want one place to track sales, stock, and payments.</h3>
-            <p>
-              Discovery calls usually start with scattered WhatsApp updates, spreadsheets, and paper records.
-            </p>
-            <div className="home-discovery-metrics">
-              <span><strong>Top request</strong> Daily reporting by close of business</span>
-              <span><strong>Top blocker</strong> Manual reconciliation and follow-ups</span>
-            </div>
-          </article>
-
-          <div className="home-discovery-side">
-            <article className="home-discovery-card home-discovery-card--compact">
-              <p className="home-discovery-quote">
-                Need: clearer handover so staff can follow one process without constant owner escalation.
-              </p>
-              <div className="home-discovery-meta">
-                <strong>Common in retail and distribution</strong>
-                <span>Operations signal</span>
-              </div>
-            </article>
-
-            <article className="home-discovery-card home-discovery-card--compact">
-              <p className="home-discovery-quote">
-                Need: reliable cashflow visibility before making stock, payroll, and supplier decisions.
-              </p>
-              <div className="home-discovery-meta">
-                <strong>Common in service businesses</strong>
-                <span>Finance signal</span>
-              </div>
-            </article>
+        <div className="home-discovery-carousel reveal" data-scroll style={{ "--delay": "80ms" }}>
+          <div className="home-discovery-track" ref={discoveryTrackRef}>
+            {discoverySignalCards.map((card) => (
+              <article key={card.id} className="home-discovery-slide">
+                <div className="home-discovery-slide-brand">
+                  <span className="home-discovery-brand-mark" aria-hidden="true">
+                    {card.tag}
+                  </span>
+                  <span className="home-discovery-brand-name">{card.brand}</span>
+                </div>
+                <p className="home-discovery-slide-quote">"{card.quote}"</p>
+                <div className="home-discovery-slide-person">
+                  <span className="home-discovery-person-avatar" aria-hidden="true">
+                    {card.person
+                      .split(" ")
+                      .map((part) => part[0])
+                      .join("")
+                      .slice(0, 2)}
+                  </span>
+                  <div className="home-discovery-person-meta">
+                    <strong>{card.person}</strong>
+                    <span>{card.role}</span>
+                  </div>
+                </div>
+              </article>
+            ))}
           </div>
-
-          <article className="home-discovery-card home-discovery-card--proof">
-            <p className="home-discovery-proof-title">Most requested priorities before build starts</p>
-            <div className="home-discovery-tags" aria-label="Common discovery priorities">
-              <span>Clean dashboard visibility</span>
-              <span>Simpler day-end workflow</span>
-              <span>Less manual reconciliation</span>
-              <span>Local support after launch</span>
-            </div>
-          </article>
         </div>
       </section>
 
@@ -837,47 +1035,46 @@ export default function Home() {
       <section className="page home-faq">
         <div className="home-faq-shell reveal" data-scroll>
           <div className="home-faq-intro">
-            <p className="eyebrow">FAQ</p>
-            <h2>Questions people ask before we start.</h2>
-            <p className="muted">Clear answers on timing, scope, migration, and support.</p>
-            <div className="home-faq-highlights" aria-label="What to expect">
-              <span>
-                <FontAwesomeIcon icon={faCheck} />
-                Onsite discovery in Ghana
-              </span>
-              <span>
-                <FontAwesomeIcon icon={faCheck} />
-                Phased rollout you can grow into
-              </span>
-              <span>
-                <FontAwesomeIcon icon={faCheck} />
-                Local post-launch support
-              </span>
-            </div>
-            <Link className="button button-ghost home-faq-cta" to="/contact">
-              Talk to our team <FontAwesomeIcon icon={faArrowRight} />
+            <h2>Questions all resolved in one place</h2>
+            <Link className="button button-primary home-faq-cta" to="/contact">
+              Get Started Free
             </Link>
           </div>
 
           <div className="home-faq-list">
             <details className="home-faq-item" open>
-              <summary>How long does a typical project take?</summary>
-              <p>Websites are usually 2-4 weeks. Dashboards are 4-6 weeks. Full systems can run 6-10 weeks.</p>
+              <summary>Is Faako secure?</summary>
+              <p>
+                Yes. We use strong security and regular backups to keep your records safe.
+              </p>
             </details>
 
             <details className="home-faq-item">
-              <summary>Can we start with one part and expand later?</summary>
-              <p>Yes. Most teams start with website and lead flow, then add operations and reporting modules.</p>
+              <summary>Who is Faako for?</summary>
+              <p>
+                Faako is for small and growing businesses in Ghana that want to run things in one place.
+              </p>
             </details>
 
             <details className="home-faq-item">
-              <summary>Do you work with our current Excel and records?</summary>
-              <p>Yes. We clean, map, and migrate your existing data so your team keeps history and context.</p>
+              <summary>Do you charge any hidden fees?</summary>
+              <p>
+                No. Pricing is scoped upfront and shared clearly before work starts, so you know exactly what is included.
+              </p>
             </details>
 
             <details className="home-faq-item">
-              <summary>What support do we get after launch?</summary>
-              <p>You get local support for fixes, staff guidance, and ongoing improvements based on real usage.</p>
+              <summary>How long does it take to set up?</summary>
+              <p>
+                Most website projects take 2-4 weeks. Full system setups usually take 4-10 weeks.
+              </p>
+            </details>
+
+            <details className="home-faq-item">
+              <summary>Can you connect our current tools and records?</summary>
+              <p>
+                Yes. We can move your current records and connect them into your new system.
+              </p>
             </details>
           </div>
         </div>
@@ -888,15 +1085,15 @@ export default function Home() {
           ======================================== */}
       <section className="page cta cta-compact reveal" data-scroll>
         <div className="cta-content">
-          <h2>Stop running in pieces.</h2>
-          <p className="lead">One system. Everything connected.</p>
+          <h2>Run your business with calm and clarity.</h2>
+          <p className="lead">One place for everything important.</p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Start Free Conversation</PrimaryButton>
+          <PrimaryButton to="/contact">Book a free call</PrimaryButton>
         </div>
       </section>
       
       <WhatsApp />
-    </>
+    </div>
   );
 }

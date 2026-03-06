@@ -26,10 +26,10 @@ export default function About() {
       <section className="about-hero split">
         <div className="about-hero-copy reveal" style={{ "--delay": "0ms" }}>
           <p className="eyebrow">About Faako</p>
-          <h1>Ghanaian business deserves better. So we built it.</h1>
+          <h1>Ghanaian businesses deserve systems that make work easier.</h1>
           <p className="lead">
-            Built by people who know the market and
-            exactly what it takes to scale a business with the right systems.
+            We are a local team building practical tools for growing businesses
+            that want clarity, speed, and reliable support.
           </p>
           <div className="cta-actions">
             <PrimaryButton to="/contact">Let's Talk</PrimaryButton>
@@ -47,35 +47,35 @@ export default function About() {
       <section className="section origin-story section-seam-top section-surface-brown section-seam-bottom">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">How It All Started</p>
-          <h2>Born out of frustration. Fuelled by ambition.</h2>
+          <h2>We started with one real business problem.</h2>
         </div>
 
         <div className="split reveal" data-scroll style={{ "--delay": "100ms" }}>
           <div className="story-copy">
             <p className="story-lead">
-              Faako started inside a kids party rental business in Ghana. The
-              pain was simple: stock never matched, and the tools made it worse.
+              Faako began inside a Ghanaian party rental business. Stock records
+              were often wrong, and daily work was harder than it should have been.
             </p>
             <div className="story-grid">
               <article className="story-card">
-                <h3>Manual stock counts</h3>
+                <h3>Manual stock checks</h3>
                 <p>
-                  Items were tracked by hand and counted every month (sometimes
-                  once a year), so the numbers were always behind reality.
+                  Items were written down by hand and counted late, so teams
+                  could not trust what was available.
                 </p>
               </article>
               <article className="story-card">
-                <h3>Spreadsheet bottleneck</h3>
+                <h3>Spreadsheet stress</h3>
                 <p>
-                  Inventory lived in a clunky Excel sheet that was hard for team
-                  members with little to no computer literacy.
+                  One spreadsheet carried too much weight and was difficult for
+                  many team members to use confidently.
                 </p>
               </article>
               <article className="story-card">
-                <h3>No-fit enterprise tools</h3>
+                <h3>Tools that did not fit</h3>
                 <p>
-                  The big platforms were too expensive, too complex, and built
-                  for elsewhere — not for how Ghanaian businesses actually run.
+                  Most big platforms were costly and complex, and they did not
+                  match how businesses here actually operate.
                 </p>
               </article>
             </div>
@@ -102,11 +102,10 @@ export default function About() {
       <section className="section mission">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What We're Really Here For</p>
-          <h2>One dashboard. One truth. Zero confusion.</h2>
+          <h2>One shared dashboard. Clear decisions every day.</h2>
           <p className="lead">
-            When your whole team sees the same numbers at the same time — no more
-            "let me check and get back to you," no more guessing where the cedis
-            went. That's the power move.
+            When everyone sees the same information at the same time, work gets
+            calmer and faster. Fewer mistakes. Better decisions.
           </p>
         </div>
 
@@ -115,33 +114,30 @@ export default function About() {
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faMapMarkerAlt} />
             </div>
-            <h3>Ghana first. Always.</h3>
+            <h3>Built for Ghana</h3>
             <p className="muted">
-              Mobile Money? Built in. WhatsApp? Connected. Local compliance?
-              Handled. We design for how business actually runs here — not some
-              textbook version of it.
+              Mobile Money, WhatsApp updates, and local business needs are built
+              in from day one.
             </p>
           </article>
           <article className="feature-card reveal" data-scroll style={{ "--delay": "120ms" }}>
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faUsers} />
             </div>
-            <h3>Made for the whole team</h3>
+            <h3>Made for every team member</h3>
             <p className="muted">
-              The finance person, the warehouse guy, the driver checking stock on
-              the road — everyone gets something that just works. No PhD required.
-              No two-week onboarding. Day one, they're in.
+              Managers, finance teams, warehouse staff, and drivers can all use
+              the system with confidence from the start.
             </p>
           </article>
           <article className="feature-card reveal" data-scroll style={{ "--delay": "240ms" }}>
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faHandshake} />
             </div>
-            <h3>We stick around. For real.</h3>
+            <h3>Support that stays</h3>
             <p className="muted">
-              Most tech companies? Gone the minute you sign. Not us. We're the ones
-              picking up the WhatsApp message at 7am when something needs sorting.
-              Monthly check-ins, real training, real support.
+              We stay close after launch with regular check-ins, team support,
+              and practical help when you need it.
             </p>
           </article>
         </div>
@@ -150,12 +146,11 @@ export default function About() {
       {/* ── How We Work ── */}
       <section className="section how-we-work section-seam-top section-surface-brown section-seam-bottom">
         <div className="section-header reveal" data-scroll>
-          <p className="eyebrow">How We Roll</p>
-          <h2>Not just software. We fix the whole operation.</h2>
+          <p className="eyebrow">How We Work</p>
+          <h2>More than software. We help your business run better.</h2>
           <p className="lead">
-            We don't hand you a manual and wish you luck. We get into the trenches
-            with you — learn YOUR flow, break down what's not working, and build
-            the fix together.
+            We do not hand over software and disappear. We learn your day-to-day
+            process, set things up with your team, and stay available.
           </p>
         </div>
 
@@ -163,45 +158,40 @@ export default function About() {
           <div className="step">
             <span>01</span>
             <div>
-              <h3>We Come to You</h3>
+              <h3>We learn your business on site</h3>
               <p className="muted">
-                Not a Zoom call. We show up at your office, sit with your team —
-                the boss, the accountant, the driver, everyone. We learn how the
-                work actually flows before we touch a single line of code.
+                We visit your team, watch how work is done, and understand where
+                delays and errors happen before setup begins.
               </p>
             </div>
           </div>
           <div className="step reveal" data-scroll style={{ "--delay": "140ms" }}>
             <span>02</span>
             <div>
-              <h3>Build Around YOU</h3>
+              <h3>We set up around your team</h3>
               <p className="muted">
-                Your dispatch runs on WhatsApp? Cool, we connect WhatsApp. Your
-                accountant lives in Excel? We pull that data in. Mobile Money
-                payments coming in all day? Hooked up and tracked. We bend the
-                system to fit you — not the other way around.
+                We connect the tools you already use and organize your key
+                information in one clear system.
               </p>
             </div>
           </div>
           <div className="step reveal" data-scroll style={{ "--delay": "200ms" }}>
             <span>03</span>
             <div>
-              <h3>Train Together, Live</h3>
+              <h3>We train with real examples</h3>
               <p className="muted">
-                No boring PowerPoints. We run real transactions — the actual stuff
-                your team does every day — right there in the room. By the time we
-                leave, everyone's comfortable. Too clear.
+                Your team practices with real tasks, so they are comfortable and
+                ready before launch day.
               </p>
             </div>
           </div>
           <div className="step reveal" data-scroll style={{ "--delay": "260ms" }}>
             <span>04</span>
             <div>
-              <h3>Stay in Your Corner</h3>
+              <h3>We stay close after launch</h3>
               <p className="muted">
-                Monthly calls to keep things sharp. A direct WhatsApp line to our
-                team. Quarterly reviews to make sure you're getting the most out of
-                every feature as your business grows. We're not going anywhere.
+                You get ongoing support, regular reviews, and direct access to
+                our team as your business grows.
               </p>
             </div>
           </div>
@@ -212,7 +202,7 @@ export default function About() {
       <section className="section values">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What Drives Us</p>
-          <h2>The stuff that keeps us up at night — in a good way.</h2>
+          <h2>What matters most in every project we deliver.</h2>
         </div>
 
         <div className="feature-grid">
@@ -220,33 +210,30 @@ export default function About() {
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faCheckCircle} />
             </div>
-            <h3>No More Guessing Games</h3>
+            <h3>Clarity for everyone</h3>
             <p className="muted">
-              Same numbers. Same timelines. Same clarity — for everyone on the team.
-              No more "who said what?" No more chasing receipts. Just clean,
-              honest data everyone can trust.
+              Everyone works with the same numbers and the same timeline, so
+              teams can move quickly with confidence.
             </p>
           </article>
           <article className="feature-card reveal" data-scroll style={{ "--delay": "120ms" }}>
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faChartLine} />
             </div>
-            <h3>Built to Survive the Chaos</h3>
+            <h3>Reliable under pressure</h3>
             <p className="muted">
-              Staff change on Monday. New supplier on Tuesday. Peak season hits
-              Wednesday. Business moves fast — and Faako moves with it.
-              We build systems that don't break when things get hectic.
+              Busy periods, team changes, and new suppliers should not slow you
+              down. We build systems that stay stable.
             </p>
           </article>
           <article className="feature-card reveal" data-scroll style={{ "--delay": "240ms" }}>
             <div className="feature-card-icon">
               <FontAwesomeIcon icon={faLightbulb} />
             </div>
-            <h3>Clarity Is Everything</h3>
+            <h3>Simple by design</h3>
             <p className="muted">
-              When everyone knows what's happening — and why — mistakes drop,
-              profits climb, and your Monday morning meeting actually finishes in
-              15 minutes. That's the dream. We make it real.
+              Clear screens and clear steps help your team avoid mistakes and
+              finish work faster.
             </p>
           </article>
         </div>
@@ -288,15 +275,14 @@ export default function About() {
         <div className="section-bg" aria-hidden="true" />
         <div className="section-media" />
         <div className="cta-content">
-          <h2>Your business is too good for spreadsheet madness.</h2>
+          <h2>Your business deserves better than scattered spreadsheets.</h2>
           <p className="lead">
-            Let's have a real conversation. No pitch, no pressure — just us showing
-            you exactly what Faako would look like running YOUR operations. Book 20
-            minutes. That's all it takes.
+            Book a short call. We will show you what Faako can do for your
+            business, step by step, with clear next actions.
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Book a Free Consultation</PrimaryButton>
+          <PrimaryButton to="/contact">Book a free consultation</PrimaryButton>
           <Link className="button button-ghost" to="/">
             Back to Home <FontAwesomeIcon icon={faArrowRight} />
           </Link>

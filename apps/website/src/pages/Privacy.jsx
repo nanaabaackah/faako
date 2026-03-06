@@ -6,7 +6,7 @@ const dataGroups = [
     title: "Information you provide",
     items: [
       "Name, work email, phone number, company, and role.",
-      "Project intake details, briefs, and uploaded files.",
+      "Project details, planning notes, and uploaded files.",
       "Billing and invoicing details submitted for contracts.",
       "Messages sent through support and contact forms.",
     ],
@@ -15,7 +15,7 @@ const dataGroups = [
     title: "Information collected automatically",
     items: [
       "Device, browser, and operating system metadata.",
-      "Feature usage events, log files, and diagnostics.",
+      "Usage events, log files, and diagnostics.",
       "Approximate location derived from IP address.",
       "Cookie and tracker preferences saved on your device.",
     ],
@@ -24,7 +24,7 @@ const dataGroups = [
 
 const processingRows = [
   {
-    purpose: "Deliver projects and configured modules",
+    purpose: "Deliver projects and configured features",
     basis: "Contract performance",
     retention: "Project lifecycle and support window",
   },
@@ -41,7 +41,7 @@ const processingRows = [
   {
     purpose: "Service analytics and performance improvement",
     basis: "Legitimate interests and consent (where required)",
-    retention: "Up to 24 months in aggregated form",
+    retention: "Up to 24 months in grouped form",
   },
   {
     purpose: "Accounting, tax, and compliance records",
@@ -61,7 +61,7 @@ const userRights = [
   },
   {
     title: "Deletion",
-    detail: "Request erasure when data is no longer needed or legally required.",
+    detail: "Request deletion when data is no longer needed or legally required.",
   },
   {
     title: "Restriction",
@@ -83,13 +83,13 @@ export default function Privacy() {
       <div className="privacy-shell">
         <header className="privacy-hero">
           <div className="privacy-hero-copy reveal" data-scroll style={{ "--delay": "0ms" }}>
-            <p className="eyebrow">Privacy Policy</p>
-            <h1>Your data, handled with clarity and control.</h1>
-            <p className="lead">
-              This policy explains what information we collect, why we process
-              it, the legal basis we rely on, and how you can exercise your
-              rights.
-            </p>
+          <p className="eyebrow">Privacy Policy</p>
+          <h1>Your data, handled with clarity and control.</h1>
+          <p className="lead">
+            This policy explains what information we collect, why we process
+            it, the legal basis we use, and how you can exercise your
+            rights.
+          </p>
             <div className="privacy-meta">
               <span>Effective date: February 11, 2026</span>
               <span>Last updated: February 11, 2026</span>
@@ -98,7 +98,7 @@ export default function Privacy() {
             <div className="privacy-chip-row">
               <span>No personal data sales</span>
               <span>Role-based access controls</span>
-              <span>Support for deletion and export requests</span>
+              <span>Support for deletion and data export requests</span>
             </div>
           </div>
 
@@ -282,8 +282,8 @@ export default function Privacy() {
                 longer retention is required by law.
               </p>
               <p>
-                Retention windows vary by category, such as support logs,
-                security events, project artifacts, and financial records.
+                Retention periods vary by category, such as support logs,
+                security events, project files, and financial records.
               </p>
             </section>
 

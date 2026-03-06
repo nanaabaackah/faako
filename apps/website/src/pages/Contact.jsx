@@ -9,8 +9,7 @@ export default function Contact() {
           <p className="eyebrow">Contact Us</p>
           <h1>Let&apos;s build the right system for your team.</h1>
           <p className="lead">
-            Email, call, or complete the form to discuss websites, dashboards,
-            and ERP workflows for your business.
+            Email, call, or send the form to discuss the setup your business needs.
           </p>
 
           <div className="contact-direct-lines">
@@ -27,22 +26,19 @@ export default function Contact() {
             <article className="contact-topic-card">
               <h4>Customer Support</h4>
               <p>
-                Our support team helps resolve implementation and usage issues
-                quickly.
+                We help your team solve day-to-day issues quickly and clearly.
               </p>
             </article>
             <article className="contact-topic-card">
-              <h4>Project Scoping</h4>
+              <h4>Project Planning</h4>
               <p>
-                We map your workflow, priorities, and budget into a practical
-                rollout plan.
+                We review your priorities and budget, then share a practical plan.
               </p>
             </article>
             <article className="contact-topic-card">
               <h4>Partnerships</h4>
               <p>
-                For media and partnership opportunities, contact our team
-                directly.
+                For partnership or media requests, contact our team directly.
               </p>
             </article>
           </div>
@@ -107,7 +103,7 @@ export default function Contact() {
               name="message"
               rows={5}
               maxLength={350}
-              placeholder="Tell us what you want to build and the timeline you have in mind."
+              placeholder="Tell us what you need help with and when you want to start."
               required
             />
           </label>
@@ -128,13 +124,13 @@ export default function Contact() {
           <p className="eyebrow">Our Location</p>
           <h2>Connecting near and far.</h2>
           <p className="lead">
-            We work with teams in Ghana and across regions through remote
-            delivery, workshops, and implementation support.
+            We support teams in Ghana and beyond through remote help, workshops,
+            and on-site visits when needed.
           </p>
           <ul className="contact-location-list">
-            <li>Accra HQ for discovery and advisory</li>
-            <li>Remote implementation for distributed teams</li>
-            <li>Onsite support available for enterprise rollouts</li>
+            <li>Accra team for planning and advisory</li>
+            <li>Remote support for distributed teams</li>
+            <li>On-site support available for larger rollouts</li>
           </ul>
           <div className="contact-actions">
             <a className="button button-primary" href="mailto:hello@faako.nanaabaackah.com">

@@ -10,16 +10,16 @@ import {
 export const caseStudies = [
   {
     slug: "party-rental-erp",
-    title: "Hybrid ERP Platform",
-    tag: "Hybrid ERP + SaaS",
+    title: "Hybrid Retail + Rental System",
+    tag: "Retail + Rental System",
     summary:
-      "A unified operating system for hybrid retail and rental businesses.",
+      "One connected system for businesses that sell and rent products.",
     thumbnail: "/imgs/case-studies/erp-case.png",
     hero: {
       eyebrow: "Case Study",
-      headline: "Retail and rentals finally live in one ERP.",
+      headline: "Retail sales and rentals now run in one place.",
       lead:
-        "A hybrid ERP bridges SKU-based sales and time-based rental bookings inside a single inventory core, with a shared ledger, dispatch workflows, and a path to multi-tenant SaaS.",
+        "This setup combines product sales and rental bookings in one shared stock and finance system, so teams stop switching between tools.",
       primaryCta: {
         label: "Request a walkthrough",
         to: "/contact",
@@ -29,8 +29,8 @@ export const caseStudies = [
         to: "/pricing",
       },
       image: "/imgs/case-studies/case-study-mobdesk2.png",
-      imageAlt: "ERP dashboard for rentals inventory and orders",
-      badges: ["Hybrid inventory", "Ledger", "Dispatch", "SaaS"],
+      imageAlt: "Dashboard for rental inventory and orders",
+      badges: ["Shared stock", "Finance view", "Dispatch", "Growth-ready"],
     },
     stats: [
       { value: "2", label: "Inventory modes" },
@@ -40,101 +40,101 @@ export const caseStudies = [
     snapshot: {
       title: "Client Snapshot",
       lead:
-        "A hybrid retail and events business rebuilding a bespoke platform into a scalable SaaS product.",
+        "A retail and events business replacing a custom tool with a clearer system they could grow with.",
       items: [
         { label: "Industry", value: "Retail + rentals" },
-        { label: "Scope", value: "ERP + SaaS foundations" },
-        { label: "Infrastructure", value: "Netlify Functions + PostgreSQL" },
-        { label: "Tooling", value: "Prisma, Playwright, ESLint" },
+        { label: "Scope", value: "Sales + rental management" },
+        { label: "Infrastructure", value: "Cloud backend + database" },
+        { label: "Tooling", value: "Modern web tools" },
       ],
     },
     challenge: {
       title: "Two business models, one inventory truth.",
       lead:
-        "Most ERPs handle retail or rentals. This platform reconciles both without breaking availability or finance reporting.",
+        "Most systems handle either retail or rentals. This one needed to handle both clearly.",
       points: [
         {
           label: "Hybrid complexity",
-          text: "SKU sales and serialized rental assets needed a shared checkout path.",
+          text: "Sales items and rental items needed one shared checkout path.",
         },
         {
           label: "Availability risk",
-          text: "Bookings require date-based checks before committing inventory.",
+          text: "Bookings needed date checks before stock could be confirmed.",
         },
         {
           label: "Financial clarity",
-          text: "A single ledger had to reconcile sales, rentals, expenses, and profit.",
+          text: "Sales, rentals, expenses, and profit had to be visible in one finance view.",
         },
       ],
     },
     solution: {
-      title: "A unified core with purpose-built modules.",
+      title: "One shared core with practical features.",
       lead:
-        "The platform now runs retail orders, rental bookings, dispatch, and finance through the same operating system.",
+        "The platform now runs orders, bookings, dispatch, and finance in one connected system.",
       points: [
         {
           label: "Unified inventory",
-          text: "Retail items and rental assets flow through one checkout engine.",
+          text: "Retail items and rental assets now pass through one checkout flow.",
         },
         {
-          label: "Serverless validation",
-          text: "Availability and totals are verified before writes are committed.",
+          label: "Automatic checks",
+          text: "Availability and totals are checked before any order is saved.",
         },
         {
-          label: "Ledger-first finance",
-          text: "Invoices, expenses, and profitability roll into a single view.",
+          label: "Clear finance view",
+          text: "Invoices, expenses, and profit all appear in one place.",
         },
       ],
     },
     tools: {
-      title: "Platform stack",
-      lead: "Modern tooling tuned for speed, reliability, and scale.",
+      title: "Tools used",
+      lead: "A reliable setup built for speed and stability.",
       items: ["React", "Vite", "Netlify Functions", "PostgreSQL", "Prisma"],
     },
     features: {
-      title: "Core modules",
-      lead: "Everything a hybrid retail and rental operator needs in one place.",
+      title: "Core features",
+      lead: "Everything a hybrid retail and rental team needs in one place.",
       items: [
         {
           icon: faBoxesStacked,
-          title: "Commerce engine",
-          text: "Unified inventory, orders, and booking availability checks.",
+          title: "Sales and booking flow",
+          text: "Shared stock, orders, and booking availability checks.",
         },
         {
           icon: faChartLine,
-          title: "Financial intelligence",
-          text: "General ledger, invoicing, and expense tracking for profit clarity.",
+          title: "Finance tracking",
+          text: "Invoicing and expense tracking for a clear view of profit.",
         },
         {
           icon: faRoute,
-          title: "Logistics and supply chain",
-          text: "Dispatch workflows, digital waivers, and maintenance tracking.",
+          title: "Delivery and upkeep",
+          text: "Dispatch steps, waivers, and maintenance tracking.",
         },
         {
           icon: faUserTie,
-          title: "Workforce management",
-          text: "Role-based access, staff profiles, and timesheets for crews.",
+          title: "Team management",
+          text: "Role-based access, staff profiles, and timesheets.",
         },
       ],
     },
     workflow: {
       title: "How the core flow works",
-      lead: "Retail and rental orders follow the same validation and ledger path.",
+      lead: "Retail and rental orders follow the same reliable process.",
       steps: [
         {
           step: "01",
-          title: "Validate availability",
-          text: "Serverless checks confirm stock, pricing, and rental dates.",
+          title: "Check availability",
+          text: "Automatic checks confirm stock, pricing, and rental dates.",
         },
         {
           step: "02",
-          title: "Commit the order",
-          text: "Orders write atomically to inventory and the general ledger.",
+          title: "Save the order",
+          text: "Orders update stock and finance records together.",
         },
         {
           step: "03",
-          title: "Deliver and reconcile",
-          text: "Dispatch, waivers, and maintenance keep assets accountable.",
+          title: "Deliver and confirm",
+          text: "Dispatch, waivers, and maintenance keep every item accountable.",
         },
       ],
     },
@@ -143,8 +143,8 @@ export const caseStudies = [
       lead: "A clearer system that can scale beyond one business.",
       stats: [
         { value: "Hybrid", label: "Retail + rental in one core" },
-        { value: "SaaS-ready", label: "Admin console + data isolation" },
-        { value: "Accurate", label: "Integer-based financials" },
+        { value: "Growth-ready", label: "Built to expand over time" },
+        { value: "Accurate", label: "Reliable finance records" },
       ],
     },
     quote: {
@@ -157,34 +157,34 @@ export const caseStudies = [
       {
         question: "Does it handle both retail and rentals?",
         answer:
-          "Yes. SKU sales and rental bookings flow through the same checkout engine.",
+          "Yes. Product sales and rental bookings run through the same checkout flow.",
         open: true,
       },
       {
         question: "How is data accuracy handled for money?",
         answer:
-          "All financial values are stored as integer cents to avoid floating point drift.",
+          "Money values are stored in a safe format to avoid calculation errors.",
       },
       {
         question: "Is this built to scale as SaaS?",
         answer:
-          "Yes. The platform is being re-engineered with multi-tenant data isolation.",
+          "Yes. The platform is built so it can grow to support multiple businesses.",
       },
     ],
     trustedBy: ["Hybrid retail operators"],
   },
   {
     slug: "developer-command-center",
-    title: "Developer Command Center",
+    title: "Team Command Center",
     tag: "Productivity Suite",
     summary:
-      "Real-time visibility into deployments, tasks, and system health in one dashboard.",
+      "One dashboard for project updates, tasks, and system status.",
     thumbnail: "/imgs/case-studies/dashboard-case.png",
     hero: {
       eyebrow: "Case Study",
-      headline: "A command center that keeps product and engineering aligned.",
+      headline: "A command center that keeps teams aligned.",
       lead:
-        "We brought deployments, incidents, and roadmap updates into one living dashboard - so leadership, PMs, and engineers stay in sync without chasing updates.",
+        "We brought release updates, issues, and priorities into one dashboard so teams stay aligned without chasing updates.",
       primaryCta: {
         label: "Book a strategy call",
         to: "/contact",
@@ -195,7 +195,7 @@ export const caseStudies = [
       },
       image: "/imgs/case-studies/case-study-mobdesk.png",
       imageAlt: "Command center dashboard with live system status",
-      badges: ["Deployments", "Incidents", "Roadmap", "KPIs"],
+      badges: ["Releases", "Issues", "Priorities", "Metrics"],
     },
     stats: [
       { value: "15 min", label: "Time to visibility" },
@@ -205,10 +205,10 @@ export const caseStudies = [
     snapshot: {
       title: "Client Snapshot",
       lead:
-        "A Ghanaian fintech platform scaling across multiple product squads and operations teams.",
+        "A Ghanaian fintech team scaling across product and operations groups.",
       items: [
         { label: "Industry", value: "Fintech & SaaS" },
-        { label: "Teams", value: "Engineering, Ops, Product, CX" },
+        { label: "Teams", value: "Engineering, Operations, Product, Support" },
         { label: "Users", value: "120+ internal stakeholders" },
         { label: "Timeline", value: "6-week launch" },
       ],
@@ -216,11 +216,11 @@ export const caseStudies = [
     challenge: {
       title: "Too many tools, not enough clarity.",
       lead:
-        "Updates lived across Jira, Slack, GitHub, and Google Sheets. Leadership never had a live view.",
+        "Updates were scattered across several tools, and leadership lacked one live view.",
       points: [
         {
           label: "Tool sprawl",
-          text: "No single view of releases, incidents, and critical blockers.",
+          text: "There was no single place to see releases, issues, and blockers.",
         },
         {
           label: "Slow updates",
@@ -228,78 +228,78 @@ export const caseStudies = [
         },
         {
           label: "Context gaps",
-          text: "Ops and CX teams had no shared source for live system health.",
+          text: "Operations and support teams had no shared source of truth.",
         },
       ],
     },
     solution: {
       title: "Live dashboards built for every role.",
       lead:
-        "We created a command center that surfaces the right data for execs, PMs, and engineers - without extra manual updates.",
+        "We created a command center that shows the right information to each team without extra manual updates.",
       points: [
         {
           label: "Unified release feed",
-          text: "Deployments, tests, and rollbacks show up instantly in one timeline.",
+          text: "Releases, tests, and rollbacks appear quickly in one timeline.",
         },
         {
-          label: "Incident playbooks",
-          text: "On-call checklists trigger automatically with status updates.",
+          label: "Issue response guides",
+          text: "Response checklists start automatically with status updates.",
         },
         {
-          label: "Executive metrics",
-          text: "KPI tiles pull from product analytics and ops data in real time.",
+          label: "Leadership metrics",
+          text: "Key tiles pull product and operations data in near real time.",
         },
       ],
     },
     tools: {
       title: "Connected sources",
-      lead: "Signals from the tools teams already trust, pulled into Faako.",
+      lead: "Updates from tools teams already use, pulled into Faako.",
       items: ["GitHub", "Jira", "Slack", "Sentry", "Google Sheets"],
     },
     features: {
-      title: "Capabilities that unlocked momentum",
+      title: "Features that improved daily work",
       lead: "Every team got a tailored view without extra reporting.",
       items: [
         {
           icon: faChartLine,
           title: "Release visibility",
-          text: "Track what shipped, what's queued, and who owns the rollout.",
+          text: "Track what shipped, what is next, and who owns each rollout.",
         },
         {
           icon: faCheckCircle,
-          title: "Incident orchestration",
-          text: "Auto-assign owners and keep comms in one shared place.",
+          title: "Issue coordination",
+          text: "Auto-assign owners and keep communication in one shared place.",
         },
         {
           icon: faUserTie,
           title: "Leadership dashboards",
-          text: "High-level KPIs with drill-down views for product leaders.",
+          text: "High-level metrics with deeper views for product leaders.",
         },
         {
           icon: faLightbulb,
           title: "Roadmap readiness",
-          text: "Keep roadmap, sprint progress, and customer requests aligned.",
+          text: "Keep priorities, sprint progress, and customer requests aligned.",
         },
       ],
     },
     workflow: {
-      title: "How the command center runs",
-      lead: "Everyone works off the same live pulse.",
+      title: "How the command center works",
+      lead: "Everyone works from the same live updates.",
       steps: [
         {
           step: "01",
           title: "Pull the live signal",
-          text: "APIs sync deployment, incident, and roadmap data every few minutes.",
+          text: "Connected tools sync release, issue, and plan data every few minutes.",
         },
         {
           step: "02",
           title: "Translate for each team",
-          text: "Dashboards auto-filter by role - no manual reporting needed.",
+          text: "Dashboards filter by role automatically, with no manual reporting.",
         },
         {
           step: "03",
           title: "Close the loop",
-          text: "Postmortems and KPIs update as soon as issues resolve.",
+          text: "Review notes and metrics update as soon as issues are resolved.",
         },
       ],
     },
@@ -307,7 +307,7 @@ export const caseStudies = [
       title: "The command center effect",
       lead: "Faster decisions, fewer surprises, and tighter alignment.",
       stats: [
-        { value: "45%", label: "Faster incident response" },
+        { value: "45%", label: "Faster issue response" },
         { value: "70%", label: "Reduction in status update time" },
         { value: "3x", label: "More product alignment" },
       ],
@@ -328,12 +328,12 @@ export const caseStudies = [
       {
         question: "Does it replace Jira or GitHub?",
         answer:
-          "No. Faako pulls data from those tools and turns it into a real-time command view.",
+          "No. Faako pulls data from those tools and shows it in one command view.",
       },
       {
-        question: "How long did onboarding take?",
+        question: "How long did team training take?",
         answer:
-          "Six weeks, including integrations, live training, and dashboard iterations.",
+          "Six weeks, including setup, live training, and dashboard refinements.",
       },
     ],
     trustedBy: ["Product leaders", "Engineering teams", "Ops teams", "CX teams"],
@@ -343,13 +343,13 @@ export const caseStudies = [
     title: "Portfolio Website",
     tag: "Portfolio Website",
     summary:
-      "Performance-first React and Vite portfolio with case studies, blog content, and a hiring-ready story.",
+      "A fast portfolio website with case studies, blog content, and a clear hiring story.",
     thumbnail: "/imgs/case-studies/website-case.png",
     hero: {
       eyebrow: "Case Study",
       headline: "A portfolio that reads like a product story, not a resume.",
       lead:
-        "The goal was a site that feels intentional, fast, and structured around impact. The final build pairs bold storytelling with clean IA, accessible motion, and clear hiring paths.",
+        "The goal was a site that feels intentional, fast, and easy to scan. The final build pairs strong storytelling with accessible motion and clear hiring paths.",
       primaryCta: {
         label: "Request a walkthrough",
         to: "/contact",
@@ -403,8 +403,8 @@ export const caseStudies = [
         "We built a layout system that makes each section scan quickly while still feeling human.",
       points: [
         {
-          label: "Structured IA",
-          text: "Clear reading paths and project groupings guide hiring managers fast.",
+          label: "Clear structure",
+          text: "Clear reading paths and project groupings guide hiring managers quickly.",
         },
         {
           label: "Reusable patterns",
@@ -417,8 +417,8 @@ export const caseStudies = [
       ],
     },
     tools: {
-      title: "Tools and stack",
-      lead: "A modern, lightweight stack optimized for speed and iteration.",
+      title: "Tools used",
+      lead: "A modern, lightweight setup optimized for speed and iteration.",
       items: ["React", "Vite", "Netlify", "Figma", "Lighthouse checks"],
     },
     features: {
@@ -428,7 +428,7 @@ export const caseStudies = [
         {
           icon: faChartLine,
           title: "Content hierarchy",
-          text: "Reading paths, highlights, and CTAs guide the right next click.",
+          text: "Reading paths, highlights, and actions guide the right next click.",
         },
         {
           icon: faCheckCircle,
@@ -454,7 +454,7 @@ export const caseStudies = [
         {
           step: "01",
           title: "Define the story",
-          text: "Map hiring goals to sections, then lock the IA and copy flow.",
+          text: "Map hiring goals to sections, then lock the content structure and copy flow.",
         },
         {
           step: "02",
@@ -539,7 +539,7 @@ export const caseStudies = [
       items: [
         { label: "Industry", value: "Professional services" },
         { label: "Scope", value: "Public booking + admin console" },
-        { label: "Stack", value: "React, Vite, Netlify redirects" },
+        { label: "Stack", value: "Modern web tools" },
         { label: "Integrations", value: "Google Calendar sync" },
       ],
     },
@@ -582,9 +582,9 @@ export const caseStudies = [
       ],
     },
     tools: {
-      title: "Core stack",
-      lead: "Lightweight frontend with a shared API backend.",
-      items: ["React", "Vite", "Netlify redirects", "Google Calendar", "Token auth"],
+      title: "Core tools",
+      lead: "A lightweight frontend with a shared backend.",
+      items: ["React", "Vite", "Netlify redirects", "Google Calendar", "Secure sign-in"],
     },
     features: {
       title: "What the system supports",
@@ -614,7 +614,7 @@ export const caseStudies = [
     },
     workflow: {
       title: "How the booking flow runs",
-      lead: "Both public and internal views stay aligned through one API.",
+      lead: "Both public and internal views stay aligned through one backend.",
       steps: [
         {
           step: "01",

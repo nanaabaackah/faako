@@ -13,45 +13,45 @@ export const moduleShowcaseItems = [
     icon: faGlobe,
     kicker: "Growth",
     title: "Website",
-    description: "Get found online and turn visitors into qualified leads.",
-    signals: ["SEO ready", "Lead capture"],
-    outcome: "Conversion-ready",
+    description: "Help people find you online and contact your team quickly.",
+    signals: ["Easy to find", "Lead capture"],
+    outcome: "More customer enquiries",
     detailSummary:
-      "Launch a business website that brings in real leads, captures inquiries, and routes every contact straight into your workflow.",
+      "Launch a clear business website that captures enquiries and sends them to the right person on your team.",
     problem:
-      "Leads come through random channels and get lost before your team follows up.",
+      "Customer enquiries come from many places and often get missed.",
     value:
-      "Every visitor gets a clear path to contact, book, or request a quote. Nothing falls through.",
+      "Every visitor gets a clear next step, so fewer opportunities are lost.",
     capabilities: [
       {
-        title: "Lead-first page structure",
-        text: "Service pages, landing sections, and calls-to-action are designed to convert visitors into enquiries.",
+        title: "Simple page structure",
+        text: "Your pages are organized so visitors quickly understand your service and reach out.",
       },
       {
-        title: "Built-in enquiry flows",
-        text: "Contact forms and booking actions push submissions directly to your team via dashboard and WhatsApp.",
+        title: "Built-in enquiry flow",
+        text: "Contact forms and booking actions send requests directly to your team.",
       },
       {
-        title: "Performance-ready setup",
-        text: "Fast page load, technical SEO basics, and analytics tagging are set up from day one.",
+        title: "Fast and practical setup",
+        text: "Pages load quickly and basic search visibility is set from day one.",
       },
     ],
     workflows: [
-      "Visitor lands on service page and submits an enquiry",
-      "Lead is captured and assigned to the right team member",
-      "Follow-up status appears in CRM and reports automatically",
+      "A visitor opens your page and sends an enquiry",
+      "The enquiry is saved and assigned to the right person",
+      "Follow-up progress appears in customer records and reports",
     ],
     includes: [
-      "Mobile-responsive layout",
+      "Mobile-friendly layout",
       "Service and product pages",
-      "Lead forms and CTA routing",
-      "Analytics and conversion tracking",
+      "Lead forms and clear call-to-action buttons",
+      "Basic traffic and enquiry tracking",
     ],
     integrations: ["CRM", "Reports", "WhatsApp alerts"],
     metrics: [
-      { value: "< 2s", label: "Typical mobile load target" },
-      { value: "100%", label: "Lead capture visibility" },
-      { value: "24/7", label: "Always-on lead intake" },
+      { value: "< 2s", label: "Typical mobile load time" },
+      { value: "100%", label: "Enquiry visibility" },
+      { value: "24/7", label: "Always-open contact point" },
     ],
   },
   {
@@ -59,38 +59,38 @@ export const moduleShowcaseItems = [
     icon: faBoxesStacked,
     kicker: "Operations",
     title: "Inventory",
-    description: "Track stock levels in real time across all your locations.",
+    description: "Track stock clearly across all your locations.",
     signals: ["Live stock", "Multi-branch"],
     outcome: "Live visibility",
     detailSummary:
-      "Get real-time inventory visibility across branches, warehouses, and sales channels so your team always knows what is in stock.",
+      "Keep stock updates in one place so your team always knows what is available.",
     problem:
-      "Stock updates are delayed or inconsistent, causing overselling and missed sales.",
+      "Stock updates are delayed or inconsistent, causing avoidable errors and missed sales.",
     value:
-      "One trusted inventory view keeps purchasing, sales, and dispatch aligned.",
+      "One trusted stock view keeps purchasing, sales, and delivery aligned.",
     capabilities: [
       {
         title: "Real-time stock movement",
-        text: "Every sale, transfer, and adjustment updates item balances immediately in the system.",
+        text: "Every sale, transfer, and adjustment updates stock totals right away.",
       },
       {
         title: "Multi-location control",
-        text: "Track stock per branch, warehouse, or shelf with clear transfer history between locations.",
+        text: "Track stock by branch or store with clear movement history.",
       },
       {
         title: "Reorder support",
-        text: "Low-stock signals help your team reorder before critical items run out.",
+        text: "Low-stock alerts help your team reorder before key items run out.",
       },
     ],
     workflows: [
-      "Sales order deducts stock instantly at selected location",
-      "Low stock threshold triggers purchase planning",
-      "Inbound restock updates on-hand levels and reports",
+      "A sale updates stock at the selected location",
+      "Low-stock alerts flag what needs reordering",
+      "Restocks update available quantity and reports",
     ],
     includes: [
       "Stock item catalog",
       "Location-based quantities",
-      "Transfer and adjustment logs",
+      "Transfer and adjustment history",
       "Low-stock alerts",
     ],
     integrations: ["Orders", "Delivery", "Reports"],
@@ -105,91 +105,91 @@ export const moduleShowcaseItems = [
     icon: faHandshake,
     kicker: "Customers",
     title: "CRM",
-    description: "Track every client interaction, follow-up, and sales stage.",
-    signals: ["Follow-ups", "Pipeline flow"],
-    outcome: "Relationship flow",
+    description: "Track customer conversations, follow-ups, and sales progress.",
+    signals: ["Follow-ups", "Sales progress"],
+    outcome: "Stronger customer follow-up",
     detailSummary:
-      "Keep every customer conversation, opportunity, and follow-up in one pipeline so your team closes more deals consistently.",
+      "Keep every customer conversation and follow-up in one place so your team responds faster and misses less.",
     problem:
-      "Customer history is spread across chats and personal notes, so follow-ups are missed.",
+      "Customer history is spread across chats and notes, so follow-ups are often missed.",
     value:
-      "A shared pipeline gives your team context, accountability, and faster response time.",
+      "A shared view gives your team context, ownership, and faster response time.",
     capabilities: [
       {
         title: "Unified customer timeline",
-        text: "Calls, messages, quote requests, and updates are stored in one place per customer record.",
+        text: "Calls, messages, and quote requests are stored in one place for each customer.",
       },
       {
-        title: "Sales stage tracking",
-        text: "Move opportunities through clear stages with ownership and next-step reminders.",
+        title: "Sales progress tracking",
+        text: "Move deals through clear stages with ownership and reminders.",
       },
       {
         title: "Follow-up automation",
-        text: "Set reminders and activity tasks so leads are never left unattended.",
+        text: "Set reminders and tasks so no customer request is ignored.",
       },
     ],
     workflows: [
-      "New enquiry becomes a lead in pipeline",
-      "Lead is assigned and moved through sales stages",
-      "Closed outcomes feed into reporting and forecasting",
+      "A new enquiry is added to customer follow-up",
+      "It is assigned and moved through clear stages",
+      "Completed outcomes appear in reports",
     ],
     includes: [
       "Lead and client records",
-      "Pipeline and stage board",
+      "Stage board for follow-up",
       "Task and follow-up reminders",
       "Activity history log",
     ],
     integrations: ["Website", "Reports", "Invoicing"],
     metrics: [
       { value: "Faster", label: "Lead response" },
-      { value: "Clear", label: "Pipeline ownership" },
+      { value: "Clear", label: "Follow-up ownership" },
       { value: "Higher", label: "Follow-up consistency" },
     ],
   },
   {
     id: "reports",
     icon: faChartLine,
-    kicker: "Analytics",
+    kicker: "Insights",
     title: "Reports",
-    description: "See profit, sales, and trend insights without manual sheets.",
-    signals: ["Auto dashboards", "Weekly insights"],
-    outcome: "Decision support",
+    description: "See sales and business trends without manual spreadsheets.",
+    signals: ["Auto dashboards", "Weekly summaries"],
+    outcome: "Clearer decisions",
     detailSummary:
-      "Turn operational data into live dashboards and practical weekly reports so leaders can make decisions quickly.",
+      "Turn daily business data into clear dashboards and simple weekly reports.",
     problem:
-      "Important numbers are delayed because reports are built manually in spreadsheets.",
+      "Important numbers arrive late when reports are built by hand.",
     value:
-      "You get trusted numbers in minutes, not days, with snapshots for every team.",
+      "You get trusted numbers quickly, with simple views for every team.",
     capabilities: [
       {
         title: "Live performance dashboards",
-        text: "Track sales, margin, inventory movement, and team activity from one reporting view.",
+        text: "Track sales, stock movement, and team activity from one reporting view.",
       },
       {
         title: "Scheduled report drops",
-        text: "Deliver summary reports weekly to leadership through email or WhatsApp-ready exports.",
+        text: "Send weekly summaries to leadership by email or WhatsApp.",
       },
       {
-        title: "Trend visibility",
-        text: "Compare current vs prior periods to catch growth opportunities and risk areas early.",
+        title: "Trend tracking",
+        text: "Compare periods to spot growth opportunities and risks early.",
       },
     ],
     workflows: [
-      "Data syncs from core modules into reporting layer",
+      "Data from core features updates reports",
       "Dashboards refresh automatically throughout the day",
-      "Weekly summary is distributed to decision makers",
+      "Weekly summary is shared with decision makers",
     ],
     includes: [
-      "KPI dashboards",
+      "Business dashboards",
       "Branch and team comparisons",
       "Weekly and monthly summaries",
       "Exportable report views",
     ],
-    integrations: ["Inventory", "CRM", "Finance modules"],
+    integrations: ["Inventory", "CRM", "Finance"],
     metrics: [
       { value: "1 view", label: "Business snapshot" },
       { value: "Daily", label: "Auto refresh cycle" },
-      { value: "Actionable", label: "Decision insights" },
+      { value: "Clear", label: "Decision insights" },
     ],
   },
   {
@@ -197,27 +197,27 @@ export const moduleShowcaseItems = [
     icon: faRoute,
     kicker: "Logistics",
     title: "Delivery",
-    description: "Monitor routes, delivery status, and dispatch performance.",
+    description: "Monitor routes, delivery status, and dispatch progress.",
     signals: ["Live routes", "Status updates"],
     outcome: "Route tracking",
     detailSummary:
-      "Coordinate dispatch, routes, and proof-of-delivery in one timeline so customers and teams stay informed.",
+      "Coordinate dispatch, routes, and delivery proof in one place so customers and teams stay informed.",
     problem:
       "Delivery updates are unclear, and dispatch teams spend time chasing status manually.",
     value:
-      "Route status, handoff confirmations, and delivery timelines become visible end-to-end.",
+      "Route status and delivery confirmations stay visible from start to finish.",
     capabilities: [
       {
         title: "Dispatch queue",
-        text: "Organize pending deliveries by location, priority, and assigned rider or driver.",
+        text: "Organize pending deliveries by location, priority, and assigned driver.",
       },
       {
         title: "Status visibility",
-        text: "Track each order through dispatched, in-transit, and delivered states.",
+        text: "Track each order through dispatched, in-transit, and delivered status.",
       },
       {
-        title: "Proof and exceptions",
-        text: "Capture delivery proof notes and exception reasons for complete service records.",
+        title: "Proof and issue notes",
+        text: "Capture delivery proof and issue notes for complete records.",
       },
     ],
     workflows: [
@@ -227,8 +227,8 @@ export const moduleShowcaseItems = [
     ],
     includes: [
       "Dispatch board",
-      "Driver and route assignment",
-      "Delivery status timeline",
+      "Driver and route planning",
+      "Delivery status history",
       "Proof-of-delivery notes",
     ],
     integrations: ["Orders", "Inventory", "CRM"],
@@ -243,41 +243,41 @@ export const moduleShowcaseItems = [
     icon: faUserTie,
     kicker: "Team",
     title: "HR",
-    description: "Manage roles, attendance, and staff accountability at scale.",
+    description: "Manage roles, attendance, and staff accountability clearly.",
     signals: ["Attendance", "Role controls"],
     outcome: "People operations",
     detailSummary:
-      "Manage people operations with clear role ownership, attendance tracking, and operational accountability.",
+      "Manage your team with clear role ownership and attendance tracking.",
     problem:
       "Team responsibilities and attendance records are inconsistent across branches.",
     value:
-      "Managers see who is scheduled, active, and responsible for each workflow.",
+      "Managers can see who is scheduled, active, and responsible for each task.",
     capabilities: [
       {
-        title: "Role and access structure",
-        text: "Define role responsibilities and tie system permissions to real team functions.",
+        title: "Role and access setup",
+        text: "Set responsibilities and permissions to match real team duties.",
       },
       {
         title: "Attendance visibility",
-        text: "Track attendance trends and missing shifts with branch-level transparency.",
+        text: "Track attendance and missing shifts across locations.",
       },
       {
         title: "Operational accountability",
-        text: "Assign owners to tasks and workflow checkpoints so nothing is ownerless.",
+        text: "Assign owners to tasks so nothing is left unmanaged.",
       },
     ],
     workflows: [
-      "Manager assigns role and branch responsibility",
+      "Managers assign roles and location responsibility",
       "Daily attendance and team activity are logged",
-      "Performance and gaps are reviewed from a single dashboard",
+      "Team progress and gaps are reviewed from one dashboard",
     ],
     includes: [
-      "Role and permission matrix",
+      "Role and permission setup",
       "Attendance records",
       "Team assignment logs",
       "Accountability snapshots",
     ],
-    integrations: ["Scheduler", "Reports", "Operations modules"],
+    integrations: ["Scheduler", "Reports", "Operations"],
     metrics: [
       { value: "Clear", label: "Role ownership" },
       { value: "Consistent", label: "Attendance tracking" },
@@ -291,4 +291,3 @@ export const moduleById = Object.fromEntries(
 );
 
 export const getModuleById = (moduleId) => moduleById[moduleId];
-

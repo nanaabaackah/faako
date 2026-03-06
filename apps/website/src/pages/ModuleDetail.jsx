@@ -39,9 +39,9 @@ export default function ModuleDetail() {
           <h1>{module.title}</h1>
           <p className="lead">{module.detailSummary}</p>
           <div className="module-detail-actions">
-            <PrimaryButton to="/contact">Talk to Us About This Module</PrimaryButton>
+            <PrimaryButton to="/contact">Talk to us about this feature</PrimaryButton>
             <Link to="/configure" className="button button-ghost">
-              Configure Your Stack
+              Build your setup
             </Link>
           </div>
         </div>
@@ -64,7 +64,7 @@ export default function ModuleDetail() {
         <article className="module-detail-snapshot-card module-detail-snapshot-card--soft">
           <p className="eyebrow">Implementation Fit</p>
           <p>
-            This module is ideal when you need measurable improvements without replacing your full stack at once.
+            This feature is ideal when you want clear improvements without replacing everything at once.
           </p>
         </article>
       </section>
@@ -72,7 +72,7 @@ export default function ModuleDetail() {
       <section className="module-detail-body">
         <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "80ms" }}>
           <p className="eyebrow">What It Solves</p>
-          <h2>From bottlenecks to clarity</h2>
+          <h2>From daily stress to clear progress</h2>
           <div className="module-detail-problem-grid">
             <div className="module-detail-problem-card module-detail-problem-card--issue">
               <h3>Current challenge</h3>
@@ -99,7 +99,7 @@ export default function ModuleDetail() {
         </article>
 
         <article className="module-detail-panel reveal" data-scroll style={{ "--delay": "160ms" }}>
-          <p className="eyebrow">Workflow</p>
+          <p className="eyebrow">Daily flow</p>
           <h2>How it runs day to day</h2>
           <ol className="module-detail-workflow">
             {module.workflows.map((step) => (
@@ -137,7 +137,7 @@ export default function ModuleDetail() {
       <section className="module-detail-related reveal" data-scroll style={{ "--delay": "240ms" }}>
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Related Modules</p>
-          <h2>Add connected tools as you grow.</h2>
+          <h2>Add connected features as you grow.</h2>
         </div>
 
         <div className="module-detail-related-grid">

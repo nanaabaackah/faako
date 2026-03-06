@@ -37,7 +37,7 @@ export default function ForgotPassword() {
           </ul>
           <div className="auth-suite-note">
             <FontAwesomeIcon icon={faShieldHalved} />
-            <span>For account safety, reset requests are logged and monitored.</span>
+            <span>For account safety, reset requests are tracked and reviewed.</span>
           </div>
         </div>
 

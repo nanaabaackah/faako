@@ -31,20 +31,20 @@ export default function Login() {
         <aside className="auth-suite-panel reveal" data-scroll style={{ "--delay": "0ms" }}>
           <span className="auth-suite-kicker">
             <FontAwesomeIcon icon={faLayerGroup} />
-            Workspace Access
+            Account Access
           </span>
-          <h1>Sign in to your Faako command center.</h1>
+          <h1>Sign in to your Faako account.</h1>
           <p className="lead">
-            Track rollout progress, module activation, and team onboarding from one secure workspace.
+            Check project progress, team updates, and approvals in one secure place.
           </p>
           <ul className="auth-suite-points">
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
-              Shared implementation timeline
+              Shared project timeline
             </li>
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
-              Role-based module access
+              Role-based access
             </li>
             <li>
               <FontAwesomeIcon icon={faCircleCheck} />
@@ -70,7 +70,7 @@ export default function Login() {
           <div className="login-copy">
             <h2>Sign in with email</h2>
             <p className="muted">
-              Use the account linked to your current workspace.
+              Use the email linked to your account.
             </p>
           </div>
 
@@ -115,7 +115,7 @@ export default function Login() {
           </div>
 
           <button className="button button-primary login-submit" type="submit">
-            Continue to dashboard
+            Continue
           </button>
 
           <div className="login-divider">
@@ -137,7 +137,7 @@ export default function Login() {
           <div className="auth-meta login-meta">
             <span>Need an account?</span>
             <Link to="/signup" className="text-link">
-              Signup Today
+              Sign up today
             </Link>
           </div>
         </form>

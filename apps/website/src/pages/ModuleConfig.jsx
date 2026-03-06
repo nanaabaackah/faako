@@ -36,7 +36,7 @@ const coreModules = [
   {
     id: "website",
     name: "Website",
-    description: "Business website with lead capture and Mobile Money.",
+    description: "Business website that captures enquiries and supports Mobile Money.",
     icon: faGlobe,
     tag: "Digital",
     required: true,
@@ -44,7 +44,7 @@ const coreModules = [
   {
     id: "dashboard",
     name: "Dashboard",
-    description: "Real-time view of sales, stock, and money flow.",
+    description: "Live view of sales, stock, and cashflow.",
     icon: faChartLine,
     tag: "Core",
     required: true,
@@ -52,7 +52,7 @@ const coreModules = [
   {
     id: "reports",
     name: "Reports",
-    description: "Daily, weekly, monthly reports to WhatsApp or email.",
+    description: "Daily, weekly, and monthly reports by WhatsApp or email.",
     icon: faReceipt,
     tag: "Core",
     required: true,
@@ -64,7 +64,7 @@ const addOnModules = [
   {
     id: "inventory",
     name: "Inventory",
-    description: "Track stock across locations with serial numbers.",
+    description: "Track stock clearly across locations.",
     icon: faBoxesStacked,
     tag: "Operations",
     popular: true,
@@ -72,7 +72,7 @@ const addOnModules = [
   {
     id: "crm",
     name: "CRM",
-    description: "Manage leads, customers, and sales pipeline.",
+    description: "Track enquiries, customers, and sales progress.",
     icon: faHandshake,
     tag: "Sales",
     popular: true,
@@ -80,7 +80,7 @@ const addOnModules = [
   {
     id: "orders",
     name: "Orders",
-    description: "From quote to delivery confirmation.",
+    description: "Track orders from quote to delivery.",
     icon: faReceipt,
     tag: "Operations",
     popular: true,
@@ -88,56 +88,56 @@ const addOnModules = [
   {
     id: "bookings",
     name: "Bookings",
-    description: "Reservations, event planning, resource scheduling.",
+    description: "Manage reservations and booking schedules.",
     icon: faCalendarDays,
     tag: "Scheduling",
   },
   {
     id: "scheduler",
     name: "Scheduler",
-    description: "Staff shifts, job assignments, availability.",
+    description: "Manage staff shifts and availability.",
     icon: faCalendarCheck,
     tag: "Scheduling",
   },
   {
     id: "delivery",
     name: "Delivery",
-    description: "Routes, driver tracking, delivery confirmation.",
+    description: "Track routes and delivery confirmation.",
     icon: faTruck,
     tag: "Operations",
   },
   {
     id: "payments",
     name: "Payments",
-    description: "Mobile Money, invoicing, payment tracking.",
+    description: "Track Mobile Money, invoices, and payments.",
     icon: faMoneyBillWave,
     tag: "Finance",
   },
   {
     id: "hr",
     name: "HR & Payroll",
-    description: "Employee records, payroll, attendance.",
+    description: "Manage staff records, payroll, and attendance.",
     icon: faUserTie,
     tag: "People",
   },
   {
     id: "integrations",
     name: "Integrations",
-    description: "Connect QuickBooks, Xero, WhatsApp Business API.",
+    description: "Connect tools like QuickBooks, Xero, and WhatsApp.",
     icon: faPlug,
     tag: "System",
   },
   {
     id: "support",
     name: "Support Desk",
-    description: "Customer tickets, SLAs, service history.",
+    description: "Handle customer requests and support history.",
     icon: faHeadset,
     tag: "Support",
   },
   {
     id: "analytics",
     name: "Analytics",
-    description: "Advanced reporting, forecasting, BI exports.",
+    description: "Deeper reports and planning insights.",
     icon: faChartLine,
     tag: "Insights",
   },
@@ -150,61 +150,61 @@ const industryPresets = {
     icon: faStore,
     iconColor: "#FF6B35",
     modules: ["inventory", "crm", "orders", "payments"],
-    description: "Perfect for shops, boutiques, and retail chains",
+    description: "Great for shops, boutiques, and retail chains",
   },
   distribution: {
     name: "Distribution & Wholesale",
     icon: faTruckFast,
     iconColor: "#F7931E",
     modules: ["inventory", "orders", "delivery", "crm", "payments"],
-    description: "Track stock across warehouses, manage deliveries",
+    description: "Track stock across warehouses and manage deliveries",
   },
   events: {
     name: "Events & Rentals",
     icon: faGlassCheers,
     iconColor: "#9B59B6",
     modules: ["bookings", "inventory", "scheduler", "payments"],
-    description: "Manage bookings, track equipment, schedule staff",
+    description: "Manage bookings, track equipment, and schedule staff",
   },
   services: {
     name: "Professional Services",
     icon: faBriefcase,
     iconColor: "#3498DB",
     modules: ["crm", "scheduler", "bookings", "payments"],
-    description: "Client management, appointments, billing",
+    description: "Manage clients, appointments, and billing",
   },
   manufacturing: {
     name: "Manufacturing",
     icon: faIndustry,
     iconColor: "#E74C3C",
     modules: ["inventory", "orders", "scheduler", "hr"],
-    description: "Production tracking, materials, labor",
+    description: "Track production, materials, and labor",
   },
   food: {
     name: "Food & Beverage",
     icon: faUtensils,
     iconColor: "#27AE60",
     modules: ["inventory", "orders", "delivery", "scheduler"],
-    description: "Menu management, orders, deliveries",
+    description: "Manage menu items, orders, and deliveries",
   },
 };
 
 const processSteps = [
   {
     title: "You Configure",
-    description: "Pick your modules. See your estimate in real time.",
+    description: "Pick your features and see your estimate instantly.",
   },
   {
     title: "We Review",
-    description: "We call to confirm requirements and integrations.",
+    description: "We call to confirm your needs and tool connections.",
   },
   {
     title: "We Build",
-    description: "Design, develop, test, and share weekly demos.",
+    description: "We build, test, and share progress each week.",
   },
   {
     title: "You Launch",
-    description: "Team training, go-live support, and optimization.",
+    description: "We train your team and support your launch.",
   },
 ];
 
@@ -212,25 +212,25 @@ const dependencyPairs = [
   {
     title: "Inventory + Delivery",
     description:
-      "Track stock levels and delivery routes in one system. Perfect for distribution.",
+      "Track stock levels and delivery routes in one place. Great for distribution teams.",
     firstIcon: faBoxesStacked,
     secondIcon: faTruck,
   },
   {
     title: "CRM + Orders",
-    description: "See customer history when they order. Close deals faster.",
+    description: "See customer history while handling orders. Respond faster.",
     firstIcon: faHandshake,
     secondIcon: faReceipt,
   },
   {
     title: "Bookings + Scheduler",
-    description: "Match bookings with staff availability. No double-booking.",
+    description: "Match bookings with staff availability and avoid double-booking.",
     firstIcon: faCalendarDays,
     secondIcon: faCalendarCheck,
   },
   {
     title: "Payments + Reports",
-    description: "See money flow in real-time. Know exactly what's outstanding.",
+    description: "See cashflow clearly and know what is still outstanding.",
     firstIcon: faMoneyBillWave,
     secondIcon: faChartLine,
   },
@@ -245,27 +245,27 @@ const faqItems = [
   {
     title: "What if I don't see a module I need?",
     description:
-      "We build custom modules. Tell us what you need and we'll quote it as part of your plan.",
+      "We can build a custom feature for your business and include it in your quote.",
   },
   {
     title: "Can I remove modules after launch?",
     description:
-      "Yes. We usually recommend setting unused modules inactive so your historical data stays available.",
+      "Yes. We can switch off unused features while keeping your past data available.",
   },
   {
     title: "How does pricing work for custom modules?",
     description:
-      "Custom work is scoped by complexity. Most custom modules fall in the GH₵ 1,800–4,500 range.",
+      "Custom work depends on effort. Most custom features fall in the GH₵ 1,800–4,500 range.",
   },
   {
     title: "Do modules work on mobile?",
     description:
-      "Every module works on desktop, tablet, and phone with synchronized live data.",
+      "Every feature works on desktop, tablet, and phone with synced data.",
   },
   {
     title: "Can modules integrate with QuickBooks/Xero?",
     description:
-      "Yes. Select the Integrations module and we can connect accounting and messaging tools.",
+      "Yes. Select Integrations and we can connect your accounting and messaging tools.",
   },
 ];
 
@@ -346,9 +346,9 @@ export default function ModuleConfig() {
             We'll show you the price and timeline instantly.
           </p>
           <div className="hero-actions">
-            <PrimaryButton to="/contact">Talk to a Solutions Expert</PrimaryButton>
+            <PrimaryButton to="/contact">Talk to an expert</PrimaryButton>
             <a className="button button-ghost" href="#addon-modules">
-              Build Custom Setup
+              Build custom setup
             </a>
           </div>
         </div>
@@ -375,7 +375,7 @@ export default function ModuleConfig() {
             </div>
             <div className="stat-content">
               <div className="stat-value">{coreModules.length + selectedAddOns.length}</div>
-              <div className="stat-label">Modules in your stack</div>
+              <div className="stat-label">Features in your setup</div>
             </div>
           </article>
 
@@ -397,9 +397,9 @@ export default function ModuleConfig() {
       <section className="page industry-presets">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Quick Start</p>
-          <h2>Choose your industry for instant recommendations.</h2>
+          <h2>Choose your business type for instant recommendations.</h2>
           <p className="lead">
-            We've pre-configured the most common setups. Click to apply.
+            We pre-selected common setups. Click once to apply.
           </p>
         </div>
 
@@ -480,7 +480,7 @@ export default function ModuleConfig() {
           <p className="eyebrow">Add What You Need</p>
           <h2>Pick the modules that match your business.</h2>
           <p className="lead">
-            Click to select. We'll calculate your price and timeline.
+            Click to select. We will calculate your price and timeline.
           </p>
         </div>
 
@@ -545,7 +545,7 @@ export default function ModuleConfig() {
           <div className="estimate-card reveal" data-scroll>
             <div className="estimate-header">
               <h3>Your Estimate</h3>
-              <p>Based on your selections</p>
+              <p>Based on what you selected</p>
             </div>
 
             <div className="estimate-breakdown">
@@ -591,14 +591,14 @@ export default function ModuleConfig() {
             </div>
 
             <div className="estimate-actions">
-              <PrimaryButton to="/contact">Request Detailed Quote</PrimaryButton>
+              <PrimaryButton to="/contact">Request detailed quote</PrimaryButton>
               <Link to="/pricing" className="button button-ghost">
-                See Full Pricing
+                See full pricing
               </Link>
             </div>
 
             <p className="estimate-note">
-              This is an estimate. Final price depends on complexity, integrations, and data migration needs.
+              This is an estimate. Final price depends on project size, integrations, and data transfer needs.
             </p>
           </div>
         </section>
@@ -610,7 +610,7 @@ export default function ModuleConfig() {
       <section className="page config-process">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">What Happens Next</p>
-          <h2>From configuration to launch.</h2>
+          <h2>From planning to launch.</h2>
         </div>
 
         <div className="process-flow">
@@ -675,7 +675,7 @@ export default function ModuleConfig() {
       <section className="page config-faq">
         <div className="section-header reveal" data-scroll>
           <p className="eyebrow">Questions</p>
-          <h2>Common configuration questions.</h2>
+          <h2>Common setup questions.</h2>
         </div>
 
         <div className="faq-grid">
@@ -702,13 +702,13 @@ export default function ModuleConfig() {
           <p className="lead">
             {selectedAddOns.length > 0
               ? `You've selected ${selectedAddOns.length + 3} modules. Let's talk about your timeline and pricing.`
-              : "Choose your modules above, or talk to us to build a custom configuration."}
+              : "Choose your modules above, or talk to us to build the right setup."}
           </p>
         </div>
         <div className="cta-actions">
-          <PrimaryButton to="/contact">Get Your Quote</PrimaryButton>
+          <PrimaryButton to="/contact">Get your quote</PrimaryButton>
           <Link className="button button-ghost" to="/pricing">
-            See Full Pricing
+            See full pricing
           </Link>
         </div>
       </section>
