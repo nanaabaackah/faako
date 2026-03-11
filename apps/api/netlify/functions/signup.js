@@ -1,12 +1,20 @@
+const crypto = require("node:crypto");
 const { Pool } = require("pg");
-const nodemailer = require("nodemailer");
 
-const headers = {
+const BASE_HEADERS = {
   "content-type": "application/json",
-  "access-control-allow-origin": process.env.ALLOWED_ORIGIN || "*",
   "access-control-allow-methods": "POST, OPTIONS",
-  "access-control-allow-headers": "content-type"
+  "access-control-allow-headers": "content-type",
+  "cache-control": "no-store",
+  "x-content-type-options": "nosniff"
 };
+
+const DEV_ALLOWED_ORIGINS = new Set([
+  "http://localhost:5173",
+  "http://127.0.0.1:5173",
+  "http://localhost:8888",
+  "http://127.0.0.1:8888"
+]);
 
 const pool =
   global.__faakoPgPool ||
@@ -21,7 +29,7 @@ if (!global.__faakoPgPool) {
 const PACKAGE_RULES = {
   starter: {
     label: "Starter",
-    maxModules: 4
+    maxModules: 3
   },
   professional: {
     label: "Professional",
@@ -68,18 +76,51 @@ const ALLOWED_COMMUNICATION_CHANNELS = new Set([
   "other"
 ]);
 
-const createId = () =>
-  `id_${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`;
+const ALLOWED_CURRENCIES = new Set(["GHS", "USD", "NGN"]);
+const ALLOWED_BUSINESS_TYPES = new Set(["sell", "rent", "both"]);
+const ALLOWED_TEAM_SIZES = new Set(["1-10", "11-50", "51-200", "201+"]);
+const ALLOWED_TIMELINES = new Set(["immediately", "soon", "exploring"]);
+const BOT_FIELD_NAME = "companyFax";
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const URL_SCHEME_PATTERN = /^[a-zA-Z][a-zA-Z\d+.-]*:\/\//;
+const MAX_REQUEST_BODY_BYTES = 24 * 1024;
+const ACCEPTED_RESPONSE_BODY = JSON.stringify({
+  ok: true,
+  message: "Thanks. We have received your form."
+});
+const RESEND_EMAILS_ENDPOINT = "https://api.resend.com/emails";
 
-const normalizeEmail = (value) => String(value || "").trim().toLowerCase();
+const createId = () => crypto.randomUUID();
 
 const normalizeOptionalText = (value, maxLength = 2000) => {
-  const trimmed = String(value || "").trim();
+  if (typeof value !== "string") {
+    return null;
+  }
+
+  const trimmed = value.trim();
   if (!trimmed) {
     return null;
   }
 
   return trimmed.slice(0, maxLength);
+};
+
+const normalizeEmail = (value) => {
+  const normalized = normalizeOptionalText(
+    typeof value === "string" ? value.toLowerCase() : value,
+    254
+  );
+
+  return normalized && EMAIL_PATTERN.test(normalized) ? normalized : null;
+};
+
+const normalizeOption = (value, allowedValues, maxLength = 80) => {
+  const normalized = normalizeOptionalText(value, maxLength);
+  if (!normalized) {
+    return null;
+  }
+
+  return allowedValues.has(normalized) ? normalized : null;
 };
 
 const normalizeHexColor = (value) => {
@@ -105,7 +146,7 @@ const normalizeModuleSelection = (value) => {
   let rawItems = [];
 
   if (Array.isArray(value)) {
-    rawItems = value;
+    rawItems = value.filter((item) => typeof item === "string");
   } else if (typeof value === "string") {
     const trimmed = value.trim();
     if (!trimmed) {
@@ -127,8 +168,134 @@ const normalizeModuleSelection = (value) => {
   }
 
   return rawItems
-    .map((item) => String(item || "").trim().toLowerCase())
+    .filter((item) => typeof item === "string")
+    .map((item) => item.trim().toLowerCase())
     .filter(Boolean);
+};
+
+const normalizeHttpUrl = (value, maxLength = 300) => {
+  const normalized = normalizeOptionalText(value, maxLength);
+  if (!normalized) {
+    return null;
+  }
+
+  const candidate = URL_SCHEME_PATTERN.test(normalized)
+    ? normalized
+    : `https://${normalized.replace(/^\/+/, "")}`;
+
+  try {
+    const parsed = new URL(candidate);
+
+    if (
+      (parsed.protocol !== "http:" && parsed.protocol !== "https:") ||
+      parsed.username ||
+      parsed.password
+    ) {
+      return null;
+    }
+
+    return parsed.toString();
+  } catch {
+    return null;
+  }
+};
+
+const parseEnvOrigins = (value) =>
+  String(value || "")
+    .split(",")
+    .map((item) => item.trim())
+    .filter(Boolean)
+    .map((item) => {
+      try {
+        return new URL(item).origin;
+      } catch {
+        return null;
+      }
+    })
+    .filter(Boolean);
+
+const ALLOWED_ORIGINS = new Set([
+  ...parseEnvOrigins(process.env.ALLOWED_ORIGIN),
+  ...parseEnvOrigins(process.env.URL),
+  ...parseEnvOrigins(process.env.DEPLOY_PRIME_URL),
+  ...parseEnvOrigins(process.env.DEPLOY_URL),
+  ...parseEnvOrigins(process.env.SITE_URL),
+  ...(process.env.NODE_ENV === "production" ? [] : [...DEV_ALLOWED_ORIGINS])
+]);
+
+const getHeaderValue = (headers, name) => {
+  if (!headers || typeof headers !== "object") {
+    return null;
+  }
+
+  const directValue = headers[name];
+  if (typeof directValue === "string") {
+    return directValue;
+  }
+
+  const lowerCaseName = name.toLowerCase();
+  for (const [headerName, headerValue] of Object.entries(headers)) {
+    if (headerName.toLowerCase() === lowerCaseName && typeof headerValue === "string") {
+      return headerValue;
+    }
+  }
+
+  return null;
+};
+
+const normalizeOrigin = (value) => {
+  const normalized = normalizeOptionalText(value, 255);
+  if (!normalized) {
+    return null;
+  }
+
+  try {
+    return new URL(normalized).origin;
+  } catch {
+    return null;
+  }
+};
+
+const getPublicRequestOrigin = (event) => {
+  const forwardedHost =
+    getHeaderValue(event.headers, "x-forwarded-host") ||
+    getHeaderValue(event.headers, "host");
+  const host = normalizeOptionalText(forwardedHost, 255);
+
+  if (!host) {
+    return null;
+  }
+
+  const forwardedProto = normalizeOptionalText(
+    getHeaderValue(event.headers, "x-forwarded-proto"),
+    16
+  );
+  const protocol =
+    forwardedProto ||
+    (host.startsWith("localhost") || host.startsWith("127.0.0.1") ? "http" : "https");
+
+  return `${protocol}://${host}`;
+};
+
+const isAllowedOrigin = (origin, event) => {
+  if (!origin) {
+    return true;
+  }
+
+  const requestOrigin = getPublicRequestOrigin(event);
+  return origin === requestOrigin || ALLOWED_ORIGINS.has(origin);
+};
+
+const buildResponseHeaders = (origin, event) => {
+  const responseHeaders = { ...BASE_HEADERS };
+  const normalizedOrigin = normalizeOrigin(origin);
+
+  if (normalizedOrigin && isAllowedOrigin(normalizedOrigin, event)) {
+    responseHeaders["access-control-allow-origin"] = normalizedOrigin;
+    responseHeaders.vary = "Origin";
+  }
+
+  return responseHeaders;
 };
 
 const isModuleAvailableForPackage = (moduleId, packageTier) => {
@@ -208,29 +375,33 @@ const buildPreviewTableHtml = (entries) =>
     )
     .join("");
 
+const buildSubmissionDetailRows = (submission) => [
+  ["Company Name", submission.companyName],
+  ["Contact Name", submission.contactName],
+  ["Email", submission.normalizedEmail],
+  ["Phone", submission.phone],
+  ["Business Type", submission.businessType],
+  ["Team Size", submission.teamSize],
+  ["Preferred Currency", submission.selectedCurrency],
+  ["Timeline Preference", submission.timelinePreference],
+  ["Package Tier", submission.packageTier],
+  ["Requested Modules", submission.requestedModules],
+  ["Communication Channels", submission.communicationChannels],
+  ["Current Workflow", submission.currentWorkflow],
+  ["Pain Points", submission.painPoints],
+  ["Project Details", submission.projectDetails],
+  ["Additional Notes", submission.additionalNotes],
+  ["Website URL", submission.websiteUrl],
+  ["Logo URL", submission.logoUrl],
+  ["Primary Color", submission.brandPrimaryColor],
+  ["Secondary Color", submission.brandSecondaryColor]
+];
+
 const buildAdminPreviewHtml = (submission) => {
   const previewRows = [
     ["Request ID", submission.signupRequestId],
     ["Submitted At", submission.submittedAtIso],
-    ["Company Name", submission.companyName],
-    ["Contact Name", submission.contactName],
-    ["Email", submission.normalizedEmail],
-    ["Phone", submission.phone],
-    ["Business Type", submission.businessType],
-    ["Team Size", submission.teamSize],
-    ["Preferred Currency", submission.selectedCurrency],
-    ["Timeline Preference", submission.timelinePreference],
-    ["Package Tier", submission.packageTier],
-    ["Requested Modules", submission.requestedModules],
-    ["Communication Channels", submission.communicationChannels],
-    ["Current Workflow", submission.currentWorkflow],
-    ["Pain Points", submission.painPoints],
-    ["Project Details", submission.projectDetails],
-    ["Additional Notes", submission.additionalNotes],
-    ["Website URL", submission.websiteUrl],
-    ["Logo URL", submission.logoUrl],
-    ["Primary Color", submission.brandPrimaryColor],
-    ["Secondary Color", submission.brandSecondaryColor],
+    ...buildSubmissionDetailRows(submission),
     ["Organization ID", submission.organizationId]
   ];
 
@@ -246,12 +417,7 @@ const buildAdminPreviewHtml = (submission) => {
 };
 
 const buildClientConfirmationHtml = (submission) => {
-  const summaryRows = [
-    ["Company", submission.companyName],
-    ["Package", submission.packageTier],
-    ["Modules", submission.requestedModules],
-    ["Timeline", submission.timelinePreference]
-  ];
+  const submissionRows = buildSubmissionDetailRows(submission);
 
   return `
     <div style="font-family:Arial,sans-serif;color:#1f1f1f;line-height:1.45;">
@@ -260,8 +426,9 @@ const buildClientConfirmationHtml = (submission) => {
         submission.contactName || "there"
       )}, thanks for sharing your business details with Faako.</p>
       <p style="margin:0 0 16px;">Our team will review your request and reply with next steps within one business day.</p>
+      <p style="margin:0 0 16px;">Here is a copy of the full information you submitted.</p>
       <table cellpadding="0" cellspacing="0" style="border-collapse:collapse;width:100%;max-width:680px;">
-        ${buildPreviewTableHtml(summaryRows)}
+        ${buildPreviewTableHtml(submissionRows)}
       </table>
       <p style="margin:16px 0 0;">Reference: <strong>${escapeHtml(
         submission.signupRequestId
@@ -270,58 +437,112 @@ const buildClientConfirmationHtml = (submission) => {
   `;
 };
 
+const parseResponseJson = async (response) => {
+  const responseText = await response.text();
+
+  if (!responseText) {
+    return {};
+  }
+
+  try {
+    return JSON.parse(responseText);
+  } catch {
+    return { message: responseText };
+  }
+};
+
+const formatResendFrom = (email, name) => {
+  if (!email) {
+    return null;
+  }
+
+  if (!name || email.includes("<")) {
+    return email;
+  }
+
+  return `${name} <${email}>`;
+};
+
+const sendResendEmail = async ({
+  apiKey,
+  from,
+  to,
+  subject,
+  html,
+  idempotencyKey
+}) => {
+  const recipients = Array.isArray(to) ? to.filter(Boolean) : [to].filter(Boolean);
+
+  if (!apiKey || !from || recipients.length === 0 || !subject || !html) {
+    return null;
+  }
+
+  const response = await fetch(RESEND_EMAILS_ENDPOINT, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${apiKey}`,
+      ...(idempotencyKey ? { "Idempotency-Key": idempotencyKey } : {})
+    },
+    body: JSON.stringify({
+      from,
+      to: recipients,
+      subject,
+      html
+    })
+  });
+
+  const result = await parseResponseJson(response);
+
+  if (!response.ok) {
+    throw new Error(result?.message || result?.error || "Resend email request failed");
+  }
+
+  return result;
+};
+
 const sendSignupPreviewEmails = async (submission) => {
-  const smtpHost = normalizeOptionalText(process.env.SMTP_HOST, 255);
-  const smtpPortValue = normalizeOptionalText(process.env.SMTP_PORT, 8) || "587";
-  const smtpPort = Number.parseInt(smtpPortValue, 10);
-  const smtpUser = normalizeOptionalText(process.env.SMTP_USER, 255);
-  const smtpPass = normalizeOptionalText(process.env.SMTP_PASS, 255);
-  const smtpFrom =
-    normalizeOptionalText(process.env.SMTP_FROM, 255) ||
-    smtpUser ||
+  const resendApiKey = normalizeOptionalText(process.env.RESEND_API_KEY, 255);
+  const resendFromEmail =
+    normalizeOptionalText(process.env.RESEND_FROM_EMAIL, 255) ||
+    normalizeOptionalText(process.env.RESEND_FROM, 255) ||
     "no-reply@faako.app";
+  const resendFromName =
+    normalizeOptionalText(process.env.RESEND_FROM_NAME, 120) || "Faako";
   const adminEmail =
     normalizeOptionalText(process.env.INTAKE_ADMIN_EMAIL, 255) ||
     normalizeOptionalText(process.env.ADMIN_EMAIL, 255);
 
-  if (!smtpHost || !smtpPort || !smtpUser || !smtpPass) {
+  if (!resendApiKey || !resendFromEmail) {
     return;
   }
 
-  const smtpSecureRaw = String(process.env.SMTP_SECURE || "").trim().toLowerCase();
-  const smtpSecure =
-    smtpSecureRaw === "true" || smtpSecureRaw === "1" || smtpPort === 465;
-
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpSecure,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass
-    }
-  });
+  const resendFrom = formatResendFrom(resendFromEmail, resendFromName);
 
   const sendJobs = [];
 
   if (adminEmail) {
     sendJobs.push(
-      transporter.sendMail({
-        from: smtpFrom,
+      sendResendEmail({
+        apiKey: resendApiKey,
+        from: resendFrom,
         to: adminEmail,
         subject: `[Faako] New Intake - ${submission.companyName}`,
-        html: buildAdminPreviewHtml(submission)
+        html: buildAdminPreviewHtml(submission),
+        idempotencyKey: `${submission.signupRequestId}-admin`
       })
     );
   }
 
   if (submission.normalizedEmail) {
     sendJobs.push(
-      transporter.sendMail({
-        from: smtpFrom,
+      sendResendEmail({
+        apiKey: resendApiKey,
+        from: resendFrom,
         to: submission.normalizedEmail,
         subject: "Faako intake received",
-        html: buildClientConfirmationHtml(submission)
+        html: buildClientConfirmationHtml(submission),
+        idempotencyKey: `${submission.signupRequestId}-client`
       })
     );
   }
@@ -338,7 +559,36 @@ const sendSignupPreviewEmails = async (submission) => {
   });
 };
 
+const parseUrlEncodedPayload = (body) => {
+  const payload = Object.create(null);
+  const params = new URLSearchParams(body || "");
+
+  for (const [key, value] of params.entries()) {
+    if (Object.prototype.hasOwnProperty.call(payload, key)) {
+      const currentValue = payload[key];
+      payload[key] = Array.isArray(currentValue)
+        ? [...currentValue, value]
+        : [currentValue, value];
+    } else {
+      payload[key] = value;
+    }
+  }
+
+  return payload;
+};
+
 exports.handler = async (event) => {
+  const requestOrigin = normalizeOrigin(getHeaderValue(event.headers, "origin"));
+  const headers = buildResponseHeaders(requestOrigin, event);
+
+  if (requestOrigin && !isAllowedOrigin(requestOrigin, event)) {
+    return {
+      statusCode: 403,
+      headers,
+      body: JSON.stringify({ error: "Origin not allowed" })
+    };
+  }
+
   if (event.httpMethod === "OPTIONS") {
     return {
       statusCode: 204,
@@ -355,20 +605,63 @@ exports.handler = async (event) => {
     };
   }
 
+  const rawBody = typeof event.body === "string" ? event.body : "";
+  if (Buffer.byteLength(rawBody, "utf8") > MAX_REQUEST_BODY_BYTES) {
+    return {
+      statusCode: 413,
+      headers,
+      body: JSON.stringify({ error: "Request body is too large" })
+    };
+  }
+
+  const contentTypeHeader = getHeaderValue(event.headers, "content-type") || "";
+  const contentType = contentTypeHeader.split(";")[0].trim().toLowerCase();
+
+  if (
+    contentType !== "application/json" &&
+    contentType !== "application/x-www-form-urlencoded"
+  ) {
+    return {
+      statusCode: 415,
+      headers,
+      body: JSON.stringify({ error: "Unsupported content type" })
+    };
+  }
+
   let payload = {};
   try {
-    payload = JSON.parse(event.body || "{}");
+    payload =
+      contentType === "application/x-www-form-urlencoded"
+        ? parseUrlEncodedPayload(rawBody)
+        : JSON.parse(rawBody || "{}");
   } catch (error) {
     return {
       statusCode: 400,
       headers,
-      body: JSON.stringify({ error: "Invalid JSON payload" })
+      body: JSON.stringify({ error: "Invalid request payload" })
+    };
+  }
+
+  if (!payload || Array.isArray(payload) || typeof payload !== "object") {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Invalid request payload" })
+    };
+  }
+
+  const honeypotValue = normalizeOptionalText(payload[BOT_FIELD_NAME], 255);
+  if (honeypotValue) {
+    return {
+      statusCode: 202,
+      headers,
+      body: ACCEPTED_RESPONSE_BODY
     };
   }
 
   const companyName = normalizeOptionalText(payload.companyName, 180);
   const normalizedEmail = normalizeEmail(payload.email);
-  const selectedCurrency = normalizeOptionalText(payload.currency, 8) || "USD";
+  const selectedCurrency = normalizeOption(payload.currency, ALLOWED_CURRENCIES, 8) || "USD";
 
   if (!companyName || !normalizedEmail) {
     return {
@@ -445,20 +738,26 @@ exports.handler = async (event) => {
     };
   }
 
-  const teamSize = normalizeOptionalText(payload.teamSize, 32);
+  const teamSize = normalizeOption(payload.teamSize, ALLOWED_TEAM_SIZES, 32);
   const contactName = normalizeOptionalText(payload.contactName || payload.fullName, 120);
   const fullName = contactName;
   const phone = normalizeOptionalText(payload.phone, 60);
-  const businessType = normalizeOptionalText(payload.businessType, 80);
+  const businessType = normalizeOption(payload.businessType, ALLOWED_BUSINESS_TYPES, 80);
   const currentWorkflow = normalizeOptionalText(payload.currentWorkflow, 2500);
   const communicationChannels = [
     ...new Set(normalizeModuleSelection(payload.communicationChannels))
   ];
-  const websiteUrl = normalizeOptionalText(payload.websiteUrl, 300);
-  const logoUrl = normalizeOptionalText(payload.logoUrl, 300);
+  const rawWebsiteUrl = normalizeOptionalText(payload.websiteUrl, 300);
+  const websiteUrl = rawWebsiteUrl ? normalizeHttpUrl(rawWebsiteUrl, 300) : null;
+  const rawLogoUrl = normalizeOptionalText(payload.logoUrl, 300);
+  const logoUrl = rawLogoUrl ? normalizeHttpUrl(rawLogoUrl, 300) : null;
   const brandPrimaryColor = normalizeHexColor(payload.brandPrimaryColor);
   const brandSecondaryColor = normalizeHexColor(payload.brandSecondaryColor);
-  const timelinePreference = normalizeOptionalText(payload.timelinePreference, 80);
+  const timelinePreference = normalizeOption(
+    payload.timelinePreference,
+    ALLOWED_TIMELINES,
+    80
+  );
   const painPoints = normalizeOptionalText(payload.painPoints, 2500);
   const projectDetails = normalizeOptionalText(payload.projectDetails, 2500);
   const additionalNotes = normalizeOptionalText(payload.additionalNotes, 2500);
@@ -470,6 +769,38 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         error: "Please describe your current workflow"
       })
+    };
+  }
+
+  if (payload.currency && !selectedCurrency) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Currency selection is invalid" })
+    };
+  }
+
+  if (payload.teamSize && !teamSize) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Team size selection is invalid" })
+    };
+  }
+
+  if (payload.businessType && !businessType) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Business type selection is invalid" })
+    };
+  }
+
+  if (payload.timelinePreference && !timelinePreference) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Timeline selection is invalid" })
     };
   }
 
@@ -497,9 +828,45 @@ exports.handler = async (event) => {
     };
   }
 
+  if (rawWebsiteUrl && !websiteUrl) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Website URL must use http or https" })
+    };
+  }
+
+  if (rawLogoUrl && !logoUrl) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Logo URL must use http or https" })
+    };
+  }
+
   const dbClient = await pool.connect();
 
   try {
+    const recentDuplicate = await dbClient.query(
+      `
+        SELECT "id"
+        FROM "SignupRequest"
+        WHERE "email" = $1
+          AND "companyName" = $2
+          AND "createdAt" >= NOW() - INTERVAL '5 minutes'
+        LIMIT 1
+      `,
+      [normalizedEmail, companyName]
+    );
+
+    if (recentDuplicate.rowCount > 0) {
+      return {
+        statusCode: 202,
+        headers,
+        body: ACCEPTED_RESPONSE_BODY
+      };
+    }
+
     await dbClient.query("BEGIN");
 
     const baseSlug = slugify(companyName);
@@ -741,15 +1108,13 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         ok: true,
         message: "Signup received",
-        requestId: signupRequestId,
-        organizationId: organization.id,
-        packageTier,
-        requestedModules,
-        currency: selectedCurrency
+        requestId: signupRequestId
       })
     };
   } catch (error) {
     await dbClient.query("ROLLBACK").catch(() => {});
+
+    console.error("Unable to save signup request:", error);
 
     return {
       statusCode: 500,

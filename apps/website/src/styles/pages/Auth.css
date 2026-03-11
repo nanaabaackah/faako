@@ -504,6 +504,48 @@
 .signup-grid--two {
   grid-template-columns: 1fr;
 }
+.signup-phone-control {
+  display: grid;
+  grid-template-columns: minmax(0, 190px) minmax(0, 1fr);
+  gap: 0.6rem;
+  align-items: center;
+}
+.signup-phone-code {
+  width: 100%;
+}
+.signup-url-control {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: stretch;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: transparent;
+}
+.signup-url-control:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset: 2px;
+}
+.signup-url-prefix {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 0.95rem;
+  background: #e5f6eb;
+  border-right: 1px solid rgba(35, 88, 66, 0.18);
+  color: #235842;
+  font-weight: 700;
+  user-select: none;
+  white-space: nowrap;
+}
+.signup-url-input {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.signup-url-input:focus-visible {
+  outline: none;
+}
 .signup-color-control {
   display: grid;
   grid-template-columns: 68px minmax(0, 1fr);
@@ -686,6 +728,111 @@
   );
   border-color: color-mix(in srgb, var(--accent-strong) 76%, #180c05);
 }
+.signup-status-panel {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.9rem;
+  align-items: center;
+  padding: 0.95rem 1rem;
+  border-radius: 16px;
+  border: 1px solid color-mix(in srgb, var(--border) 76%, transparent);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--surface-alt) 86%, rgba(255, 255, 255, 0.56)),
+      color-mix(in srgb, var(--card) 92%, rgba(255, 255, 255, 0.4))
+    );
+  box-shadow: 0 14px 24px rgba(35, 88, 66, 0.08);
+  animation: signup-status-enter 180ms ease;
+}
+.signup-status-panel--loading {
+  border-color: color-mix(in srgb, var(--accent) 34%, transparent);
+}
+.signup-status-panel--success {
+  border-color: color-mix(in srgb, #2f855a 34%, transparent);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, #e6f6ed 90%, rgba(255, 255, 255, 0.6)),
+      color-mix(in srgb, #f4fbf7 94%, rgba(255, 255, 255, 0.42))
+    );
+}
+.signup-status-panel--error {
+  border-color: color-mix(in srgb, var(--danger) 32%, transparent);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, #fff1ec 92%, rgba(255, 255, 255, 0.56)),
+      color-mix(in srgb, #fff8f5 96%, rgba(255, 255, 255, 0.36))
+    );
+}
+.signup-status-indicator {
+  width: 54px;
+  height: 54px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  color: #235842;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.signup-status-panel--success .signup-status-indicator {
+  color: #2f855a;
+  background: rgba(255, 255, 255, 0.88);
+}
+.signup-status-panel--error .signup-status-indicator {
+  color: var(--danger);
+  background: rgba(255, 255, 255, 0.88);
+}
+.signup-status-spinner {
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 3px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-top-color: currentColor;
+  animation: signup-spin 0.85s linear infinite;
+}
+.signup-status-symbol {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1;
+}
+.signup-status-copy {
+  display: grid;
+  gap: 0.24rem;
+}
+.signup-status-title,
+.signup-status-message {
+  margin: 0;
+}
+.signup-status-title {
+  font-size: 0.96rem;
+  font-weight: 800;
+  color: var(--ink);
+}
+.signup-status-message {
+  font-size: 0.84rem;
+  color: color-mix(in srgb, var(--ink) 72%, var(--muted));
+}
+
+@keyframes signup-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes signup-status-enter {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
 @media (max-width: 1100px) {
   .signup-shell {
@@ -724,6 +871,9 @@
   .signup-icon-logo {
     width: 50px;
     height: 50px;
+  }
+  .signup-phone-control {
+    grid-template-columns: 1fr;
   }
   .signup-grid--two,
   .signup-package-grid,
