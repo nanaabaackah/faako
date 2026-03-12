@@ -162,7 +162,20 @@ const resolveApiEndpoint = (path) => {
   const normalizedPath = String(path || "").replace(/^\/+/, "");
 
   if (!import.meta.env.PROD) {
-    return `/api/${normalizedPath}`;
+    const configuredDevBaseUrl = String(import.meta.env.VITE_API_DEV_BASE_URL || "")
+      .trim()
+      .replace(/\/+$/, "");
+
+    if (!configuredDevBaseUrl) {
+      return `/api/${normalizedPath}`;
+    }
+
+    if (/^https?:\/\//i.test(configuredDevBaseUrl)) {
+      return new URL(normalizedPath, `${configuredDevBaseUrl}/`).toString();
+    }
+
+    const normalizedDevBasePath = `/${configuredDevBaseUrl.replace(/^\/+/, "")}`;
+    return `${normalizedDevBasePath}/${normalizedPath}`;
   }
 
   const configuredBaseUrl = String(import.meta.env.VITE_API_BASE_URL || "")

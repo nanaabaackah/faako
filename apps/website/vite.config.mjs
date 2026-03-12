@@ -26,7 +26,9 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": {
           target: apiProxyTarget,
-          changeOrigin: true
+          changeOrigin: true,
+          rewrite: (path) =>
+            path.replace(/^\/api(?=\/|$)/, "/.netlify/functions") || "/.netlify/functions"
         }
       }
     },

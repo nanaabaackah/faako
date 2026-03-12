@@ -1,10 +1,11 @@
 [build]
   command = "npm --prefix apps/website run build"
   publish = "apps/website/dist"
+  functions = "../api/netlify/functions"
 
 [[redirects]]
   from = "/api/*"
-  to = "https://api.faako.nanaabaackah.com/:splat"
+  to = "/.netlify/functions/:splat"
   status = 200
 
 [[redirects]]
