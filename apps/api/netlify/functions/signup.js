@@ -955,6 +955,19 @@ exports.handler = async (event) => {
     };
   }
 
+  if (!normalizeOptionalText(process.env.DATABASE_URL, 4096)) {
+    return {
+      statusCode: 503,
+      headers,
+      body: JSON.stringify({
+        error: "Signup service is not configured",
+        ...(process.env.NODE_ENV === "production"
+          ? {}
+          : { debug: { message: "DATABASE_URL is missing" } })
+      })
+    };
+  }
+
   const dbClient = await pool.connect();
 
   try {
