@@ -5,6 +5,7 @@ node_modules/
 dist/
 build/
 coverage/
+apps/website/netlify/functions/
 
 # Local Netlify folder
 .netlify
