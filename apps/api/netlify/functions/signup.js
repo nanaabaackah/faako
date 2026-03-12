@@ -97,6 +97,112 @@ const RESEND_EMAILS_ENDPOINT = "https://api.resend.com/emails";
 
 const createId = () => crypto.randomUUID();
 
+const publicTableColumnsCache = new Map();
+
+const getPublicTableColumns = async (dbClient, tableName) => {
+  if (publicTableColumnsCache.has(tableName)) {
+    return publicTableColumnsCache.get(tableName);
+  }
+
+  const result = await dbClient.query(
+    `
+      SELECT "column_name"
+      FROM "information_schema"."columns"
+      WHERE "table_schema" = 'public'
+        AND "table_name" = $1
+    `,
+    [tableName]
+  );
+
+  const columns = new Set(result.rows.map((row) => row.column_name));
+  publicTableColumnsCache.set(tableName, columns);
+  return columns;
+};
+
+const tableHasRequiredColumns = async (dbClient, tableName, requiredColumns) => {
+  const columns = await getPublicTableColumns(dbClient, tableName);
+  return requiredColumns.every((column) => columns.has(column));
+};
+
+const insertSignupRequestCompat = async (dbClient, submission) => {
+  const signupRequestId = createId();
+  const columns = await getPublicTableColumns(dbClient, "SignupRequest");
+
+  if (!columns.has("id") || !columns.has("companyName") || !columns.has("email")) {
+    throw new Error('SignupRequest table is missing required columns');
+  }
+
+  const valuesByColumn = [
+    ["id", signupRequestId],
+    ["organizationId", submission.organizationId || null],
+    ["userId", submission.userId || null],
+    ["companyName", submission.companyName],
+    ["email", submission.normalizedEmail],
+    ["contactName", submission.contactName],
+    ["phone", submission.phone],
+    ["teamSize", submission.teamSize],
+    ["currency", submission.selectedCurrency],
+    ["websiteUrl", submission.websiteUrl],
+    ["logoUrl", submission.logoUrl],
+    ["brandPrimaryColor", submission.brandPrimaryColor],
+    ["brandSecondaryColor", submission.brandSecondaryColor],
+    ["packageTier", submission.packageTier],
+    ["requestedModules", submission.requestedModules],
+    ["businessType", submission.businessType],
+    ["currentWorkflow", submission.currentWorkflow],
+    ["communicationChannels", submission.communicationChannels],
+    ["timelinePreference", submission.timelinePreference],
+    ["projectDetails", submission.projectDetails],
+    ["painPoints", submission.painPoints],
+    ["additionalNotes", submission.additionalNotes],
+    ["status", "NEW"],
+    ["source", "website"]
+  ];
+
+  const insertColumns = [];
+  const insertValues = [];
+  const placeholders = [];
+
+  for (const [column, value] of valuesByColumn) {
+    if (!columns.has(column)) {
+      continue;
+    }
+
+    insertColumns.push(`"${column}"`);
+    insertValues.push(value);
+    placeholders.push(`$${insertValues.length}`);
+  }
+
+  if (columns.has("createdAt")) {
+    insertColumns.push('"createdAt"');
+    placeholders.push("NOW()");
+  }
+
+  if (columns.has("updatedAt")) {
+    insertColumns.push('"updatedAt"');
+    placeholders.push("NOW()");
+  }
+
+  await dbClient.query(
+    `
+      INSERT INTO "SignupRequest" (${insertColumns.join(", ")})
+      VALUES (${placeholders.join(", ")})
+    `,
+    insertValues
+  );
+
+  return signupRequestId;
+};
+
+const buildDebugErrorPayload = (error) => ({
+  code: typeof error?.code === "string" ? error.code : null,
+  message: typeof error?.message === "string" ? error.message : String(error || ""),
+  detail: typeof error?.detail === "string" ? error.detail : null,
+  table: typeof error?.table === "string" ? error.table : null,
+  column: typeof error?.column === "string" ? error.column : null,
+  constraint: typeof error?.constraint === "string" ? error.constraint : null
+});
+
 const normalizeOptionalText = (value, maxLength = 2000) => {
   if (typeof value !== "string") {
     return null;
@@ -874,211 +980,173 @@ exports.handler = async (event) => {
 
     await dbClient.query("BEGIN");
 
-    const baseSlug = slugify(companyName);
+    const canPersistIdentityGraph =
+      (await tableHasRequiredColumns(dbClient, "Organization", [
+        "id",
+        "name",
+        "slug",
+        "status",
+        "primaryEmail",
+        "teamSize",
+        "currency"
+      ])) &&
+      (await tableHasRequiredColumns(dbClient, "User", [
+        "id",
+        "email",
+        "fullName",
+        "status"
+      ])) &&
+      (await tableHasRequiredColumns(dbClient, "Membership", [
+        "id",
+        "organizationId",
+        "userId",
+        "role"
+      ]));
+
     let organization = null;
+    let user = null;
 
-    if (baseSlug.length > 0) {
-      const organizationResult = await dbClient.query(
-        'SELECT "id", "slug", "primaryEmail", "teamSize", "currency" FROM "Organization" WHERE "slug" = $1 LIMIT 1',
-        [baseSlug]
-      );
-      organization = organizationResult.rows[0] || null;
-    }
+    if (canPersistIdentityGraph) {
+      const baseSlug = slugify(companyName);
 
-    if (!organization) {
-      const slug = await buildUniqueSlug(dbClient, companyName);
-      const organizationId = createId();
-      const insertOrganization = await dbClient.query(
+      if (baseSlug.length > 0) {
+        const organizationResult = await dbClient.query(
+          'SELECT "id", "slug", "primaryEmail", "teamSize", "currency" FROM "Organization" WHERE "slug" = $1 LIMIT 1',
+          [baseSlug]
+        );
+        organization = organizationResult.rows[0] || null;
+      }
+
+      if (!organization) {
+        const slug = await buildUniqueSlug(dbClient, companyName);
+        const organizationId = createId();
+        const insertOrganization = await dbClient.query(
+          `
+            INSERT INTO "Organization" (
+              "id",
+              "name",
+              "slug",
+              "status",
+              "primaryEmail",
+              "teamSize",
+              "currency",
+              "createdAt",
+              "updatedAt"
+            )
+            VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
+            RETURNING "id", "slug", "primaryEmail", "teamSize", "currency"
+          `,
+          [
+            organizationId,
+            companyName,
+            slug,
+            "PENDING",
+            normalizedEmail,
+            teamSize,
+            selectedCurrency
+          ]
+        );
+
+        organization = insertOrganization.rows[0];
+      } else {
+        const updates = [];
+        const values = [];
+
+        if (!organization.primaryEmail && normalizedEmail) {
+          values.push(normalizedEmail);
+          updates.push(`"primaryEmail" = $${values.length}`);
+        }
+
+        if (!organization.teamSize && teamSize) {
+          values.push(teamSize);
+          updates.push(`"teamSize" = $${values.length}`);
+        }
+
+        if (!organization.currency && selectedCurrency) {
+          values.push(selectedCurrency);
+          updates.push(`"currency" = $${values.length}`);
+        }
+
+        if (updates.length > 0) {
+          values.push(organization.id);
+
+          const updatedOrganization = await dbClient.query(
+            `
+              UPDATE "Organization"
+              SET ${updates.join(", ")}, "updatedAt" = NOW()
+              WHERE "id" = $${values.length}
+              RETURNING "id", "slug", "primaryEmail", "teamSize", "currency"
+            `,
+            values
+          );
+
+          organization = updatedOrganization.rows[0];
+        }
+      }
+
+      const userInsert = await dbClient.query(
         `
-          INSERT INTO "Organization" (
+          INSERT INTO "User" (
             "id",
-            "name",
-            "slug",
+            "email",
+            "fullName",
             "status",
-            "primaryEmail",
-            "teamSize",
-            "currency",
             "createdAt",
             "updatedAt"
           )
-          VALUES ($1, $2, $3, $4, $5, $6, $7, NOW(), NOW())
-          RETURNING "id", "slug", "primaryEmail", "teamSize", "currency"
+          VALUES ($1, $2, $3, $4, NOW(), NOW())
+          ON CONFLICT ("email")
+          DO UPDATE
+          SET
+            "fullName" = COALESCE(EXCLUDED."fullName", "User"."fullName"),
+            "updatedAt" = NOW()
+          RETURNING "id"
         `,
-        [
-          organizationId,
-          companyName,
-          slug,
-          "PENDING",
-          normalizedEmail,
-          teamSize,
-          selectedCurrency
-        ]
+        [createId(), normalizedEmail, fullName, "PENDING"]
       );
 
-      organization = insertOrganization.rows[0];
-    } else {
-      const updates = [];
-      const values = [];
+      user = userInsert.rows[0];
 
-      if (!organization.primaryEmail && normalizedEmail) {
-        values.push(normalizedEmail);
-        updates.push(`"primaryEmail" = $${values.length}`);
-      }
-
-      if (!organization.teamSize && teamSize) {
-        values.push(teamSize);
-        updates.push(`"teamSize" = $${values.length}`);
-      }
-
-      if (!organization.currency && selectedCurrency) {
-        values.push(selectedCurrency);
-        updates.push(`"currency" = $${values.length}`);
-      }
-
-      if (updates.length > 0) {
-        values.push(organization.id);
-
-        const updatedOrganization = await dbClient.query(
-          `
-            UPDATE "Organization"
-            SET ${updates.join(", ")}, "updatedAt" = NOW()
-            WHERE "id" = $${values.length}
-            RETURNING "id", "slug", "primaryEmail", "teamSize", "currency"
-          `,
-          values
-        );
-
-        organization = updatedOrganization.rows[0];
-      }
+      await dbClient.query(
+        `
+          INSERT INTO "Membership" (
+            "id",
+            "organizationId",
+            "userId",
+            "role",
+            "createdAt"
+          )
+          VALUES ($1, $2, $3, $4, NOW())
+          ON CONFLICT ("organizationId", "userId")
+          DO NOTHING
+        `,
+        [createId(), organization.id, user.id, "owner"]
+      );
     }
 
-    const userInsert = await dbClient.query(
-      `
-        INSERT INTO "User" (
-          "id",
-          "email",
-          "fullName",
-          "status",
-          "createdAt",
-          "updatedAt"
-        )
-        VALUES ($1, $2, $3, $4, NOW(), NOW())
-        ON CONFLICT ("email")
-        DO UPDATE
-        SET
-          "fullName" = COALESCE(EXCLUDED."fullName", "User"."fullName"),
-          "updatedAt" = NOW()
-        RETURNING "id"
-      `,
-      [createId(), normalizedEmail, fullName, "PENDING"]
-    );
-
-    const user = userInsert.rows[0];
-
-    await dbClient.query(
-      `
-        INSERT INTO "Membership" (
-          "id",
-          "organizationId",
-          "userId",
-          "role",
-          "createdAt"
-        )
-        VALUES ($1, $2, $3, $4, NOW())
-        ON CONFLICT ("organizationId", "userId")
-        DO NOTHING
-      `,
-      [createId(), organization.id, user.id, "owner"]
-    );
-
-    const signupRequestId = createId();
-
-    await dbClient.query(
-      `
-        INSERT INTO "SignupRequest" (
-          "id",
-          "organizationId",
-          "userId",
-          "companyName",
-          "email",
-          "contactName",
-          "phone",
-          "teamSize",
-          "currency",
-          "websiteUrl",
-          "logoUrl",
-          "brandPrimaryColor",
-          "brandSecondaryColor",
-          "packageTier",
-          "requestedModules",
-          "businessType",
-          "currentWorkflow",
-          "communicationChannels",
-          "timelinePreference",
-          "projectDetails",
-          "painPoints",
-          "additionalNotes",
-          "status",
-          "source",
-          "createdAt",
-          "updatedAt"
-        )
-        VALUES (
-          $1,
-          $2,
-          $3,
-          $4,
-          $5,
-          $6,
-          $7,
-          $8,
-          $9,
-          $10,
-          $11,
-          $12,
-          $13,
-          $14,
-          $15,
-          $16,
-          $17,
-          $18,
-          $19,
-          $20,
-          $21,
-          $22,
-          $23,
-          $24,
-          NOW(),
-          NOW()
-        )
-      `,
-      [
-        signupRequestId,
-        organization.id,
-        user.id,
-        companyName,
-        normalizedEmail,
-        contactName,
-        phone,
-        teamSize,
-        selectedCurrency,
-        websiteUrl,
-        logoUrl,
-        brandPrimaryColor,
-        brandSecondaryColor,
-        packageTier,
-        requestedModules,
-        businessType,
-        currentWorkflow,
-        communicationChannels,
-        timelinePreference,
-        projectDetails,
-        painPoints,
-        additionalNotes,
-        "NEW",
-        "website"
-      ]
-    );
+    const signupRequestId = await insertSignupRequestCompat(dbClient, {
+      organizationId: organization?.id || null,
+      userId: user?.id || null,
+      companyName,
+      normalizedEmail,
+      contactName,
+      phone,
+      teamSize,
+      selectedCurrency,
+      websiteUrl,
+      logoUrl,
+      brandPrimaryColor,
+      brandSecondaryColor,
+      packageTier,
+      requestedModules,
+      businessType,
+      currentWorkflow,
+      communicationChannels,
+      timelinePreference,
+      projectDetails,
+      painPoints,
+      additionalNotes
+    });
 
     await dbClient.query("COMMIT");
 
@@ -1119,12 +1187,16 @@ exports.handler = async (event) => {
   } catch (error) {
     await dbClient.query("ROLLBACK").catch(() => {});
 
-    console.error("Unable to save signup request:", error);
+    const debugError = buildDebugErrorPayload(error);
+    console.error("Unable to save signup request:", debugError);
 
     return {
       statusCode: 500,
       headers,
-      body: JSON.stringify({ error: "Unable to save signup request" })
+      body: JSON.stringify({
+        error: "Unable to save signup request",
+        ...(process.env.NODE_ENV === "production" ? {} : { debug: debugError })
+      })
     };
   } finally {
     dbClient.release();

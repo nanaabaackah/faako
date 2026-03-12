@@ -162,20 +162,7 @@ const resolveApiEndpoint = (path) => {
   const normalizedPath = String(path || "").replace(/^\/+/, "");
 
   if (!import.meta.env.PROD) {
-    const configuredDevBaseUrl = String(import.meta.env.VITE_API_DEV_BASE_URL || "")
-      .trim()
-      .replace(/\/+$/, "");
-
-    if (!configuredDevBaseUrl) {
-      return `/api/${normalizedPath}`;
-    }
-
-    if (/^https?:\/\//i.test(configuredDevBaseUrl)) {
-      return new URL(normalizedPath, `${configuredDevBaseUrl}/`).toString();
-    }
-
-    const normalizedDevBasePath = `/${configuredDevBaseUrl.replace(/^\/+/, "")}`;
-    return `${normalizedDevBasePath}/${normalizedPath}`;
+    return `/api/${normalizedPath}`;
   }
 
   const configuredBaseUrl = String(import.meta.env.VITE_API_BASE_URL || "")
@@ -189,7 +176,6 @@ const resolveApiEndpoint = (path) => {
   if (/^https?:\/\//i.test(configuredBaseUrl)) {
     return new URL(normalizedPath, `${configuredBaseUrl}/`).toString();
   }
-
   const normalizedBasePath = `/${configuredBaseUrl.replace(/^\/+/, "")}`;
   return `${normalizedBasePath}/${normalizedPath}`;
 };
@@ -797,10 +783,14 @@ export default function Signup() {
       const result = parseJsonObject(responseText);
 
       if (!response.ok || result?.ok === false || result?.errors) {
-        const message =
+        const baseMessage =
           result?.error ||
           result?.errors?.[0]?.message ||
           "Could not submit form. Please try again.";
+        const debugDetails = !import.meta.env.PROD
+          ? [result?.debug?.message, result?.debug?.detail].filter(Boolean).join(" | ")
+          : "";
+        const message = debugDetails ? `${baseMessage}: ${debugDetails}` : baseMessage;
         throw new Error(message);
       }
 
